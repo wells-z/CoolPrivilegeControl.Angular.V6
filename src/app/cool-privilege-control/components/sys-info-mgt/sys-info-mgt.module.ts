@@ -12,6 +12,7 @@ import { SysInfoMgtRoutingModule } from './sys-info-mgt-routing.module';
 import { SysInfoMgtListComponent } from './sys-info-mgt-list/sys-info-mgt-list.component';
 
 // Service
+import { SysInfoMgtService } from "../../services/sys-info-mgt.service";
 
 @NgModule({
   imports: [
@@ -24,6 +25,9 @@ import { SysInfoMgtListComponent } from './sys-info-mgt-list/sys-info-mgt-list.c
   ],
   declarations: [
     SysInfoMgtListComponent
+  ],
+  providers:[
+    SysInfoMgtService
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
