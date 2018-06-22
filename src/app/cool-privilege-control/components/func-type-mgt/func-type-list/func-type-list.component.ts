@@ -82,49 +82,50 @@ export class FuncTypeListComponent extends CoolComponent implements OnInit {
   //#region [ Event -- Delete Function Type ]
   OnDel(funcTId: string) {
     this.IsClickDel = true;
-    this.loadingDialogSer.OpenLoadingDialog();
-    this.funcTypeSer.getFuncTypeByFuncTypeId(this.LangKey, funcTId).subscribe(
-      resp => {
-        if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
-          if (resp.Inst != null) {
-            this.funcTypeSer.delFuncType(resp.Inst).subscribe(
-              resp => {
-                if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+    if (this.AuthKey != null && this.AuthKey != "") {
+      this.loadingDialogSer.OpenLoadingDialog();
+      this.funcTypeSer.getFuncTypeByFuncTypeId(this.LangKey, funcTId).subscribe(
+        resp => {
+          if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+            if (resp.Inst != null) {
+              this.funcTypeSer.delFuncType(resp.Inst).subscribe(
+                resp => {
+                  if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
 
-                  this.loadingDialogSer.refreshAuthKey(resp);
+                    this.loadingDialogSer.refreshAuthKey(resp);
 
-                  resp.ResponseStatus.Message = this.LangPack.hasOwnProperty('I001') ? this.LangPack['I001'] : 'Delete Successfully!';
+                    resp.ResponseStatus.Message = this.LangPack.hasOwnProperty('I001') ? this.LangPack['I001'] : 'Delete Successfully!';
 
-                  this.msgDialogService.OpenDialog(resp);
+                    this.msgDialogService.OpenDialog(resp);
+                  }
+                  else if (resp != null) {
+
+                    this.msgDialogService.OpenDialog(resp);
+                  }
+
+                  this.loadingDialogSer.CloseLoadingDialog();
+                },
+                err => {
+                  this.msgDialogService.OpenFailureDialog(err);
+                  this.loadingDialogSer.CloseLoadingDialog();
                 }
-                else if (resp != null) {
+              );
+            }
 
-                  this.msgDialogService.OpenDialog(resp);
-                }
+            this.loadingDialogSer.refreshAuthKey(resp);
+          }
+          else if (resp != null) {
 
-                this.loadingDialogSer.CloseLoadingDialog();
-              },
-              err => {
-                this.msgDialogService.OpenFailureDialog(err);
-                this.loadingDialogSer.CloseLoadingDialog();
-              }
-            );
+            this.msgDialogService.OpenDialog(resp);
           }
 
-          this.loadingDialogSer.refreshAuthKey(resp);
-        }
-        else if (resp != null) {
-
-          this.msgDialogService.OpenDialog(resp);
-        }
-
-        this.loadingDialogSer.CloseLoadingDialog();
-      },
-      err => {
-        this.msgDialogService.OpenFailureDialog(err);
-        this.loadingDialogSer.CloseLoadingDialog();
-      }
-    );
+          this.loadingDialogSer.CloseLoadingDialog();
+        },
+        err => {
+          this.msgDialogService.OpenFailureDialog(err);
+          this.loadingDialogSer.CloseLoadingDialog();
+        });
+    }
   }
   //#region
 
@@ -166,6 +167,7 @@ export class FuncTypeListComponent extends CoolComponent implements OnInit {
     searchableVM.SortDir = this.SortDir;
     searchableVM.LangKey = this.LangKey;
 
+    if (this.AuthKey != null && this.AuthKey != "") {
     this.loadingDialogSer.OpenLoadingDialog();
     this.funcTypeSer.searchFuncTypeList(searchableVM).subscribe(
       resp => {
@@ -195,6 +197,7 @@ export class FuncTypeListComponent extends CoolComponent implements OnInit {
         this.msgDialogService.OpenFailureDialog(err);
         this.loadingDialogSer.CloseLoadingDialog();
       });
+    }
   }
   //#endregion
 

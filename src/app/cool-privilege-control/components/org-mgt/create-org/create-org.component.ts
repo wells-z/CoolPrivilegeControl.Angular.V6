@@ -102,8 +102,6 @@ export class CreateOrgComponent extends CoolComponent implements OnInit {
   ngOnInit() {
     this.OrgVMInst.Status = 1;
 
-    this.loadingDialogSer.OpenLoadingDialog();
-
     this.initOtherFuncs();
 
     this.msgDialogService.onClosedEvent.subscribe((optResp => {
@@ -112,36 +110,41 @@ export class CreateOrgComponent extends CoolComponent implements OnInit {
       }
     }));
 
-    //#region [ Get Parent Function List ]
-    this.orgSer.getAvailableOrgList(true, this.LangKey).subscribe(
-      resp => {
-        if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
-          if (resp.Inst != null) {
-            for (let item of resp.Inst) {
-              let orgVM = new OrgVm();
-              orgVM.OrgPath = item.OrgPath;
-              orgVM.OrgKey = item.OrgKey;
-              orgVM.Status = item.Status;
-              orgVM.OrgLevls = item.OrgLevls;
-              this.OrgVMInsts.push(orgVM);
+    if (this.AuthKey != null && this.AuthKey != "") {
+
+      this.loadingDialogSer.OpenLoadingDialog();
+
+      //#region [ Get Parent Function List ]
+      this.orgSer.getAvailableOrgList(true, this.LangKey).subscribe(
+        resp => {
+          if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+            if (resp.Inst != null) {
+              for (let item of resp.Inst) {
+                let orgVM = new OrgVm();
+                orgVM.OrgPath = item.OrgPath;
+                orgVM.OrgKey = item.OrgKey;
+                orgVM.Status = item.Status;
+                orgVM.OrgLevls = item.OrgLevls;
+                this.OrgVMInsts.push(orgVM);
+              }
             }
+
+            this.loadingDialogSer.refreshAuthKey(resp);
+          }
+          else if (resp != null) {
+
+            this.msgDialogService.OpenDialog(resp);
           }
 
-          this.loadingDialogSer.refreshAuthKey(resp);
+          this.loadingDialogSer.CloseLoadingDialog();
+        },
+        err => {
+          this.msgDialogService.OpenFailureDialog(err);
+          this.loadingDialogSer.CloseLoadingDialog();
         }
-        else if (resp != null) {
-
-          this.msgDialogService.OpenDialog(resp);
-        }
-
-        this.loadingDialogSer.CloseLoadingDialog();
-      },
-      err => {
-        this.msgDialogService.OpenFailureDialog(err);
-        this.loadingDialogSer.CloseLoadingDialog();
-      }
-    );
-    //#endregion
+      );
+      //#endregion
+    }
   }
   //#endregion
 
@@ -207,29 +210,31 @@ export class CreateOrgComponent extends CoolComponent implements OnInit {
 
   //#region [ Event -- Save ]
   OnSave() {
-    this.loadingDialogSer.OpenLoadingDialog();
-    this.orgSer.createOrg(this.OrgVMInst).subscribe(
-      resp => {
-        if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+    if (this.AuthKey != null && this.AuthKey != "") {
+      this.loadingDialogSer.OpenLoadingDialog();
+      this.orgSer.createOrg(this.OrgVMInst).subscribe(
+        resp => {
+          if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
 
-          this.loadingDialogSer.refreshAuthKey(resp);
+            this.loadingDialogSer.refreshAuthKey(resp);
 
-          resp.ResponseStatus.Message = this.LangPack.hasOwnProperty('I000') ? this.LangPack['I000'] : 'Save Successfully!';
+            resp.ResponseStatus.Message = this.LangPack.hasOwnProperty('I000') ? this.LangPack['I000'] : 'Save Successfully!';
 
-          this.msgDialogService.OpenDialog(resp);
-        }
-        else if (resp != null) {
-          this.loadingDialogSer.refreshAuthKey(resp);
+            this.msgDialogService.OpenDialog(resp);
+          }
+          else if (resp != null) {
+            this.loadingDialogSer.refreshAuthKey(resp);
 
-          this.msgDialogService.OpenDialog(resp);
-        }
+            this.msgDialogService.OpenDialog(resp);
+          }
 
-        this.loadingDialogSer.CloseLoadingDialog();
-      },
-      err => {
-        this.msgDialogService.OpenFailureDialog(err);
-        this.loadingDialogSer.CloseLoadingDialog();
-      });
+          this.loadingDialogSer.CloseLoadingDialog();
+        },
+        err => {
+          this.msgDialogService.OpenFailureDialog(err);
+          this.loadingDialogSer.CloseLoadingDialog();
+        });
+    }
   }
   //#endregion
 }

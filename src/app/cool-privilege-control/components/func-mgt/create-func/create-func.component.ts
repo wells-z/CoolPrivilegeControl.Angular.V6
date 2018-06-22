@@ -35,7 +35,7 @@ import { PrivilegeCheckService } from "../../../services/privilege-check.service
   templateUrl: './create-func.component.html',
   styleUrls: ['./create-func.component.css']
 })
-export class CreateFuncComponent  extends CoolComponent implements OnInit {
+export class CreateFuncComponent extends CoolComponent implements OnInit {
   FuncVMInsts: any[] = [];
 
   FuncTypeVMInsts: any[] = [];
@@ -99,7 +99,7 @@ export class CreateFuncComponent  extends CoolComponent implements OnInit {
     else {
       this.ParentFuncGroup.controls.ParentFunctionSelect.enable();
 
-      this.ParentFuncGroup.controls.FuncPathTextBox.disable();    
+      this.ParentFuncGroup.controls.FuncPathTextBox.disable();
     }
   }
   //#endregion
@@ -138,57 +138,59 @@ export class CreateFuncComponent  extends CoolComponent implements OnInit {
   OnParentFunctionChange(event: any) {
     this.ParentPath = this.ParentFuncGroup.get('ParentFunctionSelect').value;
 
-    this.loadingDialogSer.OpenLoadingDialog();
-    this.funcSer.getMaxFuncPath(this.LangKey, this.ParentPath).subscribe(
-      resp => {
-        if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
-          if (resp.Inst != null) {
-            this.FuncVMInst.FuncPath = resp.Inst;
-            this.ParentFuncGroup.get('FuncPathTextBox').setValue(this.FuncVMInst.FuncPath);
+    if (this.AuthKey != null && this.AuthKey != "") {
+      this.loadingDialogSer.OpenLoadingDialog();
+      this.funcSer.getMaxFuncPath(this.LangKey, this.ParentPath).subscribe(
+        resp => {
+          if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+            if (resp.Inst != null) {
+              this.FuncVMInst.FuncPath = resp.Inst;
+              this.ParentFuncGroup.get('FuncPathTextBox').setValue(this.FuncVMInst.FuncPath);
+            }
+
+            this.loadingDialogSer.refreshAuthKey(resp);
+          }
+          else if (resp != null) {
+
+            this.msgDialogService.OpenDialog(resp);
           }
 
-          this.loadingDialogSer.refreshAuthKey(resp);
-        }
-        else if (resp != null) {
-
-          this.msgDialogService.OpenDialog(resp);
-        }
-
-        this.loadingDialogSer.CloseLoadingDialog();
-      },
-      err => {
-        this.msgDialogService.OpenFailureDialog(err);
-        this.loadingDialogSer.CloseLoadingDialog();
-      }
-    );
+          this.loadingDialogSer.CloseLoadingDialog();
+        },
+        err => {
+          this.msgDialogService.OpenFailureDialog(err);
+          this.loadingDialogSer.CloseLoadingDialog();
+        });
+    }
   }
   //#endregion
 
   //#region [ Event -- Save Button Event ]
   OnSave() {
-    this.loadingDialogSer.OpenLoadingDialog();
-    this.funcSer.createFunc(this.FuncVMInst).subscribe(
-      resp => {
-        if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+    if (this.AuthKey != null && this.AuthKey != "") {
+      this.loadingDialogSer.OpenLoadingDialog();
+      this.funcSer.createFunc(this.FuncVMInst).subscribe(
+        resp => {
+          if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
 
-          this.loadingDialogSer.refreshAuthKey(resp);
+            this.loadingDialogSer.refreshAuthKey(resp);
 
-          resp.ResponseStatus.Message = this.LangPack.hasOwnProperty('I000') ? this.LangPack['I000'] : 'Save Successfully!';
+            resp.ResponseStatus.Message = this.LangPack.hasOwnProperty('I000') ? this.LangPack['I000'] : 'Save Successfully!';
 
-          this.msgDialogService.OpenDialog(resp);
-        }
-        else if (resp != null) {
+            this.msgDialogService.OpenDialog(resp);
+          }
+          else if (resp != null) {
 
-          this.msgDialogService.OpenDialog(resp);
-        }
+            this.msgDialogService.OpenDialog(resp);
+          }
 
-        this.loadingDialogSer.CloseLoadingDialog();
-      },
-      err => {
-        this.msgDialogService.OpenFailureDialog(err);
-        this.loadingDialogSer.CloseLoadingDialog();
-      }
-    );
+          this.loadingDialogSer.CloseLoadingDialog();
+        },
+        err => {
+          this.msgDialogService.OpenFailureDialog(err);
+          this.loadingDialogSer.CloseLoadingDialog();
+        });
+    }
   }
   //#endregion
 
@@ -196,37 +198,39 @@ export class CreateFuncComponent  extends CoolComponent implements OnInit {
   OnReset() {
     this.FuncTypeVMInsts = [];
     this.FuncVMInst.SelectedFucTypeList = [];
-    //#region [ Get Function Type List ]
-    this.funcTypeSer.getAllFuncTypes(this.LangKey).subscribe(
-      resp => {
-        if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
-          if (resp.Inst != null) {
-            for (let item of resp.Inst) {
-              let funcTypeVM = new FuncTypeVm();
-              funcTypeVM.FuncTypeKey = item.FuncTypeKey;
-              funcTypeVM.FuncTypeName = item.FuncTypeKey;
-              funcTypeVM.Status = item.Status;
-              funcTypeVM.Priority = item.Priority;
-              funcTypeVM.ID = item.ID;
-              this.FuncTypeVMInsts.push(funcTypeVM);
+    if (this.AuthKey != null && this.AuthKey != "") {
+      this.loadingDialogSer.OpenLoadingDialog();
+      //#region [ Get Function Type List ]
+      this.funcTypeSer.getAllFuncTypes(this.LangKey).subscribe(
+        resp => {
+          if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+            if (resp.Inst != null) {
+              for (let item of resp.Inst) {
+                let funcTypeVM = new FuncTypeVm();
+                funcTypeVM.FuncTypeKey = item.FuncTypeKey;
+                funcTypeVM.FuncTypeName = item.FuncTypeKey;
+                funcTypeVM.Status = item.Status;
+                funcTypeVM.Priority = item.Priority;
+                funcTypeVM.ID = item.ID;
+                this.FuncTypeVMInsts.push(funcTypeVM);
+              }
             }
+
+            this.loadingDialogSer.refreshAuthKey(resp);
+          }
+          else if (resp != null) {
+
+            this.msgDialogService.OpenDialog(resp);
           }
 
-          this.loadingDialogSer.refreshAuthKey(resp);
-        }
-        else if (resp != null) {
-
-          this.msgDialogService.OpenDialog(resp);
-        }
-
-        this.loadingDialogSer.CloseLoadingDialog();
-      },
-      err => {
-        this.msgDialogService.OpenFailureDialog(err);
-        this.loadingDialogSer.CloseLoadingDialog();
-      }
-    );
-    //#endregion
+          this.loadingDialogSer.CloseLoadingDialog();
+        },
+        err => {
+          this.msgDialogService.OpenFailureDialog(err);
+          this.loadingDialogSer.CloseLoadingDialog();
+        });
+      //#endregion
+    }
   }
   //#endregion
 
@@ -273,74 +277,73 @@ export class CreateFuncComponent  extends CoolComponent implements OnInit {
 
     this.initOtherFuncs();
 
-    this.loadingDialogSer.OpenLoadingDialog();
-
     this.loadingDialogSer.onLangChangeEvent.subscribe(optResp => {
       this.router.navigate(["/CoolPrivilegeControl", this.LangKey, this.FuncKey]);
     });
     //#endregion
 
-    //#region [ Get Parent Function List ]
-    this.funcSer.getAvailableFuncList(false, this.LangKey).subscribe(
-      resp => {
-        if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
-          if (resp.Inst != null) {
-            for (let item of resp.Inst) {
-              let funcVM = new FuncVm();
-              funcVM.FuncKey = item.FuncKey;
-              funcVM.FuncPath = item.FuncPath;
-              funcVM.Url = item.Url;
-              this.FuncVMInsts.push(funcVM);
+    if (this.AuthKey != null && this.AuthKey != "") {
+      this.loadingDialogSer.OpenLoadingDialog();
+      //#region [ Get Parent Function List ]
+      this.funcSer.getAvailableFuncList(false, this.LangKey).subscribe(
+        resp => {
+          if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+            if (resp.Inst != null) {
+              for (let item of resp.Inst) {
+                let funcVM = new FuncVm();
+                funcVM.FuncKey = item.FuncKey;
+                funcVM.FuncPath = item.FuncPath;
+                funcVM.Url = item.Url;
+                this.FuncVMInsts.push(funcVM);
+              }
             }
+
+            this.loadingDialogSer.refreshAuthKey(resp);
+          }
+          else if (resp != null) {
+
+            this.msgDialogService.OpenDialog(resp);
           }
 
-          this.loadingDialogSer.refreshAuthKey(resp);
-        }
-        else if (resp != null) {
+          this.loadingDialogSer.CloseLoadingDialog();
+        },
+        err => {
+          this.msgDialogService.OpenFailureDialog(err);
+          this.loadingDialogSer.CloseLoadingDialog();
+        });
+      //#endregion
 
-          this.msgDialogService.OpenDialog(resp);
-        }
-
-        this.loadingDialogSer.CloseLoadingDialog();
-      },
-      err => {
-        this.msgDialogService.OpenFailureDialog(err);
-        this.loadingDialogSer.CloseLoadingDialog();
-      }
-    );
-    //#endregion
-
-    //#region [ Get Function Type List ]
-    this.funcTypeSer.getAllFuncTypes(this.LangKey).subscribe(
-      resp => {
-        if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
-          if (resp.Inst != null) {
-            for (let item of resp.Inst) {
-              let funcTypeVM = new FuncTypeVm();
-              funcTypeVM.FuncTypeKey = item.FuncTypeKey;
-              funcTypeVM.FuncTypeName = item.FuncTypeKey;
-              funcTypeVM.Status = item.Status;
-              funcTypeVM.Priority = item.Priority;
-              funcTypeVM.ID = item.ID;
-              this.FuncTypeVMInsts.push(funcTypeVM);
+      //#region [ Get Function Type List ]
+      this.funcTypeSer.getAllFuncTypes(this.LangKey).subscribe(
+        resp => {
+          if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+            if (resp.Inst != null) {
+              for (let item of resp.Inst) {
+                let funcTypeVM = new FuncTypeVm();
+                funcTypeVM.FuncTypeKey = item.FuncTypeKey;
+                funcTypeVM.FuncTypeName = item.FuncTypeKey;
+                funcTypeVM.Status = item.Status;
+                funcTypeVM.Priority = item.Priority;
+                funcTypeVM.ID = item.ID;
+                this.FuncTypeVMInsts.push(funcTypeVM);
+              }
             }
+
+            this.loadingDialogSer.refreshAuthKey(resp);
+          }
+          else if (resp != null) {
+
+            this.msgDialogService.OpenDialog(resp);
           }
 
-          this.loadingDialogSer.refreshAuthKey(resp);
-        }
-        else if (resp != null) {
-
-          this.msgDialogService.OpenDialog(resp);
-        }
-
-        this.loadingDialogSer.CloseLoadingDialog();
-      },
-      err => {
-        this.msgDialogService.OpenFailureDialog(err);
-        this.loadingDialogSer.CloseLoadingDialog();
-      }
-    );
-    //#endregion
+          this.loadingDialogSer.CloseLoadingDialog();
+        },
+        err => {
+          this.msgDialogService.OpenFailureDialog(err);
+          this.loadingDialogSer.CloseLoadingDialog();
+        });
+      //#endregion
+    }
 
     //#region [ Msg Box CallBack ]
     this.msgDialogService.onClosedEvent.subscribe((optResp => {

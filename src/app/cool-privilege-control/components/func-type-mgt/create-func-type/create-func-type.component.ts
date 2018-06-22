@@ -37,7 +37,7 @@ export class CreateFuncTypeComponent extends CoolComponent implements OnInit {
 
     this.FuncKey = "FuncTMgt";
     this.FuncListKey = "FuncTypeList";
-    
+
     this.FuncTypeDetailGroup = new FormGroup({
       FuncTypeKey: new FormControl({ value: '', disabled: false }, Validators.required),
       Priority: new FormControl({ value: null, disabled: false }, Validators.required),
@@ -77,29 +77,30 @@ export class CreateFuncTypeComponent extends CoolComponent implements OnInit {
 
   //#region [ Event -- Save Button Event ]
   OnSave() {
-    this.loadingDialogSer.OpenLoadingDialog();
-    this.funcTypeSer.createFuncType(this.FuncTypeVMInst).subscribe(
-      resp => {
-        if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+    if (this.AuthKey != null && this.AuthKey != "") {
+      this.loadingDialogSer.OpenLoadingDialog();
+      this.funcTypeSer.createFuncType(this.FuncTypeVMInst).subscribe(
+        resp => {
+          if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
 
-          this.loadingDialogSer.refreshAuthKey(resp);
+            this.loadingDialogSer.refreshAuthKey(resp);
 
-          resp.ResponseStatus.Message = this.LangPack.hasOwnProperty('I000') ? this.LangPack['I000'] : 'Save Successfully!';
+            resp.ResponseStatus.Message = this.LangPack.hasOwnProperty('I000') ? this.LangPack['I000'] : 'Save Successfully!';
 
-          this.msgDialogService.OpenDialog(resp);
-        }
-        else if (resp != null) {
+            this.msgDialogService.OpenDialog(resp);
+          }
+          else if (resp != null) {
 
-          this.msgDialogService.OpenDialog(resp);
-        }
+            this.msgDialogService.OpenDialog(resp);
+          }
 
-        this.loadingDialogSer.CloseLoadingDialog();
-      },
-      err => {
-        this.msgDialogService.OpenFailureDialog(err);
-        this.loadingDialogSer.CloseLoadingDialog();
-      }
-    );
+          this.loadingDialogSer.CloseLoadingDialog();
+        },
+        err => {
+          this.msgDialogService.OpenFailureDialog(err);
+          this.loadingDialogSer.CloseLoadingDialog();
+        });
+    }
   }
   //#endregion
 
@@ -112,8 +113,6 @@ export class CreateFuncTypeComponent extends CoolComponent implements OnInit {
     this.OnChangeStatus(null);
 
     this.initOtherFuncs();
-
-    this.loadingDialogSer.OpenLoadingDialog();
 
     //#region [ Language Change CallBack ]
     this.loadingDialogSer.onLangChangeEvent.subscribe(optResp => {
@@ -129,30 +128,33 @@ export class CreateFuncTypeComponent extends CoolComponent implements OnInit {
     }));
     //#endregion
 
-    //#region [ Get max Function Type Priority ]
-    this.funcTypeSer.getMaxFuncTypePri(this.LangKey).subscribe(
-      resp => {
-        if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
-          if (resp.Inst) {
-            if (resp.Inst.Priority != null) {
-              this.FuncTypeVMInst.Priority = resp.Inst.Priority + 1;
+    if (this.AuthKey != null && this.AuthKey != "") {
+
+      this.loadingDialogSer.OpenLoadingDialog();
+      //#region [ Get max Function Type Priority ]
+      this.funcTypeSer.getMaxFuncTypePri(this.LangKey).subscribe(
+        resp => {
+          if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+            if (resp.Inst) {
+              if (resp.Inst.Priority != null) {
+                this.FuncTypeVMInst.Priority = resp.Inst.Priority + 1;
+              }
+
+              this.loadingDialogSer.refreshAuthKey(resp);
             }
-
-            this.loadingDialogSer.refreshAuthKey(resp);
           }
-        }
-        else if (resp != null) {
-          this.msgDialogService.OpenDialog(resp);
-        }
+          else if (resp != null) {
+            this.msgDialogService.OpenDialog(resp);
+          }
 
-        this.loadingDialogSer.CloseLoadingDialog();
-      },
-      err => {
-        this.msgDialogService.OpenFailureDialog(err);
-        this.loadingDialogSer.CloseLoadingDialog();
-      }
-    );
-    //#endregion
+          this.loadingDialogSer.CloseLoadingDialog();
+        },
+        err => {
+          this.msgDialogService.OpenFailureDialog(err);
+          this.loadingDialogSer.CloseLoadingDialog();
+        });
+      //#endregion
+    }
   }
   //#endregion
 }

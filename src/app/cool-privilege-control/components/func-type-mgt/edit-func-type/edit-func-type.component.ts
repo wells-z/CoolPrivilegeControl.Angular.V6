@@ -43,30 +43,33 @@ export class EditFuncTypeComponent extends CoolComponent implements OnInit {
 
   //#region [ Event -- Save Button Event ]
   OnSave() {
-    this.loadingDialogSer.OpenLoadingDialog();
 
-    this.funcTypeSer.editFuncType(this.FuncTypeVMInst).subscribe(
-      resp => {
-        if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+    if (this.AuthKey != null && this.AuthKey != "") {
 
-          this.loadingDialogSer.refreshAuthKey(resp);
+      this.loadingDialogSer.OpenLoadingDialog();
 
-          resp.ResponseStatus.Message = this.LangPack.hasOwnProperty('I000') ? this.LangPack['I000'] : 'Save Successfully!';
+      this.funcTypeSer.editFuncType(this.FuncTypeVMInst).subscribe(
+        resp => {
+          if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
 
-          this.msgDialogService.OpenDialog(resp);
-        }
-        else if (resp != null) {
+            this.loadingDialogSer.refreshAuthKey(resp);
 
-          this.msgDialogService.OpenDialog(resp);
-        }
+            resp.ResponseStatus.Message = this.LangPack.hasOwnProperty('I000') ? this.LangPack['I000'] : 'Save Successfully!';
 
-        this.loadingDialogSer.CloseLoadingDialog();
-      },
-      err => {
-        this.msgDialogService.OpenFailureDialog(err);
-        this.loadingDialogSer.CloseLoadingDialog();
-      }
-    );
+            this.msgDialogService.OpenDialog(resp);
+          }
+          else if (resp != null) {
+
+            this.msgDialogService.OpenDialog(resp);
+          }
+
+          this.loadingDialogSer.CloseLoadingDialog();
+        },
+        err => {
+          this.msgDialogService.OpenFailureDialog(err);
+          this.loadingDialogSer.CloseLoadingDialog();
+        });
+    }
   }
   //#endregion
 
@@ -76,40 +79,41 @@ export class EditFuncTypeComponent extends CoolComponent implements OnInit {
 
     this.initOtherFuncs();
 
-    this.loadingDialogSer.OpenLoadingDialog();
+    if (this.AuthKey != null && this.AuthKey != "") {
+      this.loadingDialogSer.OpenLoadingDialog();
 
-    this.route.paramMap.subscribe((params: ParamMap) => {
-      if (params.has("ID")) {
-        this.funcTypeId = params.get("ID");
+      this.route.paramMap.subscribe((params: ParamMap) => {
+        if (params.has("ID")) {
+          this.funcTypeId = params.get("ID");
 
-        this.funcTypeSer.getFuncTypeByFuncTypeId(this.LangKey, this.funcTypeId).subscribe(
-          resp => {
-            if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
-              if (resp.Inst != null) {
-                this.FuncTypeVMInst = resp.Inst;
+          this.funcTypeSer.getFuncTypeByFuncTypeId(this.LangKey, this.funcTypeId).subscribe(
+            resp => {
+              if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+                if (resp.Inst != null) {
+                  this.FuncTypeVMInst = resp.Inst;
+                }
+
+                this.loadingDialogSer.refreshAuthKey(resp);
+              }
+              else if (resp != null) {
+
+                this.msgDialogService.OpenDialog(resp);
               }
 
-              this.loadingDialogSer.refreshAuthKey(resp);
+              this.loadingDialogSer.CloseLoadingDialog();
+            },
+            err => {
+              this.msgDialogService.OpenFailureDialog(err);
+              this.loadingDialogSer.CloseLoadingDialog();
             }
-            else if (resp != null) {
-
-              this.msgDialogService.OpenDialog(resp);
-            }
-
-            this.loadingDialogSer.CloseLoadingDialog();
-          },
-          err => {
-            this.msgDialogService.OpenFailureDialog(err);
-            this.loadingDialogSer.CloseLoadingDialog();
-          }
-        );
-      }
-      else {
-        this.msgDialogService.OpenFailureDialog({ message: this.LangPack.E003 });
-        this.loadingDialogSer.CloseLoadingDialog();
-      }
+          );
+        }
+        else {
+          this.msgDialogService.OpenFailureDialog({ message: this.LangPack.E003 });
+          this.loadingDialogSer.CloseLoadingDialog();
+        }
+      });
     }
-    );
 
     //#region [ Msg Box CallBack ]
     this.msgDialogService.onClosedEvent.subscribe((optResp => {

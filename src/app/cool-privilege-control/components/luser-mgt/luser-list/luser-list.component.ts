@@ -80,47 +80,49 @@ export class LuserListComponent extends CoolComponent implements OnInit {
   //#region [ Event -- Delete Login User ]
   OnDel(orgId: string) {
     this.IsClickDel = true;
-    this.loadingDialogSer.OpenLoadingDialog();
-    this.luserSer.getLUserByLUserId(this.LangKey, orgId).subscribe(
-      resp => {
-        if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
-          if (resp.Inst != null) {
-            this.luserSer.delLUser(resp.Inst).subscribe(
-              resp => {
-                if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
-                  this.loadingDialogSer.refreshAuthKey(resp);
+    if (this.AuthKey != null && this.AuthKey != "") {
+      this.loadingDialogSer.OpenLoadingDialog();
+      this.luserSer.getLUserByLUserId(this.LangKey, orgId).subscribe(
+        resp => {
+          if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+            if (resp.Inst != null) {
+              this.luserSer.delLUser(resp.Inst).subscribe(
+                resp => {
+                  if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+                    this.loadingDialogSer.refreshAuthKey(resp);
 
-                  resp.ResponseStatus.Message = this.LangPack.hasOwnProperty('I001') ? this.LangPack['I001'] : 'Delete Successfully!';
+                    resp.ResponseStatus.Message = this.LangPack.hasOwnProperty('I001') ? this.LangPack['I001'] : 'Delete Successfully!';
 
-                  this.msgDialogService.OpenDialog(resp);
+                    this.msgDialogService.OpenDialog(resp);
+                  }
+                  else if (resp != null) {
+                    this.msgDialogService.OpenDialog(resp);
+                  }
+
+                  this.loadingDialogSer.CloseLoadingDialog();
+                },
+                err => {
+                  this.msgDialogService.OpenFailureDialog(err);
+                  this.loadingDialogSer.CloseLoadingDialog();
                 }
-                else if (resp != null) {
-                  this.msgDialogService.OpenDialog(resp);
-                }
+              );
+            }
 
-                this.loadingDialogSer.CloseLoadingDialog();
-              },
-              err => {
-                this.msgDialogService.OpenFailureDialog(err);
-                this.loadingDialogSer.CloseLoadingDialog();
-              }
-            );
+            this.loadingDialogSer.refreshAuthKey(resp);
           }
+          else if (resp != null) {
 
-          this.loadingDialogSer.refreshAuthKey(resp);
-        }
-        else if (resp != null) {
+            this.msgDialogService.OpenDialog(resp);
 
-          this.msgDialogService.OpenDialog(resp);
-
+            this.loadingDialogSer.CloseLoadingDialog();
+          }
+        },
+        err => {
+          this.msgDialogService.OpenFailureDialog(err);
           this.loadingDialogSer.CloseLoadingDialog();
         }
-      },
-      err => {
-        this.msgDialogService.OpenFailureDialog(err);
-        this.loadingDialogSer.CloseLoadingDialog();
-      }
-    );
+      );
+    }
   }
   //#endregion
 
@@ -162,69 +164,71 @@ export class LuserListComponent extends CoolComponent implements OnInit {
     searchableVM.SortDir = this.SortDir;
     searchableVM.LangKey = this.LangKey;
 
-    this.loadingDialogSer.OpenLoadingDialog();
-    this.luserSer.searchLUserList(searchableVM).subscribe(
-      resp => {
-        if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
-          if (resp.Inst != null) {
-            this.LUserList = resp.Inst;
+    if (this.AuthKey != null && this.AuthKey != "") {
+      this.loadingDialogSer.OpenLoadingDialog();
+      this.luserSer.searchLUserList(searchableVM).subscribe(
+        resp => {
+          if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+            if (resp.Inst != null) {
+              this.LUserList = resp.Inst;
 
-            //#region [ Get selected function detail list ]
-            if (this.LUserList != null && this.LUserList.length > 0) {
-              for (let i = 0; i < this.LUserList.length; ++i) {
-                if (this.LUserList[i].SelectedFuncDetailList != null && this.LUserList[i].SelectedFuncDetailList.length > 0) {
-                  this.LUserList[i].SelFuncDInfos = [];
+              //#region [ Get selected function detail list ]
+              if (this.LUserList != null && this.LUserList.length > 0) {
+                for (let i = 0; i < this.LUserList.length; ++i) {
+                  if (this.LUserList[i].SelectedFuncDetailList != null && this.LUserList[i].SelectedFuncDetailList.length > 0) {
+                    this.LUserList[i].SelFuncDInfos = [];
 
-                  let funcIDList: string[] = []
-                  for (let selFuncDetail of this.LUserList[i].SelectedFuncDetailList) {
-                    if (funcIDList.indexOf(selFuncDetail.FuncID) < 0) {
-                      funcIDList.push(selFuncDetail.FuncID);
-                    }
-                  }
-
-                  for (let funcID of funcIDList) {
-                    let selSpecificFuncDetailList = this.LUserList[i].SelectedFuncDetailList.filter(selFunc => selFunc.FuncID == funcID);
-
-                    if (selSpecificFuncDetailList != null && selSpecificFuncDetailList.length > 0) {
-                      let selSpecificFunc_new = new SelectedSpecificFunc();
-                      selSpecificFunc_new.FuncID = selSpecificFuncDetailList[0].FuncID;
-                      selSpecificFunc_new.FuncName = this.LangPack.hasOwnProperty(selSpecificFuncDetailList[0].FuncKey) ? this.LangPack[selSpecificFuncDetailList[0].FuncKey] : selSpecificFuncDetailList[0].FuncKey;
-                      selSpecificFunc_new.FuncTypeList = [];
-                      for (let selSpecificFuncDetail of selSpecificFuncDetailList) {
-                        let selSpecificFuncType = new SelectedSpecificFuncType();
-                        selSpecificFuncType.FuncTypeID = selSpecificFuncDetail.FuncTypeID;
-                        selSpecificFuncType.FuncTypeKey = selSpecificFuncDetail.FuncTypeKey;
-                        selSpecificFunc_new.FuncTypeList.push(selSpecificFuncType);
+                    let funcIDList: string[] = []
+                    for (let selFuncDetail of this.LUserList[i].SelectedFuncDetailList) {
+                      if (funcIDList.indexOf(selFuncDetail.FuncID) < 0) {
+                        funcIDList.push(selFuncDetail.FuncID);
                       }
-                      this.LUserList[i].SelFuncDInfos.push(selSpecificFunc_new);
+                    }
+
+                    for (let funcID of funcIDList) {
+                      let selSpecificFuncDetailList = this.LUserList[i].SelectedFuncDetailList.filter(selFunc => selFunc.FuncID == funcID);
+
+                      if (selSpecificFuncDetailList != null && selSpecificFuncDetailList.length > 0) {
+                        let selSpecificFunc_new = new SelectedSpecificFunc();
+                        selSpecificFunc_new.FuncID = selSpecificFuncDetailList[0].FuncID;
+                        selSpecificFunc_new.FuncName = this.LangPack.hasOwnProperty(selSpecificFuncDetailList[0].FuncKey) ? this.LangPack[selSpecificFuncDetailList[0].FuncKey] : selSpecificFuncDetailList[0].FuncKey;
+                        selSpecificFunc_new.FuncTypeList = [];
+                        for (let selSpecificFuncDetail of selSpecificFuncDetailList) {
+                          let selSpecificFuncType = new SelectedSpecificFuncType();
+                          selSpecificFuncType.FuncTypeID = selSpecificFuncDetail.FuncTypeID;
+                          selSpecificFuncType.FuncTypeKey = selSpecificFuncDetail.FuncTypeKey;
+                          selSpecificFunc_new.FuncTypeList.push(selSpecificFuncType);
+                        }
+                        this.LUserList[i].SelFuncDInfos.push(selSpecificFunc_new);
+                      }
                     }
                   }
                 }
               }
+              //#endregion
             }
-            //#endregion
-          }
-          this.TotalCount = resp.RecordCount;
+            this.TotalCount = resp.RecordCount;
 
-          this.loadingDialogSer.refreshAuthKey(resp);
-        }
-        else if (resp != null) {
+            this.loadingDialogSer.refreshAuthKey(resp);
+          }
+          else if (resp != null) {
+            this.TotalCount = 0;
+            this.PageIndex = 1;
+            this.loadingDialogSer.refreshAuthKey(resp);
+            this.LUserList = [];
+
+            this.msgDialogService.OpenDialog(resp);
+          }
+
+          this.loadingDialogSer.CloseLoadingDialog();
+        },
+        err => {
           this.TotalCount = 0;
           this.PageIndex = 1;
-          this.loadingDialogSer.refreshAuthKey(resp);
-          this.LUserList = [];
-
-          this.msgDialogService.OpenDialog(resp);
-        }
-
-        this.loadingDialogSer.CloseLoadingDialog();
-      },
-      err => {
-        this.TotalCount = 0;
-        this.PageIndex = 1;
-        this.msgDialogService.OpenFailureDialog(err);
-        this.loadingDialogSer.CloseLoadingDialog();
-      });
+          this.msgDialogService.OpenFailureDialog(err);
+          this.loadingDialogSer.CloseLoadingDialog();
+        });
+    }
   }
   //#endregion
 

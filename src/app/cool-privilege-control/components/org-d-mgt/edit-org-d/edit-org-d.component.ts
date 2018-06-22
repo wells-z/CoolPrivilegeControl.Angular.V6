@@ -70,45 +70,51 @@ export class EditOrgDComponent extends CoolComponent implements OnInit {
       }
     }));
 
-    this.route.paramMap.subscribe((params: ParamMap) => {
-      if (params.has("ID")) {
-        this.orgDId = params.get("ID");
 
-        this.orgDSer.getOrgDByOrgDId(this.LangKey, this.orgDId).subscribe(
-          resp => {
-            if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
-              if (resp.Inst != null) {
-                this.OrgDetailVMInst = resp.Inst;
+    if (this.AuthKey != null && this.AuthKey != "") {
 
-                if (this.OrgDetailVMInst.AccessPrivilegeTypeShort == 1) {
-                  this.selFuncDetailList = this.OrgDetailVMInst.SelectedFuncDetailList;
+      this.loadingDialogSer.OpenLoadingDialog();
+
+      this.route.paramMap.subscribe((params: ParamMap) => {
+        if (params.has("ID")) {
+          this.orgDId = params.get("ID");
+
+          this.orgDSer.getOrgDByOrgDId(this.LangKey, this.orgDId).subscribe(
+            resp => {
+              if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+                if (resp.Inst != null) {
+                  this.OrgDetailVMInst = resp.Inst;
+
+                  if (this.OrgDetailVMInst.AccessPrivilegeTypeShort == 1) {
+                    this.selFuncDetailList = this.OrgDetailVMInst.SelectedFuncDetailList;
+                  }
+                  else if (this.OrgDetailVMInst.AccessPrivilegeTypeShort == 2) {
+                    this.selRoleList = this.OrgDetailVMInst.SelectedOrgDetailAccRoleList;
+                  }
                 }
-                else if (this.OrgDetailVMInst.AccessPrivilegeTypeShort == 2) {
-                  this.selRoleList = this.OrgDetailVMInst.SelectedOrgDetailAccRoleList;
-                }
+
+                this.loadingDialogSer.refreshAuthKey(resp);
+              }
+              else if (resp != null) {
+
+                this.msgDialogService.OpenDialog(resp);
               }
 
-              this.loadingDialogSer.refreshAuthKey(resp);
+              this.loadingDialogSer.CloseLoadingDialog();
+            },
+            err => {
+              this.msgDialogService.OpenFailureDialog(err);
+              this.loadingDialogSer.CloseLoadingDialog();
             }
-            else if (resp != null) {
-
-              this.msgDialogService.OpenDialog(resp);
-            }
-
-            this.loadingDialogSer.CloseLoadingDialog();
-          },
-          err => {
-            this.msgDialogService.OpenFailureDialog(err);
-            this.loadingDialogSer.CloseLoadingDialog();
-          }
-        );
+          );
+        }
+        else {
+          this.msgDialogService.OpenFailureDialog({ message: this.LangPack.E003 });
+          this.loadingDialogSer.CloseLoadingDialog();
+        }
       }
-      else {
-        this.msgDialogService.OpenFailureDialog({ message: this.LangPack.E003 });
-        this.loadingDialogSer.CloseLoadingDialog();
-      }
+      );
     }
-    );
   }
   //#endregion
 
@@ -185,29 +191,31 @@ export class EditOrgDComponent extends CoolComponent implements OnInit {
 
   //#region [ Event -- Save ]
   OnSave() {
-    this.loadingDialogSer.OpenLoadingDialog();
-    this.orgDSer.editOrgD(this.OrgDetailVMInst).subscribe(
-      resp => {
-        if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+    if (this.AuthKey != null && this.AuthKey != "") {
+      this.loadingDialogSer.OpenLoadingDialog();
+      this.orgDSer.editOrgD(this.OrgDetailVMInst).subscribe(
+        resp => {
+          if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
 
-          this.loadingDialogSer.refreshAuthKey(resp);
+            this.loadingDialogSer.refreshAuthKey(resp);
 
-          resp.ResponseStatus.Message = this.LangPack.hasOwnProperty('I000') ? this.LangPack['I000'] : 'Save Successfully!';
+            resp.ResponseStatus.Message = this.LangPack.hasOwnProperty('I000') ? this.LangPack['I000'] : 'Save Successfully!';
 
-          this.msgDialogService.OpenDialog(resp);
-        }
-        else if (resp != null) {
-          this.loadingDialogSer.refreshAuthKey(resp);
+            this.msgDialogService.OpenDialog(resp);
+          }
+          else if (resp != null) {
+            this.loadingDialogSer.refreshAuthKey(resp);
 
-          this.msgDialogService.OpenDialog(resp);
-        }
+            this.msgDialogService.OpenDialog(resp);
+          }
 
-        this.loadingDialogSer.CloseLoadingDialog();
-      },
-      err => {
-        this.msgDialogService.OpenFailureDialog(err);
-        this.loadingDialogSer.CloseLoadingDialog();
-      });
+          this.loadingDialogSer.CloseLoadingDialog();
+        },
+        err => {
+          this.msgDialogService.OpenFailureDialog(err);
+          this.loadingDialogSer.CloseLoadingDialog();
+        });
+    }
   }
   //#endregion
 }

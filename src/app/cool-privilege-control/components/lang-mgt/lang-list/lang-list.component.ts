@@ -33,7 +33,7 @@ export class LangListComponent extends CoolComponent implements OnInit {
 
   public SearchCriteria = {
     LanguageKey: "",
-    LanguageDesc:"",
+    LanguageDesc: "",
     Priority: null,
   };
 
@@ -87,49 +87,50 @@ export class LangListComponent extends CoolComponent implements OnInit {
   //#region [ Event -- Delete Language ]
   OnDel(langId: string) {
     this.IsClickDel = true;
-    this.loadingDialogSer.OpenLoadingDialog();
-    this.langSer.getLangByLangId(this.LangKey, langId).subscribe(
-      resp => {
-        if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
-          if (resp.Inst != null) {
-            this.langSer.delLang(resp.Inst).subscribe(
-              resp => {
-                if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+    if (this.AuthKey != null && this.AuthKey != "") {
+      this.loadingDialogSer.OpenLoadingDialog();
+      this.langSer.getLangByLangId(this.LangKey, langId).subscribe(
+        resp => {
+          if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+            if (resp.Inst != null) {
+              this.langSer.delLang(resp.Inst).subscribe(
+                resp => {
+                  if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
 
-                  this.loadingDialogSer.refreshAuthKey(resp);
+                    this.loadingDialogSer.refreshAuthKey(resp);
 
-                  resp.ResponseStatus.Message = this.LangPack.hasOwnProperty('I001') ? this.LangPack['I001'] : 'Delete Successfully!';
+                    resp.ResponseStatus.Message = this.LangPack.hasOwnProperty('I001') ? this.LangPack['I001'] : 'Delete Successfully!';
 
-                  this.msgDialogService.OpenDialog(resp);
+                    this.msgDialogService.OpenDialog(resp);
+                  }
+                  else if (resp != null) {
+
+                    this.msgDialogService.OpenDialog(resp);
+                  }
+
+                  this.loadingDialogSer.CloseLoadingDialog();
+                },
+                err => {
+                  this.msgDialogService.OpenFailureDialog(err);
+                  this.loadingDialogSer.CloseLoadingDialog();
                 }
-                else if (resp != null) {
+              );
+            }
 
-                  this.msgDialogService.OpenDialog(resp);
-                }
+            this.loadingDialogSer.refreshAuthKey(resp);
+          }
+          else if (resp != null) {
 
-                this.loadingDialogSer.CloseLoadingDialog();
-              },
-              err => {
-                this.msgDialogService.OpenFailureDialog(err);
-                this.loadingDialogSer.CloseLoadingDialog();
-              }
-            );
+            this.msgDialogService.OpenDialog(resp);
           }
 
-          this.loadingDialogSer.refreshAuthKey(resp);
-        }
-        else if (resp != null) {
-
-          this.msgDialogService.OpenDialog(resp);
-        }
-
-        this.loadingDialogSer.CloseLoadingDialog();
-      },
-      err => {
-        this.msgDialogService.OpenFailureDialog(err);
-        this.loadingDialogSer.CloseLoadingDialog();
-      }
-    );
+          this.loadingDialogSer.CloseLoadingDialog();
+        },
+        err => {
+          this.msgDialogService.OpenFailureDialog(err);
+          this.loadingDialogSer.CloseLoadingDialog();
+        });
+    }
   }
   //#region
 
@@ -171,35 +172,37 @@ export class LangListComponent extends CoolComponent implements OnInit {
     searchableVM.SortDir = this.SortDir;
     searchableVM.LangKey = this.LangKey;
 
-    this.loadingDialogSer.OpenLoadingDialog();
-    this.langSer.searchLangList(searchableVM).subscribe(
-      resp => {
-        if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
-          if (resp.Inst != null) {
-            this.LangList = resp.Inst;
+    if (this.AuthKey != null && this.AuthKey != "") {
+      this.loadingDialogSer.OpenLoadingDialog();
+      this.langSer.searchLangList(searchableVM).subscribe(
+        resp => {
+          if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+            if (resp.Inst != null) {
+              this.LangList = resp.Inst;
+            }
+
+            this.TotalCount = resp.RecordCount;
+
+            this.loadingDialogSer.refreshAuthKey(resp);
+          }
+          else if (resp != null) {
+            this.TotalCount = 0;
+            this.PageIndex = 1;
+            this.loadingDialogSer.refreshAuthKey(resp);
+            this.LangList = [];
+
+            this.msgDialogService.OpenDialog(resp);
           }
 
-          this.TotalCount = resp.RecordCount;
-
-          this.loadingDialogSer.refreshAuthKey(resp);
-        }
-        else if (resp != null) {
+          this.loadingDialogSer.CloseLoadingDialog();
+        },
+        err => {
           this.TotalCount = 0;
           this.PageIndex = 1;
-          this.loadingDialogSer.refreshAuthKey(resp);
-          this.LangList = [];
-
-          this.msgDialogService.OpenDialog(resp);
-        }
-
-        this.loadingDialogSer.CloseLoadingDialog();
-      },
-      err => {
-        this.TotalCount = 0;
-        this.PageIndex = 1;
-        this.msgDialogService.OpenFailureDialog(err);
-        this.loadingDialogSer.CloseLoadingDialog();
-      });
+          this.msgDialogService.OpenFailureDialog(err);
+          this.loadingDialogSer.CloseLoadingDialog();
+        });
+    }
   }
   //#endregion
 

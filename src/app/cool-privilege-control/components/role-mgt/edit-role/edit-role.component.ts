@@ -52,8 +52,6 @@ export class EditRoleComponent extends CoolComponent implements OnInit {
 
   //#region [ Initial Method ]
   ngOnInit() {
-    this.loadingDialogSer.OpenLoadingDialog();
-
     this.initOtherFuncs();
 
     this.selFuncDetailList = [];
@@ -64,40 +62,44 @@ export class EditRoleComponent extends CoolComponent implements OnInit {
       }
     }));
 
-    this.route.paramMap.subscribe((params: ParamMap) => {
-      if (params.has("ID")) {
-        this.roleId = params.get("ID");
+    if (this.AuthKey != null && this.AuthKey != "") {
+      this.loadingDialogSer.OpenLoadingDialog();
 
-        this.roleSer.getRoleByRoleId(this.LangKey, this.roleId).subscribe(
-          resp => {
-            if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
-              if (resp.Inst != null) {
-                this.RoleVMInst = resp.Inst;
+      this.route.paramMap.subscribe((params: ParamMap) => {
+        if (params.has("ID")) {
+          this.roleId = params.get("ID");
 
-                this.selFuncDetailList = this.RoleVMInst.SelectedFuncDetailList;
+          this.roleSer.getRoleByRoleId(this.LangKey, this.roleId).subscribe(
+            resp => {
+              if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+                if (resp.Inst != null) {
+                  this.RoleVMInst = resp.Inst;
+
+                  this.selFuncDetailList = this.RoleVMInst.SelectedFuncDetailList;
+                }
+
+                this.loadingDialogSer.refreshAuthKey(resp);
+              }
+              else if (resp != null) {
+
+                this.msgDialogService.OpenDialog(resp);
               }
 
-              this.loadingDialogSer.refreshAuthKey(resp);
+              this.loadingDialogSer.CloseLoadingDialog();
+            },
+            err => {
+              this.msgDialogService.OpenFailureDialog(err);
+              this.loadingDialogSer.CloseLoadingDialog();
             }
-            else if (resp != null) {
-
-              this.msgDialogService.OpenDialog(resp);
-            }
-
-            this.loadingDialogSer.CloseLoadingDialog();
-          },
-          err => {
-            this.msgDialogService.OpenFailureDialog(err);
-            this.loadingDialogSer.CloseLoadingDialog();
-          }
-        );
+          );
+        }
+        else {
+          this.msgDialogService.OpenFailureDialog({ message: this.LangPack.E003 });
+          this.loadingDialogSer.CloseLoadingDialog();
+        }
       }
-      else {
-        this.msgDialogService.OpenFailureDialog({ message: this.LangPack.E003 });
-        this.loadingDialogSer.CloseLoadingDialog();
-      }
+      );
     }
-    );
   }
   //#endregion
 
@@ -163,29 +165,31 @@ export class EditRoleComponent extends CoolComponent implements OnInit {
       return null;
     }
 
-    this.loadingDialogSer.OpenLoadingDialog();
-    this.roleSer.editRole(this.RoleVMInst).subscribe(
-      resp => {
-        if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+    if (this.AuthKey != null && this.AuthKey != "") {
+      this.loadingDialogSer.OpenLoadingDialog();
+      this.roleSer.editRole(this.RoleVMInst).subscribe(
+        resp => {
+          if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
 
-          this.loadingDialogSer.refreshAuthKey(resp);
+            this.loadingDialogSer.refreshAuthKey(resp);
 
-          resp.ResponseStatus.Message = this.LangPack.hasOwnProperty('I000') ? this.LangPack['I000'] : 'Save Successfully!';
+            resp.ResponseStatus.Message = this.LangPack.hasOwnProperty('I000') ? this.LangPack['I000'] : 'Save Successfully!';
 
-          this.msgDialogService.OpenDialog(resp);
-        }
-        else if (resp != null) {
-          this.loadingDialogSer.refreshAuthKey(resp);
+            this.msgDialogService.OpenDialog(resp);
+          }
+          else if (resp != null) {
+            this.loadingDialogSer.refreshAuthKey(resp);
 
-          this.msgDialogService.OpenDialog(resp);
-        }
+            this.msgDialogService.OpenDialog(resp);
+          }
 
-        this.loadingDialogSer.CloseLoadingDialog();
-      },
-      err => {
-        this.msgDialogService.OpenFailureDialog(err);
-        this.loadingDialogSer.CloseLoadingDialog();
-      });
+          this.loadingDialogSer.CloseLoadingDialog();
+        },
+        err => {
+          this.msgDialogService.OpenFailureDialog(err);
+          this.loadingDialogSer.CloseLoadingDialog();
+        });
+    }
   }
   //#endregion
 }

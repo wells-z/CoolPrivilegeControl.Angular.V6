@@ -63,47 +63,49 @@ export class RoleListComponent extends CoolComponent implements OnInit {
   //#region [ Event -- Delete Function ]
   OnDel(roleId: string) {
     this.IsClickDel = true;
-    this.loadingDialogSer.OpenLoadingDialog();
-    this.roleSer.getRoleByRoleId(this.LangKey, roleId).subscribe(
-      resp => {
-        if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
-          if (resp.Inst != null) {
-            this.roleSer.delRole(resp.Inst).subscribe(
-              resp => {
-                if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
-                  this.loadingDialogSer.refreshAuthKey(resp);
+    if (this.AuthKey != null && this.AuthKey != "") {
+      this.loadingDialogSer.OpenLoadingDialog();
+      this.roleSer.getRoleByRoleId(this.LangKey, roleId).subscribe(
+        resp => {
+          if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+            if (resp.Inst != null) {
+              this.roleSer.delRole(resp.Inst).subscribe(
+                resp => {
+                  if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+                    this.loadingDialogSer.refreshAuthKey(resp);
 
-                  resp.ResponseStatus.Message = this.LangPack.hasOwnProperty('I001') ? this.LangPack['I001'] : 'Delete Successfully!';
+                    resp.ResponseStatus.Message = this.LangPack.hasOwnProperty('I001') ? this.LangPack['I001'] : 'Delete Successfully!';
 
-                  this.msgDialogService.OpenDialog(resp);
+                    this.msgDialogService.OpenDialog(resp);
+                  }
+                  else if (resp != null) {
+                    this.msgDialogService.OpenDialog(resp);
+                  }
+
+                  this.loadingDialogSer.CloseLoadingDialog();
+                },
+                err => {
+                  this.msgDialogService.OpenFailureDialog(err);
+                  this.loadingDialogSer.CloseLoadingDialog();
                 }
-                else if (resp != null) {
-                  this.msgDialogService.OpenDialog(resp);
-                }
+              );
+            }
 
-                this.loadingDialogSer.CloseLoadingDialog();
-              },
-              err => {
-                this.msgDialogService.OpenFailureDialog(err);
-                this.loadingDialogSer.CloseLoadingDialog();
-              }
-            );
+            this.loadingDialogSer.refreshAuthKey(resp);
           }
+          else if (resp != null) {
 
-          this.loadingDialogSer.refreshAuthKey(resp);
-        }
-        else if (resp != null) {
+            this.msgDialogService.OpenDialog(resp);
 
-          this.msgDialogService.OpenDialog(resp);
-
+            this.loadingDialogSer.CloseLoadingDialog();
+          }
+        },
+        err => {
+          this.msgDialogService.OpenFailureDialog(err);
           this.loadingDialogSer.CloseLoadingDialog();
         }
-      },
-      err => {
-        this.msgDialogService.OpenFailureDialog(err);
-        this.loadingDialogSer.CloseLoadingDialog();
-      }
-    );
+      );
+    }
   }
   //#endregion
 
@@ -145,34 +147,36 @@ export class RoleListComponent extends CoolComponent implements OnInit {
     searchableVM.SortDir = this.SortDir;
     searchableVM.LangKey = this.LangKey;
 
-    this.loadingDialogSer.OpenLoadingDialog();
-    this.roleSer.searchRoleList(searchableVM).subscribe(
-      resp => {
-        if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
-          if (resp.Inst != null) {
-            this.RoleList = resp.Inst;
-          }
-          this.TotalCount = resp.RecordCount;
+    if (this.AuthKey != null && this.AuthKey != "") {
+      this.loadingDialogSer.OpenLoadingDialog();
+      this.roleSer.searchRoleList(searchableVM).subscribe(
+        resp => {
+          if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+            if (resp.Inst != null) {
+              this.RoleList = resp.Inst;
+            }
+            this.TotalCount = resp.RecordCount;
 
-          this.loadingDialogSer.refreshAuthKey(resp);
-        }
-        else if (resp != null) {
+            this.loadingDialogSer.refreshAuthKey(resp);
+          }
+          else if (resp != null) {
+            this.TotalCount = 0;
+            this.PageIndex = 1;
+            this.loadingDialogSer.refreshAuthKey(resp);
+            this.RoleList = [];
+
+            this.msgDialogService.OpenDialog(resp);
+          }
+
+          this.loadingDialogSer.CloseLoadingDialog();
+        },
+        err => {
           this.TotalCount = 0;
           this.PageIndex = 1;
-          this.loadingDialogSer.refreshAuthKey(resp);
-          this.RoleList = [];
-
-          this.msgDialogService.OpenDialog(resp);
-        }
-
-        this.loadingDialogSer.CloseLoadingDialog();
-      },
-      err => {
-        this.TotalCount = 0;
-        this.PageIndex = 1;
-        this.msgDialogService.OpenFailureDialog(err);
-        this.loadingDialogSer.CloseLoadingDialog();
-      });
+          this.msgDialogService.OpenFailureDialog(err);
+          this.loadingDialogSer.CloseLoadingDialog();
+        });
+    }
   }
   //#endregion
 

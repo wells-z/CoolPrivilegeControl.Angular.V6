@@ -47,32 +47,33 @@ export class SysInfoMgtListComponent extends CoolComponent implements OnInit {
 
     this.initOtherFuncs();
 
-    this.loadingDialogSer.OpenLoadingDialog();
+    if (this.AuthKey != null && this.AuthKey != "") {
+      this.loadingDialogSer.OpenLoadingDialog();
+      this.route.paramMap.subscribe((params: ParamMap) => {
+        this.sysInfoSer.retrieveSysInfo().subscribe(
+          resp => {
+            if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+              if (resp.Inst != null) {
+                this.SysInfoVMInst = resp.Inst;
+              }
 
-    this.route.paramMap.subscribe((params: ParamMap) => {
-      this.sysInfoSer.retrieveSysInfo().subscribe(
-        resp => {
-          if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
-            if (resp.Inst != null) {
-              this.SysInfoVMInst = resp.Inst;
+              this.loadingDialogSer.refreshAuthKey(resp);
+            }
+            else if (resp != null) {
+
+              this.msgDialogService.OpenDialog(resp);
             }
 
-            this.loadingDialogSer.refreshAuthKey(resp);
+            this.loadingDialogSer.CloseLoadingDialog();
+          },
+          err => {
+            this.msgDialogService.OpenFailureDialog(err);
+            this.loadingDialogSer.CloseLoadingDialog();
           }
-          else if (resp != null) {
-
-            this.msgDialogService.OpenDialog(resp);
-          }
-
-          this.loadingDialogSer.CloseLoadingDialog();
-        },
-        err => {
-          this.msgDialogService.OpenFailureDialog(err);
-          this.loadingDialogSer.CloseLoadingDialog();
-        }
-      );
-    }
-    );
+        );
+      }
+      )
+    };
 
     //#region [ Msg Box CallBack ]
     this.msgDialogService.onClosedEvent.subscribe((optResp => {
@@ -162,30 +163,33 @@ export class SysInfoMgtListComponent extends CoolComponent implements OnInit {
   //#region [ Event -- Save Button Event ]
   OnSave() {
     if (this.IsValid) {
-      this.loadingDialogSer.OpenLoadingDialog();
 
-      this.sysInfoSer.editSysInfo(this.SysInfoVMInst).subscribe(
-        resp => {
-          if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+      if (this.AuthKey != null && this.AuthKey != "") {
+        this.loadingDialogSer.OpenLoadingDialog();
 
-            this.loadingDialogSer.refreshAuthKey(resp);
+        this.sysInfoSer.editSysInfo(this.SysInfoVMInst).subscribe(
+          resp => {
+            if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
 
-            resp.ResponseStatus.Message = this.LangPack.hasOwnProperty('I000') ? this.LangPack['I000'] : 'Save Successfully!';
+              this.loadingDialogSer.refreshAuthKey(resp);
 
-            this.msgDialogService.OpenDialog(resp);
+              resp.ResponseStatus.Message = this.LangPack.hasOwnProperty('I000') ? this.LangPack['I000'] : 'Save Successfully!';
+
+              this.msgDialogService.OpenDialog(resp);
+            }
+            else if (resp != null) {
+
+              this.msgDialogService.OpenDialog(resp);
+            }
+
+            this.loadingDialogSer.CloseLoadingDialog();
+          },
+          err => {
+            this.msgDialogService.OpenFailureDialog(err);
+            this.loadingDialogSer.CloseLoadingDialog();
           }
-          else if (resp != null) {
-
-            this.msgDialogService.OpenDialog(resp);
-          }
-
-          this.loadingDialogSer.CloseLoadingDialog();
-        },
-        err => {
-          this.msgDialogService.OpenFailureDialog(err);
-          this.loadingDialogSer.CloseLoadingDialog();
-        }
-      );
+        );
+      }
     }
     else {
       let responseStatus = new ResponseStatus();

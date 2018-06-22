@@ -131,38 +131,40 @@ export class AuthorListComponent extends CoolComponent implements OnInit {
     searchableVM.SortDir = this.SortDir;
     searchableVM.LangKey = this.LangKey;
 
-    this.loadingDialogSer.OpenLoadingDialog();
-    this.authorSer.searchAuthorList(searchableVM).subscribe(
-      resp => {
-        if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
-          if (resp.Inst != null) {
-            this.AuthorList = resp.Inst;
+    if (this.AuthKey != null && this.AuthKey != "") {
+      this.loadingDialogSer.OpenLoadingDialog();
+      this.authorSer.searchAuthorList(searchableVM).subscribe(
+        resp => {
+          if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+            if (resp.Inst != null) {
+              this.AuthorList = resp.Inst;
 
-            for (let i = 0; i < this.AuthorList.length; ++i) {
-              this.AuthorList[i].AuthorDT = moment(this.AuthorList[i].AuthorDT).format(this.DateFormat + " " + this.TimeFormat)
+              for (let i = 0; i < this.AuthorList.length; ++i) {
+                this.AuthorList[i].AuthorDT = moment(this.AuthorList[i].AuthorDT).format(this.DateFormat + " " + this.TimeFormat)
+              }
             }
-          }
-          this.TotalCount = resp.RecordCount;
+            this.TotalCount = resp.RecordCount;
 
-          this.loadingDialogSer.refreshAuthKey(resp);
-        }
-        else if (resp != null) {
+            this.loadingDialogSer.refreshAuthKey(resp);
+          }
+          else if (resp != null) {
+            this.TotalCount = 0;
+            this.PageIndex = 1;
+            this.loadingDialogSer.refreshAuthKey(resp);
+            this.AuthorList = [];
+
+            this.msgDialogService.OpenDialog(resp);
+          }
+
+          this.loadingDialogSer.CloseLoadingDialog();
+        },
+        err => {
           this.TotalCount = 0;
           this.PageIndex = 1;
-          this.loadingDialogSer.refreshAuthKey(resp);
-          this.AuthorList = [];
-
-          this.msgDialogService.OpenDialog(resp);
-        }
-
-        this.loadingDialogSer.CloseLoadingDialog();
-      },
-      err => {
-        this.TotalCount = 0;
-        this.PageIndex = 1;
-        this.msgDialogService.OpenFailureDialog(err);
-        this.loadingDialogSer.CloseLoadingDialog();
-      });
+          this.msgDialogService.OpenFailureDialog(err);
+          this.loadingDialogSer.CloseLoadingDialog();
+        });
+    }
   }
   //#endregion
 

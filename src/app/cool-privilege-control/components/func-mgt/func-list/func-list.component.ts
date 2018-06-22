@@ -97,49 +97,50 @@ export class FuncListComponent extends CoolComponent implements OnInit {
   //#region [ Event -- Delete Function ]
   OnDel(funcId: string) {
     this.IsClickDel = true;
-    this.loadingDialogSer.OpenLoadingDialog();
-    this.funcSer.getFuncByFuncId(this.LangKey, funcId).subscribe(
-      resp => {
-        if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
-          if (resp.Inst != null) {
-            this.funcSer.delFunc(resp.Inst).subscribe(
-              resp => {
-                if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+    if (this.AuthKey != null && this.AuthKey != "") {
+      this.loadingDialogSer.OpenLoadingDialog();
+      this.funcSer.getFuncByFuncId(this.LangKey, funcId).subscribe(
+        resp => {
+          if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+            if (resp.Inst != null) {
+              this.funcSer.delFunc(resp.Inst).subscribe(
+                resp => {
+                  if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
 
-                  this.loadingDialogSer.refreshAuthKey(resp);
+                    this.loadingDialogSer.refreshAuthKey(resp);
 
-                  resp.ResponseStatus.Message = this.LangPack.hasOwnProperty('I001') ? this.LangPack['I001'] : 'Delete Successfully!';
+                    resp.ResponseStatus.Message = this.LangPack.hasOwnProperty('I001') ? this.LangPack['I001'] : 'Delete Successfully!';
 
-                  this.msgDialogService.OpenDialog(resp);
+                    this.msgDialogService.OpenDialog(resp);
+                  }
+                  else if (resp != null) {
+
+                    this.msgDialogService.OpenDialog(resp);
+                  }
+
+                  this.loadingDialogSer.CloseLoadingDialog();
+                },
+                err => {
+                  this.msgDialogService.OpenFailureDialog(err);
+                  this.loadingDialogSer.CloseLoadingDialog();
                 }
-                else if (resp != null) {
+              );
+            }
 
-                  this.msgDialogService.OpenDialog(resp);
-                }
+            this.loadingDialogSer.refreshAuthKey(resp);
+          }
+          else if (resp != null) {
 
-                this.loadingDialogSer.CloseLoadingDialog();
-              },
-              err => {
-                this.msgDialogService.OpenFailureDialog(err);
-                this.loadingDialogSer.CloseLoadingDialog();
-              }
-            );
+            this.msgDialogService.OpenDialog(resp);
           }
 
-          this.loadingDialogSer.refreshAuthKey(resp);
-        }
-        else if (resp != null) {
-
-          this.msgDialogService.OpenDialog(resp);
-        }
-
-        this.loadingDialogSer.CloseLoadingDialog();
-      },
-      err => {
-        this.msgDialogService.OpenFailureDialog(err);
-        this.loadingDialogSer.CloseLoadingDialog();
-      }
-    );
+          this.loadingDialogSer.CloseLoadingDialog();
+        },
+        err => {
+          this.msgDialogService.OpenFailureDialog(err);
+          this.loadingDialogSer.CloseLoadingDialog();
+        });
+    }
   }
   //#region
 

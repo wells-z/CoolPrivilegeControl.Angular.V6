@@ -79,9 +79,8 @@ export class CreateRoleComponent extends CoolComponent implements OnInit {
   OnReset() {
     this.selFuncDetailList = [];
 
-    if(this.RoleVMInst!=null)
-    {
-      this.RoleVMInst.SelectedFuncDetailList= [];
+    if (this.RoleVMInst != null) {
+      this.RoleVMInst.SelectedFuncDetailList = [];
     }
   }
   //#endregion
@@ -136,29 +135,31 @@ export class CreateRoleComponent extends CoolComponent implements OnInit {
 
   //#region [ Event -- Save ]
   OnSave() {
-    this.loadingDialogSer.OpenLoadingDialog();
-    this.roleSer.createRole(this.RoleVMInst).subscribe(
-      resp => {
-        if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
+    if (this.AuthKey != null && this.AuthKey != "") {
+      this.loadingDialogSer.OpenLoadingDialog();
+      this.roleSer.createRole(this.RoleVMInst).subscribe(
+        resp => {
+          if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {
 
-          this.loadingDialogSer.refreshAuthKey(resp);
+            this.loadingDialogSer.refreshAuthKey(resp);
 
-          resp.ResponseStatus.Message = this.LangPack.hasOwnProperty('I000') ? this.LangPack['I000'] : 'Save Successfully!';
+            resp.ResponseStatus.Message = this.LangPack.hasOwnProperty('I000') ? this.LangPack['I000'] : 'Save Successfully!';
 
-          this.msgDialogService.OpenDialog(resp);
-        }
-        else if (resp != null) {
-          this.loadingDialogSer.refreshAuthKey(resp);
+            this.msgDialogService.OpenDialog(resp);
+          }
+          else if (resp != null) {
+            this.loadingDialogSer.refreshAuthKey(resp);
 
-          this.msgDialogService.OpenDialog(resp);
-        }
+            this.msgDialogService.OpenDialog(resp);
+          }
 
-        this.loadingDialogSer.CloseLoadingDialog();
-      },
-      err => {
-        this.msgDialogService.OpenFailureDialog(err);
-        this.loadingDialogSer.CloseLoadingDialog();
-      });
+          this.loadingDialogSer.CloseLoadingDialog();
+        },
+        err => {
+          this.msgDialogService.OpenFailureDialog(err);
+          this.loadingDialogSer.CloseLoadingDialog();
+        });
+    }
   }
   //#endregion
 }
