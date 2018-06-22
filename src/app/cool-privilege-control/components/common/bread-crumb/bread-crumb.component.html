@@ -1,0 +1,25 @@
+<!-- <div class="container">
+  <div class="breadcrumb">
+    <a *ngFor="let breadcrumb of breadcrumbs; index as i" [routerLink]="[breadcrumb.url]">
+      <span class="breadcrumb__inner">
+        <span class="breadcrumb__title">{{ breadcrumb.label }}</span>
+      </span>
+    </a>
+  </div>
+</div> -->
+
+<!-- <li class="breadcrumb-item">
+      <a href="#">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a href="#">Library</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Data</li> -->
+
+    <ul class="breadcrumb" *ngIf="breadcrumbs!=null">
+      <li *ngFor="let breadcrumb of breadcrumbs; index as i" [class]="i==(breadcrumbs.length-1)?'breadcrumb-item active':'breadcrumb-item'">
+          <a *ngIf="i<(breadcrumbs.length-1)" [routerLink]="[breadcrumb.url]">{{(LangPack!=null&&LangPack.hasOwnProperty(breadcrumb.label))?LangPack[breadcrumb.label]:breadcrumb.label}}</a>
+          <span *ngIf="i==(breadcrumbs.length-1) && i!=0">{{(LangPack!=null&&LangPack.hasOwnProperty(breadcrumb.label))?LangPack[breadcrumb.label]:breadcrumb.label}}</span>
+          <a *ngIf="i==(breadcrumbs.length-1) && i==0" [routerLink]="[breadcrumb.url]">{{(LangPack!=null&&LangPack.hasOwnProperty(breadcrumb.label))?LangPack[breadcrumb.label]:breadcrumb.label}}</a>
+      </li>
+  </ul>

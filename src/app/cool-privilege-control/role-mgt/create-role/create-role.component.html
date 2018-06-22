@@ -1,0 +1,87 @@
+<mat-card fxFlex fxFlexAlign="start center">
+  <mat-toolbar fxFlex color="primary">{{LangPack.hasOwnProperty('CreateRole')?LangPack['CreateRole']:'CreateRole'}}</mat-toolbar>
+  <mat-card-content class="CreateCard">
+    <div>
+      <mat-horizontal-stepper [linear]="isLinear" #stepper>
+        <mat-step [stepControl]="RoleInfoGroup">
+          <form [formGroup]="RoleInfoGroup">
+            <ng-template matStepLabel>{{LangPack.hasOwnProperty('InputRoleInfo')?LangPack['InputRoleInfo']:'InputRoleInfo'}}</ng-template>
+            <div class="Content">
+              <div class="Row">
+                <mat-form-field fxFlexFill>
+                  <input matInput placeholder="{{LangPack.hasOwnProperty('RoleKey')?LangPack['RoleKey']:'RoleKey'}}"
+                    formControlName="RoleKeyTextBox" (change)="OnChangeRoleKey()">
+                </mat-form-field>
+              </div>
+
+              <div class="BtnBar">
+                <button mat-raised-button color="warn" (click)="OnBackToList()">{{LangPack.hasOwnProperty('BacktoList')?LangPack['BacktoList']:'BacktoList'}}</button>
+                <button mat-raised-button matStepperNext>{{LangPack.hasOwnProperty('NextStep')?LangPack['NextStep']:'NextStep'}}</button>
+              </div>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="RoleDetailGroup">
+          <form [formGroup]="RoleDetailGroup">
+            <ng-template matStepLabel>{{LangPack.hasOwnProperty('InputDetailInfo')?LangPack['InputDetailInfo']:'InputDetailInfo'}}</ng-template>
+            <div class="Content">
+              <cpc-selected-funcs [pagesize]="PageSize" [displaypagecount]="DisplayPageNum" [LangKey]="LangKey" [LangPack]="LangPack"
+                [OutFuncDetailList]="selFuncDetailList" (UpdateFuncDetailList)="OnUpdateFuncDetailList($event)"></cpc-selected-funcs>
+
+              <div class="BtnBar" style="margin-top: 1em;">
+                <button mat-raised-button matStepperPrevious>{{LangPack.hasOwnProperty('PreStep')?LangPack['PreStep']:'PreStep'}}</button>
+                <button mat-raised-button matStepperNext>{{LangPack.hasOwnProperty('NextStep')?LangPack['NextStep']:'NextStep'}}</button>
+              </div>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>{{LangPack.hasOwnProperty('Confirm')?LangPack['Confirm']:'Confirm'}}</ng-template>
+          <div class="Content">
+            <div style="margin-bottom: 8px; font-weight: bold;">
+              {{LangPack.hasOwnProperty('ConfirmInfo')?LangPack['ConfirmInfo']:'ConfirmInfo'}}
+            </div>
+
+            <div class="Row" fxLayout="row" fxLayout.xs="column" style="margin-bottom: 1em;">
+              <div fxFlex fxFlex.xs style="border: 1px double #444;">
+                <div fxLayout="row" fxLayout.xs="column" style="border-bottom: 1px double #444;">
+                  <div class="ContentData Bold" fxFlex="30" fxFlex.xs fxLayoutAlign="start center">
+                    {{LangPack.hasOwnProperty('RoleKey')?LangPack['RoleKey']:'RoleKey'}}
+                  </div>
+                  <div class="ContentData" fxFlex="70" fxFlex.xs fxLayoutAlign="start center">
+                    {{RoleVMInst.RoleKey}}
+                  </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column" style="border-bottom: 1px double #444;">
+                  <div class="ContentDataHeight Bold" fxFlex="30" fxFlex.xs fxLayoutAlign="start center">
+                    {{LangPack.hasOwnProperty('FuncAllocationList')?LangPack['FuncAllocationList']:'FuncAllocationList'}}
+                  </div>
+                  <div class="ContentDataHeight" fxFlex="70" fxFlex.xs fxLayout="column" style="align-items:left !important;">
+                    <div *ngFor="let item of SelFuncDInfos" style="padding-top: 5px; padding-bottom: 5px;">
+                      <div fxLayout="row" fxFlexFill style="height: auto;">
+                        <div fxFlex="40">{{item.FuncName}}</div>
+                        <div fxFlex="60">
+                          <span *ngFor="let item_FuncType of item.FuncTypeList;">{{item_FuncType.FuncTypeKey}}|</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="margin-bottom: 8px; font-weight: bold;">
+              {{LangPack.hasOwnProperty('ResetInfo')?LangPack['ResetInfo']:'ResetInfo'}}
+            </div>
+            <div style="margin-bottom: 1em;">
+              <button mat-raised-button color="warn" (click)="stepper.reset();OnReset();">{{LangPack.hasOwnProperty('Reset')?LangPack['Reset']:'Reset'}}</button>
+            </div>
+            <div class="BtnBar">
+              <button mat-raised-button matStepperPrevious>{{LangPack.hasOwnProperty('PreStep')?LangPack['PreStep']:'PreStep'}}</button>
+              <button mat-raised-button color="primary" (click)="OnSave()" [disabled]="!this.PrivilegeTypeInst.Create">{{LangPack.hasOwnProperty('Save')?LangPack['Save']:'Save'}}</button>
+            </div>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </div>
+  </mat-card-content>
+</mat-card>

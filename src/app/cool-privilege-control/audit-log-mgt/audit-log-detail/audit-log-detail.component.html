@@ -1,0 +1,79 @@
+<div fxFlexFill>
+  <h1 mat-dialog-title>{{LangPack.hasOwnProperty('DetailInfo')?LangPack['DetailInfo']:'DetailInfo'}}</h1>
+  <div mat-dialog-content>
+    <div class="GridContent">
+      <div fxLayoutGap="8px" fxLayout="row" fxFlexFill class="GridContentItem">
+        <div fxLayoutAlign="start" fxFlex="30" class="Label">
+          {{LangPack.hasOwnProperty('LUserId')?LangPack['LUserId']:'LUserId'}}:
+        </div>
+        <div fxFlex="70">
+          {{auditLogVM.LUserInst.ID}}
+        </div>
+      </div>
+      <div fxLayoutGap="8px" fxLayout="row" fxFlexFill class="GridContentItem">
+        <div fxLayoutAlign="start" fxFlex="30" class="Label">
+          {{LangPack.hasOwnProperty('LoginName')?LangPack['LoginName']:'LoginName'}}:
+        </div>
+        <div fxFlex="70">
+          {{auditLogVM.LUserInst.LoginName}}
+        </div>
+      </div>
+      <div fxLayoutGap="8px" fxLayout="row" fxFlexFill class="GridContentItem">
+        <div fxLayoutAlign="start" fxFlex="30" class="Label">
+          {{LangPack.hasOwnProperty('Date')?LangPack['Date']:'Date'}}:
+        </div>
+        <div fxFlex="70">
+          {{auditLogVM.CreateDate}}
+        </div>
+      </div>
+      <div fxLayoutGap="8px" fxLayout="row" fxFlexFill class="GridContentItem">
+        <div fxLayoutAlign="start" fxFlex="30" class="Label">
+          {{LangPack.hasOwnProperty('TableName')?LangPack['TableName']:'TableName'}}:
+        </div>
+        <div fxFlex="70">
+          {{auditLogVM.TableName}}
+        </div>
+      </div>
+      
+      <div fxLayoutGap="8px" fxLayout="row" fxFlexFill class="GridContentItem">
+        <div fxLayoutAlign="start" fxFlex="30" class="Label">
+          {{LangPack.hasOwnProperty('Type')?LangPack['Type']:'Type'}}:
+        </div>
+        <div fxFlex="70">
+          {{LangPack.hasOwnProperty(auditLogVM.EventType)?LangPack[auditLogVM.EventType]:auditLogVM.EventType}}
+        </div>
+      </div>
+
+      <div fxLayoutGap="8px" fxLayout="row" fxFlexFill class="GridContentItem">
+        <div fxLayoutAlign="start" fxFlex="30" class="Label">
+          {{LangPack.hasOwnProperty('RelativeId')?LangPack['RelativeId']:'RelativeId'}}:
+        </div>
+        <div fxFlex="70">
+          {{auditLogVM.RecordKey}}
+        </div>
+      </div>
+
+      <div fxLayoutGap="8px" fxLayout="row" fxFlexFill class="GridContentItem">
+        <div fxLayoutAlign="start" fxFlex="30" class="Label">
+          {{LangPack.hasOwnProperty('OriginalValue')?LangPack['OriginalValue']:'OriginalValue'}}:
+        </div>
+        <div fxFlex="70" style="flex-wrap: wrap;word-wrap:break-word;">
+          {{auditLogVM.OriginalValue}}
+        </div>
+      </div>
+
+      <div fxLayoutGap="8px" fxLayout="row" fxFlexFill class="GridContentItem">
+        <div fxLayoutAlign="start" fxFlex="30" class="Label">
+          {{LangPack.hasOwnProperty('NewValue')?LangPack['NewValue']:'NewValue'}}:
+        </div>
+        <div fxFlex="70" style="flex-wrap: wrap;word-wrap:break-word;">
+          {{auditLogVM.NewValue}}
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div mat-dialog-actions fxLayoutAlign="center center">
+    <button mat-raised-button color="primary" (click)="onOKClick()">OK</button>
+  </div>
+</div>

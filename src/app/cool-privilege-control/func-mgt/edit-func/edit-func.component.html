@@ -1,0 +1,66 @@
+<mat-card fxFlex fxFlexAlign="start center">
+  <mat-toolbar fxFlex color="primary">{{LangPack.hasOwnProperty('EditFunc')?LangPack['EditFunc']:'EditFunc'}}</mat-toolbar>
+  <mat-card-content class="EditFunc">
+    <div class="Content">
+      <div class="Row">
+        <mat-form-field fxFlexFill>
+          <input matInput placeholder="{{LangPack.hasOwnProperty('Path')?LangPack['Path']:'Path'}}" [(ngModel)]="FuncVMInst.FuncPath">
+        </mat-form-field>
+      </div>
+      <div class="Row">
+        <mat-form-field fxFlexFill>
+          <input matInput placeholder="{{LangPack.hasOwnProperty('FuncKey')?LangPack['FuncKey']:'FuncKey'}}" [(ngModel)]="FuncVMInst.FuncKey">
+        </mat-form-field>
+      </div>
+      <div class="Row">
+        <mat-form-field fxFlexFill>
+          <input matInput placeholder="{{LangPack.hasOwnProperty('Url')?LangPack['Url']:'Url'}}" [(ngModel)]="FuncVMInst.Url">
+        </mat-form-field>
+      </div>
+      <div class="Row" fxLayoutGap="1em" style="margin-bottom: 1em;" fxLayoutAlign="start center">
+        <div>{{LangPack.hasOwnProperty('Status')?LangPack['Status']:'Status'}}</div>
+        <mat-radio-group [(ngModel)]="FuncVMInst.Status" fxLayoutGap="8px" fxLayout="row" fxLayout.xs="column">
+          <div>
+            <mat-radio-button [value]="1">{{LangPack.hasOwnProperty('Active')?LangPack['Active']:'Active'}}</mat-radio-button>
+          </div>
+          <div>
+            <mat-radio-button [value]="2">{{LangPack.hasOwnProperty('InActive')?LangPack['InActive']:'InActive'}}</mat-radio-button>
+          </div>
+        </mat-radio-group>
+      </div>
+      <div style="margin-bottom: 8px;">{{LangPack.hasOwnProperty('SelectedFuncType')?LangPack['SelectedFuncType']:'SelectedFuncType'}}</div>
+      <div class="Row" fxLayout="row" fxLayout.xs="column" style="margin-bottom: 1em;">
+        <div fxFlex fxFlex.xs style="border: 1px double #444;">
+          <div fxLayout="row" fxLayout.xs="column" style="border-bottom: 1px double #444;" fxLayoutGap="1em">
+            <div class="Header" fxFlex="10" fxHide.xs fxLayoutAlign="start center">
+
+            </div>
+            <div class="Header" fxFlex="40" fxFlex.xs fxLayoutAlign="start center">
+              {{LangPack.hasOwnProperty('FuncTypeKey')?LangPack['FuncTypeKey']:'FuncTypeKey'}}
+            </div>
+            <div class="Header" fxFlex="50" fxFlex.xs fxLayoutAlign="start center">
+              {{LangPack.hasOwnProperty('FuncTypeName')?LangPack['FuncTypeName']:'FuncTypeName'}}
+            </div>
+          </div>
+          <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="1em" style="border-bottom: 1px double #444;" *ngFor="let funcTypeItem of FuncVMInst.SelectedFucTypeList">
+            <ng-container>
+              <div class="ContentDataCheckBoxCol" fxFlex="10" fxFlex.xs="40px" fxLayoutAlign="center center">
+                <mat-checkbox fxFlexAlign="space-around center" color="primary" [(ngModel)]="funcTypeItem.Selected"></mat-checkbox>
+              </div>
+              <div class="ContentData" fxFlex="40" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('FuncTypeKey')?LangPack['FuncTypeKey']:'FuncTypeKey'}}">
+                {{funcTypeItem.FuncTypeKey}}
+              </div>
+              <div class="ContentData" fxFlex="50" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('FuncTypeName')?LangPack['FuncTypeName']:'FuncTypeName'}}">
+                {{LangPack.hasOwnProperty(funcTypeItem.FuncTypeKey)?LangPack[funcTypeItem.FuncTypeKey]:funcTypeItem.FuncTypeKey}}
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="BtnBar">
+        <button mat-raised-button color="warn" (click)="OnBackToList()">{{LangPack.hasOwnProperty('BacktoList')?LangPack['BacktoList']:'BacktoList'}}</button>
+        <button mat-raised-button color="primary" [disabled]="!this.PrivilegeTypeInst.Update" (click)="OnSave()">{{LangPack.hasOwnProperty('Save')?LangPack['Save']:'Save'}}</button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

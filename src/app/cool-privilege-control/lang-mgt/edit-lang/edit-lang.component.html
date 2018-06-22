@@ -1,0 +1,26 @@
+<mat-card fxFlex fxFlexAlign="start center">
+  <mat-toolbar fxFlex color="primary">{{LangPack.hasOwnProperty('EditLang')?LangPack['EditLang']:'EditLang'}}</mat-toolbar>
+  <mat-card-content class="EditCard">
+      <div class="Content">
+          <div class="Row">
+              <mat-form-field fxFlexFill>
+                  <input matInput placeholder="{{LangPack.hasOwnProperty('LanguageKey')?LangPack['LanguageKey']:'LanguageKey'}}" [(ngModel)]="LangVMInst.LanguageKey">
+              </mat-form-field>
+          </div>
+          <div class="Row">
+            <mat-form-field fxFlexFill>
+                <input matInput placeholder="{{LangPack.hasOwnProperty('LanguageDesc')?LangPack['LanguageDesc']:'LanguageDesc'}}" [(ngModel)]="LangVMInst.LanguageDesc">
+            </mat-form-field>
+        </div>
+          <div class="Row">
+              <mat-form-field fxFlexFill>
+                  <input matInput placeholder="{{LangPack.hasOwnProperty('Pri')?LangPack['Pri']:'Pri'}}" [(ngModel)]="LangVMInst.Priority" type="number">
+              </mat-form-field>
+          </div>
+          <div class="BtnBar">
+              <button mat-raised-button color="warn" (click)="OnBackToList()">{{LangPack.hasOwnProperty('BacktoList')?LangPack['BacktoList']:'BacktoList'}}</button>
+              <button mat-raised-button color="primary" [disabled]="!this.PrivilegeTypeInst.Update" (click)="OnSave()">{{LangPack.hasOwnProperty('Save')?LangPack['Save']:'Save'}}</button>
+          </div>
+      </div>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,26 @@
+.CreateCard {
+    /* font-family: Arial, Helvetica, sans-serif; */
+    border: 1px double #444;
+    /* border-bottom: none; */
+    /* min-width: 200px; */
+}
+
+.CreateCard .Content {
+    padding-left: 3px;
+    padding-right: 3px;
+    display: flex;
+    flex-direction: column;
+}
+
+.CreateCard .Content .Row {
+    margin: 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.CreateCard .BtnBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

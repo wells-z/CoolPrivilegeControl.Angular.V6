@@ -1,0 +1,123 @@
+<mat-card fxFlex fxFlexAlign="start center" *ngIf="!IsAdd && !IsEdit" style="margin-top: 2px; padding: 10px;">
+  <mat-card-actions *ngIf="!IsAdd" style="margin: 0px;">
+    <button mat-raised-button color="primary" (click)="OnCreate($event)">{{LangPack.hasOwnProperty('AddRoleToAllocationList')?LangPack['AddRoleToAllocationList']:'AddRoleToAllocationList'}}</button>
+  </mat-card-actions>
+  <mat-toolbar fxFlex color="primary">{{LangPack.hasOwnProperty('RoleAllocationList')?LangPack['RoleAllocationList']:'RoleAllocationList'}}</mat-toolbar>
+  <mat-card-content fxFlex class="Grid">
+    <div>
+      <mat-expansion-panel style="padding-left: 1px; padding-right: 1px;">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{LangPack.hasOwnProperty('SearchCriteria')?LangPack['SearchCriteria']:'SearchCriteria'}}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{LangPack.hasOwnProperty('InputSearchCriteria')?LangPack['InputSearchCriteria']:'InputSearchCriteria'}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div fxFlex fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center" fxLayoutGap="8px">
+          <mat-form-field fxFlex.xs>
+            <mat-select placeholder="{{LangPack.hasOwnProperty('RoleKey')?LangPack['RoleKey']:'RoleKey'}}" [(ngModel)]="SearchCriteria.RoleID">
+              <mat-option *ngFor="let roleItem of RoleVMInsts" [value]="roleItem.ID" fxFlexFill>
+                {{roleItem.RoleKey}} : {{LangPack.hasOwnProperty(roleItem.RoleKey)?LangPack[roleItem.RoleKey]:roleItem.RoleKey}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center" style="margin-top: 8px;">
+
+          <div fxFlex.xs fxFlex="25">
+            <button mat-button color="primary" (click)="OnSearch()">{{LangPack.hasOwnProperty('Search')?LangPack['Search']:'Search'}}</button>
+          </div>
+
+          <div fxFlex.xs fxFlex="25">
+            <button mat-button color="primary" (click)="OnClear()">{{LangPack.hasOwnProperty('Clear')?LangPack['Clear']:'Clear'}}</button>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" fxFlexFill>
+      <!-- <div class="CheckBoxCol"> </div> -->
+      <div class="Header" fxFlex="65" fxFlex.xs fxLayoutAlign="start center" (click)="OnSort('RoleKey')">
+        <a matLine class="link">{{LangPack.hasOwnProperty('RoleKey')?LangPack['RoleKey']:'RoleKey'}}</a>
+        <button mat-icon-button *ngIf="SortColumn=='RoleKey'">
+          <mat-icon>{{(SortDir=='asc')?'keyboard_arrow_up':'keyboard_arrow_down'}}</mat-icon>
+        </button>
+      </div>
+
+      <div class="Header" fxFlex="35" fxFlex.xs fxLayoutAlign="center center">
+        {{LangPack.hasOwnProperty('Operation')?LangPack['Operation']:'Operation'}}
+      </div>
+    </div>
+    <div [@listAnimation]="DisplayRoleList_Paging">
+      <div fxLayout="row" fxLayout.xs="column" style="border-bottom: 1px solid #444;" *ngFor="let roleInfo of DisplayRoleList_Paging;">
+        <ng-container>
+          <div class="ContentData" fxFlex="65" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('RoleKey')?LangPack['RoleKey']:'RoleKey'}}">
+            {{roleInfo.RoleKey}}
+          </div>
+          <div class="ContentData" fxFlex="35" fxFlex.xs fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Edit')?LangPack['Edit']:'Edit'}}" (click)="OnEdit(roleInfo)">
+              <mat-icon class="md-22" aria-hidden="true">mode_edit</mat-icon>
+            </button>
+
+            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Delete')?LangPack['Delete']:'Delete'}}" (click)="OnDel(roleInfo)">
+              <mat-icon class="md-22" aria-hidden="true">delete</mat-icon>
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" *ngIf="totalcount<=0" style="border-bottom: 1px solid #444;">
+      <ng-container>
+        <div class="ContentData" fxLayoutAlign="start center">{{LangPack.hasOwnProperty('E019')?LangPack['E019']:'No record found.'}}</div>
+      </ng-container>
+    </div>
+    <paging-bar *ngIf="totalcount!=null&&totalcount>0" [totalcount]="totalcount" [pagesize]="pagesize" [pageindex]="pageindex"
+      [displaypagecount]="displaypagecount" (PageChange)="OnPageChange($event)" [langPackage]="LangPack"></paging-bar>
+  </mat-card-content>
+</mat-card>
+
+<mat-card fxFlex fxFlexAlign="start center" *ngIf="IsAdd" style="margin-top: 2px; padding: 10px;">
+  <mat-toolbar fxFlex color="primary">{{LangPack.hasOwnProperty('AddRoleToAllocationList')?LangPack['AddRoleToAllocationList']:'AddRoleToAllocationList'}}</mat-toolbar>
+  <mat-card-content fxFlex class="Grid" style="border-bottom: 1px solid #444;">
+    <div style="padding-left:1em;padding-right:1em; margin-top: 1em;">
+      <div fxFlex fxLayout="column" fxFlexAlign="center center" fxLayoutGap="8px" *ngIf="IsAdd">
+        <mat-form-field>
+          <mat-select placeholder="{{LangPack.hasOwnProperty('RoleKey')?LangPack['RoleKey']:'RoleKey'}}" [(ngModel)]="RoleVMInst">
+            <mat-option *ngFor="let roleItem of RoleVMInsts" [value]="roleItem" fxFlexFill>
+              {{roleItem.RoleKey}} : {{LangPack.hasOwnProperty(roleItem.RoleKey)?LangPack[roleItem.RoleKey]:roleItem.RoleKey}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="BtnBar">
+          <button mat-raised-button color="warn" (click)="OnCancel()">{{LangPack.hasOwnProperty('Cancel')?LangPack['Cancel']:'Cancel'}}</button>
+          <button mat-raised-button color="primary" (click)="OnSave()">{{LangPack.hasOwnProperty('AddRoleToAllocationList')?LangPack['AddRoleToAllocationList']:'AddRoleToAllocationList'}}</button>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<mat-card fxFlex fxFlexAlign="start center" *ngIf="IsEdit" style="margin-top: 2px; padding: 10px;">
+  <mat-toolbar fxFlex color="primary">{{LangPack.hasOwnProperty('EditRoleToAllocationList')?LangPack['EditRoleToAllocationList']:'EditRoleToAllocationList'}}</mat-toolbar>
+  <mat-card-content fxFlex class="Grid" style="border-bottom: 1px solid #444;">
+    <div style="padding-left:1em;padding-right:1em; margin-top: 1em;">
+      <div fxFlex fxLayout="column" fxFlexAlign="center center" fxLayoutGap="8px" *ngIf="IsEdit">
+        <mat-form-field>
+          <mat-select placeholder="{{LangPack.hasOwnProperty('RoleKey')?LangPack['RoleKey']:'RoleKey'}}" [(ngModel)]="RoleVMInst">
+            <mat-option *ngFor="let roleItem of RoleVMInsts" [value]="roleItem" fxFlexFill>
+              {{roleItem.RoleKey}} : {{LangPack.hasOwnProperty(roleItem.RoleKey)?LangPack[roleItem.RoleKey]:roleItem.RoleKey}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="BtnBar">
+          <button mat-raised-button color="warn" (click)="OnCancel()">{{LangPack.hasOwnProperty('Cancel')?LangPack['Cancel']:'Cancel'}}</button>
+          <button mat-raised-button color="primary" (click)="OnSave()">{{LangPack.hasOwnProperty('EditRoleToAllocationList')?LangPack['EditRoleToAllocationList']:'EditRoleToAllocationList'}}</button>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

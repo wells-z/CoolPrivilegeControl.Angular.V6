@@ -1,0 +1,68 @@
+.EditFuncT {
+    /* font-family: Arial, Helvetica, sans-serif; */
+    border: 1px double #444;
+    /* border-bottom: none; */
+    /* min-width: 200px; */
+    padding-bottom: 1em;
+}
+
+.EditFuncT .Content {
+    margin-top: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
+    display: flex;
+    flex-direction: column;
+}
+
+.EditFuncT .Content .Row {
+    margin: 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.EditFuncT .Content .Row .Header {
+    font-size: 14px;
+    height: 45px;
+    min-width: 80px;
+    font-weight: bold;
+    padding-left: 5px;
+}
+
+.EditFuncT .Content .Row .ContentData {
+    font-size: 12px;
+    height: 45px;
+    flex-grow: 1;
+    padding-left: 5px;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.EditFuncT .Content .Row .ContentData.Bold {
+    font-weight: bold;
+}
+
+.EditFuncT .Content .Row .ContentDataHeight {
+    font-size: 12px;
+    flex-grow: 1;
+    padding-left: 5px;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.EditFuncT .Content .Row .ContentDataHeight.Bold {
+    font-weight: bold;
+}
+
+.EditFuncT .BtnBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 3px;
+}
+
+.NextBtn {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}

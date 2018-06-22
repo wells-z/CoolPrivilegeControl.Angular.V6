@@ -1,0 +1,38 @@
+.pagination
+{
+    display: flex;
+    border-bottom: 1px solid #444;
+    justify-content: space-between !important;
+}
+
+.pageindex
+{
+    flex-basis: 150px;
+}
+
+.bar
+{
+    flex-basis: 335px;
+    justify-content:  space-around !important;
+}
+
+.button
+{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    width: 35px !important;
+    min-width: auto !important;
+}
+
+.numberbutton{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    width: 35px !important;
+    min-width: auto !important;
+}
+
+.pagedes
+{
+    flex-basis: 100px;
+    float: right;
+}

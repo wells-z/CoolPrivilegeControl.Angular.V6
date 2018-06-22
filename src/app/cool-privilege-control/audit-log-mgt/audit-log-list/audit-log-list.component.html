@@ -1,0 +1,111 @@
+<mat-card fxFlex fxFlexAlign="start center">
+  <mat-toolbar fxFlex color="primary">{{LangPack.hasOwnProperty('AuditLogList')?LangPack['AuditLogList']:'AuditLogList'}}</mat-toolbar>
+  <mat-card-content fxFlex class="Grid">
+    <div>
+      <mat-expansion-panel *ngIf="this.PrivilegeTypeInst.Search">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{LangPack.hasOwnProperty('SearchCriteria')?LangPack['SearchCriteria']:'SearchCriteria'}}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{LangPack.hasOwnProperty('InputSearchCriteria')?LangPack['InputSearchCriteria']:'InputSearchCriteria'}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div fxFlex fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutGap="8px">
+          <mat-form-field>
+            <input type="text" matInput name="SearchLoginName" [(ngModel)]="SearchCriteria.LoginName" placeholder="{{LangPack.hasOwnProperty('LoginName')?LangPack['LoginName']:'LoginName'}}">
+          </mat-form-field>
+        </div>
+
+        <div fxFlex fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutGap="8px" style="margin-top: 10px;">
+          <div>
+            <div style="height: 30px;">{{LangPack.hasOwnProperty("DateRange")?LangPack["DateRange"]+":":"DateRange:"}}</div>
+          </div>
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="{{LangPack.hasOwnProperty('From')?LangPack['From']:'From'}}" name="SearchDateFrom"
+              [(ngModel)]="SearchCriteria.DateFrom">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker1" placeholder="{{LangPack.hasOwnProperty('To')?LangPack['To']:'To'}}" name="SearchDateTo"
+              [(ngModel)]="SearchCriteria.DateTo">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex fxLayout="row" fxLayout.xs="row" fxLayoutAlign="start center" style="margin-top: 8px;">
+
+          <button mat-button color="primary" (click)="OnSearch()">{{LangPack.hasOwnProperty('Search')?LangPack['Search']:'Search'}}</button>
+
+          <button mat-button color="primary" (click)="OnClear()">{{LangPack.hasOwnProperty('Clear')?LangPack['Clear']:'Clear'}}</button>
+
+        </div>
+      </mat-expansion-panel>
+    </div>
+    <!-- fxHide.xs="true" -->
+    <div fxLayout="row" fxLayout.xs="column" fxFlexFill>
+      <!-- <div class="CheckBoxCol"> </div> -->
+      <div class="Header" fxFlex="20" fxFlex.xs fxFlex.sm="40" fxLayoutAlign="start center">
+        {{LangPack.hasOwnProperty('LoginName')?LangPack['LoginName']:'LoginName'}}
+      </div>
+
+      <div class="Header" fxFlex="20" fxFlex.xs fxFlex.sm="40" fxLayoutAlign="start center" (click)="OnSort('CreateDate')">
+        <a matLine class="link">{{LangPack.hasOwnProperty('Date')?LangPack['Date']:'Date'}}</a>
+        <button mat-icon-button *ngIf="SortColumn=='CreateDate'">
+          <mat-icon>{{(SortDir=='asc')?'keyboard_arrow_up':'keyboard_arrow_down'}}</mat-icon>
+        </button>
+      </div>
+
+      <div class="Header" fxFlex="30" fxHide.xs fxHide.sm fxLayoutAlign="start center">
+        {{LangPack.hasOwnProperty('TableName')?LangPack['TableName']:'TableName'}}
+      </div>
+
+      <div class="Header" fxFlex="20" fxHide.xs fxHide.sm fxLayoutAlign="start center">
+        {{LangPack.hasOwnProperty('Type')?LangPack['Type']:'Type'}}
+      </div>
+
+      <div class="Header" fxFlex="10" fxFlex.xs fxFlex.sm="20" fxLayoutAlign="center center">
+        {{LangPack.hasOwnProperty('Operation')?LangPack['Operation']:'Operation'}}
+      </div>
+    </div>
+    <div [@listAnimation]="AuditLogList">
+      <div fxLayout="row" fxLayout.xs="column" *ngFor="let auditLogInst of AuditLogList;">
+        <ng-container>
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxFlex.sm="40" fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('LoginName')?LangPack['LoginName']:'LoginName'}}">
+            <a [routerLink]="['/CoolPrivilegeControl',this.LangKey,'LUserMgt','EditLUser', auditLogInst.LUserID]" *ngIf="this.PrivilegeTypeInst_LUser.Update">{{auditLogInst.LUserInst.LoginName}}</a>
+            <span *ngIf="!this.PrivilegeTypeInst_LUser.Update">{{auditLogInst.LUserInst.LoginName}}</span>
+          </div>
+
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxFlex.sm="40" fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('Date')?LangPack['Date']:'Date'}}">
+            {{auditLogInst.CreateDate}}
+          </div>
+
+          <div class="ContentData" fxFlex="30" fxHide.xs fxHide.sm fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('TableName')?LangPack['TableName']:'TableName'}}">
+            {{auditLogInst.TableName}}
+          </div>
+
+          <div class="ContentData" fxFlex="20" fxHide.xs fxHide.sm fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('Type')?LangPack['Type']:'Type'}}">
+            {{LangPack.hasOwnProperty(auditLogInst.EventType)?LangPack[auditLogInst.EventType]:auditLogInst.EventType}}
+          </div>
+
+          <div class="ContentData" fxFlex="10" fxFlex.xs fxFlex.sm="20" fxLayoutAlign="center center" matTooltip="{{LangPack.hasOwnProperty('Deatil')?LangPack['Deatil']:'Deatil'}}">
+            <button mat-button (click)="OnClickDetail(auditLogInst)">
+              {{LangPack.hasOwnProperty('Deatil')?LangPack['Deatil']:'Deatil'}}
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" *ngIf="TotalCount<=0">
+      <ng-container>
+        <div class="ContentData" fxLayoutAlign="start center">{{LangPack.hasOwnProperty('E019')?LangPack['E019']:'No record found.'}}</div>
+      </ng-container>
+    </div>
+    <paging-bar *ngIf="TotalCount!=null&&TotalCount>0" [totalcount]="TotalCount" [pagesize]="PageSize" [pageindex]="PageIndex"
+      [displaypagecount]="DisplayPageNum" (PageChange)="OnPageChange($event)" [langPackage]="LangPack"></paging-bar>
+  </mat-card-content>
+</mat-card>

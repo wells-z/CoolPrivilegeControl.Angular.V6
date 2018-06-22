@@ -1,0 +1,20 @@
+<mat-card fxFlex fxFlexAlign="start center">
+  <mat-toolbar fxFlex color="primary">{{LangPack.hasOwnProperty('EditRole')?LangPack['EditRole']:'EditRole'}}</mat-toolbar>
+  <mat-card-content class="EditCard">
+    <div class="Content">
+      <div class="Row">
+        <mat-form-field fxFlexFill>
+          <input matInput placeholder="{{LangPack.hasOwnProperty('RoleKey')?LangPack['RoleKey']:'RoleKey'}}" [(ngModel)]="RoleVMInst.RoleKey">
+        </mat-form-field>
+      </div>
+
+      <cpc-selected-funcs [pagesize]="PageSize" [displaypagecount]="DisplayPageNum" [LangKey]="LangKey" [LangPack]="LangPack"
+        [OutFuncDetailList]="selFuncDetailList" (UpdateFuncDetailList)="OnUpdateFuncDetailList($event)"></cpc-selected-funcs>
+
+      <div class="BtnBar" style="margin-top: 1em;">
+        <button mat-raised-button color="warn" (click)="OnBackToList()">{{LangPack.hasOwnProperty('BacktoList')?LangPack['BacktoList']:'BacktoList'}}</button>
+        <button mat-raised-button color="primary" [disabled]="!this.PrivilegeTypeInst.Update" (click)="OnSave()">{{LangPack.hasOwnProperty('Save')?LangPack['Save']:'Save'}}</button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

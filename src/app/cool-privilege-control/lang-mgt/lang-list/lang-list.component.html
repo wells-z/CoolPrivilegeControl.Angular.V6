@@ -1,0 +1,101 @@
+<mat-card fxFlex fxFlexAlign="start center">
+  <mat-toolbar fxFlex color="primary">{{LangPack.hasOwnProperty('LangList')?LangPack['LangList']:'LangList'}}</mat-toolbar>
+  <mat-card-content fxFlex class="Grid">
+    <div>
+      <mat-expansion-panel *ngIf="this.PrivilegeTypeInst.Search">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{LangPack.hasOwnProperty('SearchCriteria')?LangPack['SearchCriteria']:'SearchCriteria'}}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{LangPack.hasOwnProperty('InputSearchCriteria')?LangPack['InputSearchCriteria']:'InputSearchCriteria'}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div fxFlex fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center" fxLayoutGap="8px">
+          <mat-form-field fxFlex.xs>
+            <input type="text" matInput name="SearchFuncKey" [(ngModel)]="SearchCriteria.LanguageKey" placeholder="{{LangPack.hasOwnProperty('LanguageKey')?LangPack['LanguageKey']:'LanguageKey'}}">
+          </mat-form-field>
+
+          <mat-form-field fxFlex.xs>
+            <input type="text" matInput name="SearchFuncKey" [(ngModel)]="SearchCriteria.LanguageDesc" placeholder="{{LangPack.hasOwnProperty('LanguageDesc')?LangPack['LanguageDesc']:'LanguageDesc'}}">
+          </mat-form-field>
+
+          <mat-form-field fxFlex.xs>
+            <input type="text" matInput name="SearchFuncPath" [(ngModel)]="SearchCriteria.Priority" placeholder="{{LangPack.hasOwnProperty('Pri')?LangPack['Pri']:'Pri'}}"
+              type="number">
+          </mat-form-field>
+        </div>
+
+        <div fxFlex fxLayout="row" fxLayout.xs="row" fxLayoutAlign="start center" style="margin-top: 8px;">
+
+          <button mat-button color="primary" (click)="OnSearch()">{{LangPack.hasOwnProperty('Search')?LangPack['Search']:'Search'}}</button>
+
+          <button mat-button color="primary" (click)="OnClear()">{{LangPack.hasOwnProperty('Clear')?LangPack['Clear']:'Clear'}}</button>
+
+        </div>
+      </mat-expansion-panel>
+    </div>
+    <!-- fxHide.xs="true" -->
+    <div fxLayout="row" fxLayout.xs="column" fxFlexFill>
+      <!-- <div class="CheckBoxCol"> </div> -->
+      <div class="Header" fxFlex="20" fxFlex.xs fxFlex.sm="40" fxLayoutAlign="start center" (click)="OnSort('Priority')">
+        <a matLine class="link">{{LangPack.hasOwnProperty('Pri')?LangPack['Pri']:'Pri'}}</a>
+        <button mat-icon-button *ngIf="SortColumn=='Priority'">
+          <mat-icon>{{(SortDir=='asc')?'keyboard_arrow_up':'keyboard_arrow_down'}}</mat-icon>
+        </button>
+      </div>
+      <div class="Header" fxFlex="25" fxFlex.xs fxFlex.sm="40" fxLayoutAlign="start center" (click)="OnSort('LanguageKey')">
+        <a matLine class="link">{{LangPack.hasOwnProperty('LanguageKey')?LangPack['LanguageKey']:'LanguageKey'}}</a>
+        <button mat-icon-button *ngIf="SortColumn=='LanguageKey'">
+          <mat-icon>{{(SortDir=='asc')?'keyboard_arrow_up':'keyboard_arrow_down'}}</mat-icon>
+        </button>
+      </div>
+      <div class="Header" fxFlex="35" fxHide.xs fxHide.sm fxLayoutAlign="start center" (click)="OnSort('LanguageDesc')">
+        <a matLine class="link">{{LangPack.hasOwnProperty('LanguageDesc')?LangPack['LanguageDesc']:'LanguageDesc'}}</a>
+        <button mat-icon-button *ngIf="SortColumn=='LanguageDesc'">
+          <mat-icon>{{(SortDir=='asc')?'keyboard_arrow_up':'keyboard_arrow_down'}}</mat-icon>
+        </button>
+      </div>
+      <div class="Header" fxFlex="20" fxFlex.xs fxFlex.sm="20" fxLayoutAlign="center center">
+        {{LangPack.hasOwnProperty('Operation')?LangPack['Operation']:'Operation'}}
+      </div>
+    </div>
+    <div [@listAnimation]="LangList">
+      <div fxLayout="row" fxLayout.xs="column" *ngFor="let langInst of LangList;">
+        <ng-container>
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxFlex.sm="40" fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('Pri')?LangPack['Pri']:'Pri'}}">
+            {{langInst.Priority}}
+          </div>
+          <div class="ContentData" fxFlex="25" fxFlex.xs fxFlex.sm="40" fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('LanguageKey')?LangPack['LanguageKey']:'LanguageKey'}}">
+            {{langInst.LanguageKey}}
+          </div>
+          <div class="ContentData" fxFlex="35" fxHide.xs fxHide.sm fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('LanguageDesc')?LangPack['LanguageDesc']:'LanguageDesc'}}">
+            {{langInst.LanguageDesc}}
+          </div>
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxFlex.sm="20" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Edit')?LangPack['Edit']:'Edit'}}" (click)="OnEdit(langInst.ID)"
+              [disabled]="!this.PrivilegeTypeInst.Update">
+              <mat-icon class="md-22" aria-hidden="true">mode_edit</mat-icon>
+            </button>
+
+            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Delete')?LangPack['Delete']:'Delete'}}" (click)="OnDel(langInst.ID)"
+              [disabled]="!this.PrivilegeTypeInst.Delete">
+              <mat-icon class="md-22" aria-hidden="true">delete</mat-icon>
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" *ngIf="TotalCount<=0">
+      <ng-container>
+        <div class="ContentData" fxLayoutAlign="start center">{{LangPack.hasOwnProperty('E019')?LangPack['E019']:'No record found.'}}</div>
+      </ng-container>
+    </div>
+    <paging-bar [totalcount]="TotalCount" [pagesize]="PageSize" [pageindex]="PageIndex" [displaypagecount]="DisplayPageNum" (PageChange)="OnPageChange($event)"
+      [langPackage]="LangPack"></paging-bar>
+  </mat-card-content>
+  <mat-card-actions class="ListAction">
+    <button mat-raised-button color="primary" (click)="OnCreate()" [disabled]="!this.PrivilegeTypeInst.Create">{{LangPack.hasOwnProperty('CreateLang')?LangPack['CreateLang']:'CreateLang'}}</button>
+  </mat-card-actions>
+</mat-card>

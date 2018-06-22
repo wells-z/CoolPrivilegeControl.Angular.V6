@@ -1,0 +1,16 @@
+<div fxFlexFill>
+  <h1 mat-dialog-title>{{DialogInfo.DialogTitle}}</h1>
+  <div mat-dialog-content>
+    <div fxLayoutGap="8px" fxLayout="column" fxFlexFill>
+      <div fxLayoutAlign="start" [ngClass]="{'MsgContent':!DialogInfo.IsFailed,'MsgContentError':DialogInfo.IsFailed}">
+        {{DialogInfo.DialogMsg}}
+      </div>
+      <!-- <div>{{DialogInfo.DetailMsgs}}</div> -->
+      <!-- <div *ngFor="let item of DialogInfo.DetailMsgs">{{item.Message}}</div> -->
+      <div *ngFor="let item of DialogInfo.DetailMsgs">{{item.Message}}</div>
+    </div>
+  </div>
+  <div mat-dialog-actions fxLayoutAlign="center center">
+    <button mat-raised-button color="primary" (click)="onOKClick()">OK</button>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<mat-list-item>
+  <div fxLayout="row" fxFlexFill fxLayoutAlign="space-between center" (click)="menuItemClick($event)" id="menu{{menuItem.MenuItemPath}}">
+      <a matLine class="link">{{menuItem.MenuItemName}}</a>
+      <button mat-icon-button *ngIf="menuItem!=null && menuItem.SubMenuItems!=null && menuItem.SubMenuItems.length>0">
+    <mat-icon>{{(!expanded)?'keyboard_arrow_right':'keyboard_arrow_down'}}</mat-icon>
+  </button>
+  </div>
+</mat-list-item>
+<mat-nav-list class="submenu" id="menuContainer{{menuItem.MenuItemPath}}" [@subMenuState]="expanded" *ngIf="menuItem!=null && menuItem.SubMenuItems!=null && menuItem.SubMenuItems.length>0">
+  <div fxFlexFill *ngFor="let subMenuItem of menuItem.SubMenuItems; index as i">
+      <app-side-menu [menuItem]='subMenuItem' (MenuItemClick)="menuItemClick($event)"></app-side-menu>
+  </div>
+</mat-nav-list>

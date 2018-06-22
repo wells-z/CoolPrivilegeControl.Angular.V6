@@ -1,0 +1,43 @@
+<div fxLayout="row" fxLayout.xs="row" fxFlexFill fxLayoutAlign="space-between center" fxLayoutGap="8px" style="border-bottom: 1px solid #444;">
+  <div fxFlex="35" fxFlex.xs="50" fxLayout="row" fxLayoutAlign="start center" *ngIf="pagingBarInfo.totalcount>0" style="padding-left: 6px;">
+    <div>
+      {{langPackage.hasOwnProperty("Page")?langPackage["Page"]:"Page" }}
+    </div>
+    <div>
+      <!-- {{this.pageIndexInfo}} -->
+      <mat-form-field style="width:50px; text-align: center;">
+        <mat-select [(ngModel)]="pageindex" style="width:50px" (selectionChange)="PagingBtnOnClick(pageindex)">
+          <mat-option *ngFor="let pageStr of pageList" [value]="pageStr">
+            {{pageStr}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div>
+      {{' of '+ GetPageCount(pagingBarInfo.totalcount, pagingBarInfo.pagesize)}}
+    </div>
+  </div>
+  <div fxFlex="35" fxHide.xs fxLayoutAlign="center center">
+    <div fxFlex *ngFor="let item of pagingBarInfo.Items">
+      <a class="button" mat-button *ngIf="item.IsFirst && !item.Disabled" (click)="PagingBtnOnClick(item.PageIndex)">{{item.Name}}</a>
+      <a class="button" mat-button *ngIf="item.IsFirst && item.Disabled" disabled>{{item.Name}}</a>
+
+      <a class="button" mat-button *ngIf="item.IsPre && !item.Disabled" (click)="PagingBtnOnClick(item.PageIndex)">{{item.Name}}</a>
+      <a class="button" mat-button *ngIf="item.IsPre && item.Disabled" disabled>{{item.Name}}</a>
+
+      <a class="numberbutton" mat-button *ngIf="item.IsPages && !item.IsCurrPage" (click)="PagingBtnOnClick(item.PageIndex)">{{item.Name}}</a>
+      <a class="numberbutton" mat-button *ngIf="item.IsPages && item.IsCurrPage" disabled style="color:red !important;">{{item.Name}}</a>
+
+      <a class="button" mat-button *ngIf="item.IsNext && !item.Disabled" (click)="PagingBtnOnClick(item.PageIndex)">{{item.Name}}</a>
+      <a class="button" mat-button *ngIf="item.IsNext && item.Disabled" disabled>{{item.Name}}</a>
+
+      <a class="button" mat-button *ngIf="item.IsLast && !item.Disabled" (click)="PagingBtnOnClick(item.PageIndex)">{{item.Name}}</a>
+      <a class="button" mat-button *ngIf="item.IsLast && item.Disabled" disabled>{{item.Name}}</a>
+    </div>
+  </div>
+  <div fxFlex="30" fxFlex.xs="50" fxLayoutAlign="end center">
+    <span style="margin-right:5px;" *ngIf="pagingBarInfo.totalcount>0">
+      {{this.recordInfo}}
+    </span>
+  </div>
+</div>

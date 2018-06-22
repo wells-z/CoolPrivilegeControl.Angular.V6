@@ -1,0 +1,76 @@
+.CreateCard {
+    /* font-family: Arial, Helvetica, sans-serif; */
+    border: 1px double #444;
+    /* border-bottom: none; */
+    /* min-width: 200px; */
+  }
+  
+  .CreateCard .Content {
+    padding-left: 3px;
+    padding-right: 3px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .CreateCard .Content .Row {
+    margin: 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  
+  .CreateCard .Content .Row .Header {
+    font-size: 14px;
+    height: 45px;
+    min-width: 80px;
+    font-weight: bold;
+    padding-left: 5px;
+  }
+  
+  /* .CreateFunc .Content .Row .ContentDataCheckBoxCol {
+      flex-basis: 50px;
+  } */
+  
+  .CreateCard .Content .Row .ContentData {
+    font-size: 12px;
+    height: 45px;
+    flex-grow: 1;
+    padding-left: 5px;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+  
+  .CreateCard .Content .Row .ContentData.Bold {
+    font-weight: bold;
+  }
+  
+  .CreateCard .Content .Row .ContentDataHeight {
+    font-size: 12px;
+    flex-grow: 1;
+    padding-left: 5px;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+  
+  .CreateCard .Content .Row .ContentDataHeight.Bold {
+    font-weight: bold;
+  }
+  
+  .CreateCard .BtnBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .NextBtn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  
+  .PreBtn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  

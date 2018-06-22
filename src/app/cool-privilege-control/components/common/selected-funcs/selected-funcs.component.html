@@ -1,0 +1,199 @@
+<mat-card fxFlex fxFlexAlign="start center" *ngIf="!IsAdd && !IsEdit" style="margin-top: 2px; padding: 10px;">
+  <mat-card-actions *ngIf="!IsAdd" style="margin: 0px;">
+    <button mat-raised-button color="primary" (click)="OnCreate($event)">{{LangPack.hasOwnProperty('AddFuncToAllocationList')?LangPack['AddFuncToAllocationList']:'AddFuncToAllocationList'}}</button>
+  </mat-card-actions>
+  <mat-toolbar fxFlex color="primary">{{LangPack.hasOwnProperty('FuncAllocationList')?LangPack['FuncAllocationList']:'FuncAllocationList'}}</mat-toolbar>
+  <mat-card-content fxFlex class="Grid">
+    <div>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{LangPack.hasOwnProperty('SearchCriteria')?LangPack['SearchCriteria']:'SearchCriteria'}}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{LangPack.hasOwnProperty('InputSearchCriteria')?LangPack['InputSearchCriteria']:'InputSearchCriteria'}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div fxFlex fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center" fxLayoutGap="8px">
+          <mat-form-field fxFlex.xs>
+            <mat-select placeholder="{{LangPack.hasOwnProperty('FuncKey')?LangPack['FuncKey']:'FuncKey'}}" [(ngModel)]="SearchCriteria.FuncKey">
+              <mat-option *ngFor="let funcItem of FuncVMInsts" [value]="funcItem.FuncKey" fxFlexFill>
+                {{funcItem.FuncKey}} : {{LangPack.hasOwnProperty(funcItem.FuncKey)?LangPack[funcItem.FuncKey]:funcItem.FuncKey}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex.xs>
+            <mat-select placeholder="{{LangPack.hasOwnProperty('FuncTypeKey')?LangPack['FuncTypeKey']:'FuncTypeKey'}}" [(ngModel)]="SearchCriteria.FuncTypeKey">
+              <mat-option *ngFor="let funcTypeItem of FuncTypeVMInsts" [value]="funcTypeItem.FuncTypeKey" fxFlexFill>
+                {{funcTypeItem.FuncTypeKey}} : {{LangPack.hasOwnProperty(funcTypeItem.FuncTypeKey)?LangPack[funcTypeItem.FuncTypeKey]:funcTypeItem.FuncTypeKey}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center" style="margin-top: 8px;">
+          <div fxFlex.xs fxFlex="25">
+            <button mat-button color="primary" (click)="OnSearch()">{{LangPack.hasOwnProperty('Search')?LangPack['Search']:'Search'}}</button>
+          </div>
+
+          <div fxFlex.xs fxFlex="25">
+            <button mat-button color="primary" (click)="OnClear()">{{LangPack.hasOwnProperty('Clear')?LangPack['Clear']:'Clear'}}</button>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" fxFlexFill>
+      <!-- <div class="CheckBoxCol"> </div> -->
+      <div class="Header" fxFlex="20" fxFlex.xs fxLayoutAlign="start center" (click)="OnSort('FuncKey')">
+        <!-- {{LangPack.hasOwnProperty("FuncKey")?LangPack["FuncKey"]:"FuncKey"}} -->
+        <a matLine class="link">{{LangPack.hasOwnProperty('FuncKey')?LangPack['FuncKey']:'FuncKey'}}</a>
+        <button mat-icon-button *ngIf="SortColumn=='FuncKey'">
+          <mat-icon>{{(SortDir=='asc')?'keyboard_arrow_up':'keyboard_arrow_down'}}</mat-icon>
+        </button>
+      </div>
+
+      <div class="Header" fxFlex="20" fxFlex.xs fxLayoutAlign="start center" (click)="OnSort('FuncName')">
+        <!-- {{LangPack.hasOwnProperty("FuncKey")?LangPack["FuncKey"]:"FuncKey"}} -->
+        <a matLine class="link">{{LangPack.hasOwnProperty('FuncName')?LangPack['FuncName']:'FuncName'}}</a>
+        <button mat-icon-button *ngIf="SortColumn=='FuncName'">
+          <mat-icon>{{(SortDir=='asc')?'keyboard_arrow_up':'keyboard_arrow_down'}}</mat-icon>
+        </button>
+      </div>
+
+      <div class="Header" fxFlex="35" fxFlex.xs fxLayoutAlign="start center">
+        {{LangPack.hasOwnProperty("FuncTypeKey")?LangPack["FuncTypeKey"]:"FuncTypeKey"}}
+      </div>
+
+      <div class="Header" fxFlex="25" fxFlex.xs fxLayoutAlign="center center">
+        {{LangPack.hasOwnProperty('Operation')?LangPack['Operation']:'Operation'}}
+      </div>
+    </div>
+    <div [@listAnimation]="DisplayFuncList_Paging">
+      <div fxLayout="row" fxLayout.xs="column" style="border-bottom: 1px solid #444;" *ngFor="let funcInfo of DisplayFuncList_Paging;">
+        <ng-container>
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('FuncKey')?LangPack['FuncKey']:'FuncKey'}}">
+            {{funcInfo.FuncKey}}
+          </div>
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('FuncName')?LangPack['FuncName']:'FuncName'}}">
+            {{funcInfo.FuncName}}
+          </div>
+          <div class="ContentData" fxFlex="35" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('FuncTypeKey')?LangPack['FuncTypeKey']:'FuncTypeKey'}}">
+            <span *ngFor="let funcTypeInfo of funcInfo.FuncTypeList;">{{funcTypeInfo.FuncTypeKey}}|</span>
+          </div>
+          <div class="ContentData" fxFlex="25" fxFlex.xs fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Edit')?LangPack['Edit']:'Edit'}}" (click)="OnEdit(funcInfo)">
+              <mat-icon class="md-22" aria-hidden="true">mode_edit</mat-icon>
+            </button>
+
+            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Delete')?LangPack['Delete']:'Delete'}}" (click)="OnDel(funcInfo)">
+              <mat-icon class="md-22" aria-hidden="true">delete</mat-icon>
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" *ngIf="totalcount<=0" style="border-bottom: 1px solid #444;">
+      <ng-container>
+        <div class="ContentData" fxLayoutAlign="start center">{{LangPack.hasOwnProperty('E019')?LangPack['E019']:'No record found.'}}</div>
+      </ng-container>
+    </div>
+    <paging-bar *ngIf="totalcount!=null&&totalcount>0" [totalcount]="totalcount" [pagesize]="pagesize" [pageindex]="pageindex"
+      [displaypagecount]="displaypagecount" (PageChange)="OnPageChange($event)" [langPackage]="LangPack"></paging-bar>
+  </mat-card-content>
+</mat-card>
+
+<mat-card fxFlex fxFlexAlign="start center" *ngIf="IsAdd" style="margin-top: 2px; padding: 10px;">
+  <mat-toolbar fxFlex color="primary">{{LangPack.hasOwnProperty('AddFuncToAllocationList')?LangPack['AddFuncToAllocationList']:'AddFuncToAllocationList'}}</mat-toolbar>
+  <mat-card-content fxFlex class="Grid" style="border-bottom: 1px solid #444;">
+    <div style="padding-left:1em;padding-right:1em; margin-top: 1em;">
+      <div fxFlex fxLayout="column" fxFlexAlign="center center" fxLayoutGap="8px" *ngIf="IsAdd">
+        <mat-form-field>
+          <mat-select placeholder="{{LangPack.hasOwnProperty('FuncKey')?LangPack['FuncKey']:'FuncKey'}}" [(ngModel)]="FuncVMInst" (selectionChange)="OnSelFuncID(FuncVMInst.ID)">
+            <mat-option *ngFor="let funcItem of FuncVMInsts" [value]="funcItem" fxFlexFill>
+              {{funcItem.FuncKey}} : {{LangPack.hasOwnProperty(funcItem.FuncKey)?LangPack[funcItem.FuncKey]:funcItem.FuncKey}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div style="margin-bottom: 8px;" *ngIf="FuncVMInst!=null">{{LangPack.hasOwnProperty('SelectedFuncType')?LangPack['SelectedFuncType']:'SelectedFuncType'}}</div>
+        <div fxLayout="row" fxLayout.xs="column" style="margin-bottom: 1em;" *ngIf="FuncVMInst!=null">
+          <div fxFlex fxFlex.xs style="border: 1px double #444;">
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="1em" class="Header">
+              <div fxFlex="20" fxHide.xs fxLayoutAlign="start center">
+
+              </div>
+              <div fxFlex="80" fxFlex.xs fxLayoutAlign="start center">
+                {{LangPack.hasOwnProperty('FuncTypeKey')?LangPack['FuncTypeKey']:'FuncTypeKey'}}
+              </div>
+            </div>
+            <!-- <div [@listAnimation]="Func_FuncTypeList"> -->
+            <div fxLayout="row" fxLayout.xs="column" style="border-bottom: 1px solid #444;" fxLayoutGap="1em" *ngFor="let funcTypeItem of Func_FuncTypeList">
+              <ng-container>
+                <div fxFlex="20" fxFlex.xs="40px" fxLayoutAlign="center center">
+                  <mat-checkbox fxFlexAlign="space-around center" color="primary" [(ngModel)]="funcTypeItem.Selected"></mat-checkbox>
+                </div>
+                <div class="ContentData" fxFlex="80" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('FuncTypeKey')?LangPack['FuncTypeKey']:'FuncTypeKey'}}">
+                  {{funcTypeItem.FuncTypeKey}}
+                </div>
+              </ng-container>
+            </div>
+            <!-- </div> -->
+          </div>
+        </div>
+        <div class="BtnBar">
+          <button mat-raised-button color="warn" (click)="OnCancel()">{{LangPack.hasOwnProperty('Cancel')?LangPack['Cancel']:'Cancel'}}</button>
+          <button mat-raised-button color="primary" (click)="OnSave()">{{LangPack.hasOwnProperty('AddFuncToAllocationList')?LangPack['AddFuncToAllocationList']:'AddFuncToAllocationList'}}</button>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<mat-card fxFlex fxFlexAlign="start center" *ngIf="IsEdit" style="margin-top: 2px; padding: 10px;">
+  <mat-toolbar fxFlex color="primary">{{LangPack.hasOwnProperty('EidtFuncInAllocationList')?LangPack['EidtFuncInAllocationList']:'EidtFuncInAllocationList'}}</mat-toolbar>
+  <mat-card-content fxFlex class="Grid" style="border-bottom: 1px solid #444;">
+    <div style="padding-left:1em;padding-right:1em; margin-top: 1em;">
+      <div fxFlex fxLayout="column" fxFlexAlign="center center" fxLayoutGap="8px" *ngIf="IsEdit">
+        <mat-form-field>
+          <mat-select placeholder="{{LangPack.hasOwnProperty('FuncKey')?LangPack['FuncKey']:'FuncKey'}}" [(ngModel)]="FuncVMInst" (selectionChange)="OnSelFuncID(FuncVMInst.ID)">
+            <mat-option *ngFor="let funcItem of FuncVMInsts" [value]="funcItem" fxFlexFill>
+              {{funcItem.FuncKey}} : {{LangPack.hasOwnProperty(funcItem.FuncKey)?LangPack[funcItem.FuncKey]:funcItem.FuncKey}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div style="margin-bottom: 8px;" *ngIf="FuncVMInst!=null">{{LangPack.hasOwnProperty('SelectedFuncType')?LangPack['SelectedFuncType']:'SelectedFuncType'}}</div>
+        <div fxLayout="row" fxLayout.xs="column" style="margin-bottom: 1em;" *ngIf="FuncVMInst!=null">
+          <div fxFlex fxFlex.xs style="border: 1px double #444;">
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="1em" class="Header">
+              <div fxFlex="20" fxHide.xs fxLayoutAlign="start center">
+
+              </div>
+              <div fxFlex="80" fxFlex.xs fxLayoutAlign="start center">
+                {{LangPack.hasOwnProperty('FuncTypeKey')?LangPack['FuncTypeKey']:'FuncTypeKey'}}
+              </div>
+            </div>
+            <!-- <div [@listAnimation]="Func_FuncTypeList"> -->
+            <div fxLayout="row" fxLayout.xs="column" style="border-bottom: 1px solid #444;" fxLayoutGap="1em" *ngFor="let funcTypeItem of Func_FuncTypeList">
+              <ng-container>
+                <div fxFlex="20" fxFlex.xs="40px" fxLayoutAlign="center center">
+                  <mat-checkbox fxFlexAlign="space-around center" color="primary" [(ngModel)]="funcTypeItem.Selected"></mat-checkbox>
+                </div>
+                <div class="ContentData" fxFlex="80" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('FuncTypeKey')?LangPack['FuncTypeKey']:'FuncTypeKey'}}">
+                  {{funcTypeItem.FuncTypeKey}}
+                </div>
+              </ng-container>
+            </div>
+            <!-- </div> -->
+          </div>
+        </div>
+        <div class="BtnBar">
+          <button mat-raised-button color="warn" (click)="OnCancel()">{{LangPack.hasOwnProperty('Cancel')?LangPack['Cancel']:'Cancel'}}</button>
+          <button mat-raised-button color="primary" (click)="OnSave()">{{LangPack.hasOwnProperty('EidtFuncInAllocationList')?LangPack['EidtFuncInAllocationList']:'EidtFuncInAllocationList'}}</button>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

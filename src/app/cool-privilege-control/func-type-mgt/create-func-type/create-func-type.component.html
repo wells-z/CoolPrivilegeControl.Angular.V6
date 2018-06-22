@@ -1,0 +1,88 @@
+<mat-card fxFlex fxFlexAlign="start center">
+  <mat-toolbar fxFlex color="primary">{{LangPack.hasOwnProperty('CreateFuncType')?LangPack['CreateFuncType']:'CreateFuncType'}}</mat-toolbar>
+  <mat-card-content class="CreateCard">
+      <div>
+          <mat-horizontal-stepper [linear]="isLinear" #stepper>
+              <mat-step [stepControl]="FuncTypeDetailGroup">
+                  <form [formGroup]="FuncTypeDetailGroup">
+                      <ng-template matStepLabel>{{LangPack.hasOwnProperty('InputDetailInfo')?LangPack['InputDetailInfo']:'InputDetailInfo'}}</ng-template>
+                      <div class="Content">
+                          <div class="Row">
+                              <mat-form-field fxFlexFill>
+                                  <input matInput placeholder="{{LangPack.hasOwnProperty('FuncTypeKey')?LangPack['FuncTypeKey']:'FuncTypeKey'}}" formControlName="FuncTypeKey" (change)="OnChangeFuncTypeKey()">
+                              </mat-form-field>
+                          </div>
+                          <div class="Row">
+                              <mat-form-field fxFlexFill>
+                                  <input matInput placeholder="{{LangPack.hasOwnProperty('Pri')?LangPack['Pri']:'Pri'}}" formControlName="Priority" type="number" (change)="OnChangePriority()">
+                              </mat-form-field>
+                          </div>
+                          <div class="Row" fxLayoutGap="1em" style="margin-bottom: 1em;" fxLayoutAlign="start center">
+                              <div>{{LangPack.hasOwnProperty('Status')?LangPack['Status']:'Status'}}</div>
+                              <mat-radio-group formControlName="StatusRB" fxLayoutGap="8px" fxLayout="row" fxLayout.xs="column" (change)="OnChangeStatus($event)">
+                                  <div>
+                                      <mat-radio-button [value]="1">{{LangPack.hasOwnProperty('Active')?LangPack['Active']:'Active'}}</mat-radio-button>
+                                  </div>
+                                  <div>
+                                      <mat-radio-button [value]="2">{{LangPack.hasOwnProperty('InActive')?LangPack['InActive']:'InActive'}}</mat-radio-button>
+                                  </div>
+                              </mat-radio-group>
+                          </div>
+                          <div class="BtnBar">
+                              <button mat-raised-button color="warn" (click)="OnBackToList()">{{LangPack.hasOwnProperty('BacktoList')?LangPack['BacktoList']:'BacktoList'}}</button>
+                              <button mat-raised-button matStepperNext>{{LangPack.hasOwnProperty('NextStep')?LangPack['NextStep']:'NextStep'}}</button>
+                          </div>
+                      </div>
+                  </form>
+              </mat-step>
+              <mat-step>
+                  <ng-template matStepLabel>{{LangPack.hasOwnProperty('Confirm')?LangPack['Confirm']:'Confirm'}}</ng-template>
+                  <div class="Content">
+                      <div style="margin-bottom: 8px; font-weight: bold;">
+                          {{LangPack.hasOwnProperty('ConfirmInfo')?LangPack['ConfirmInfo']:'ConfirmInfo'}}
+                      </div>
+
+                      <div class="Row" fxLayout="row" fxLayout.xs="column" style="margin-bottom: 1em;">
+                          <div fxFlex fxFlex.xs style="border: 1px double #444;">
+                              <div fxLayout="row" fxLayout.xs="column" style="border-bottom: 1px double #444;">
+                                  <div class="ContentData Bold" fxFlex="30" fxFlex.xs fxLayoutAlign="start center">
+                                      {{LangPack.hasOwnProperty('FuncTypeKey')?LangPack['FuncTypeKey']:'FuncTypeKey'}}
+                                  </div>
+                                  <div class="ContentData" fxFlex="70" fxFlex.xs fxLayoutAlign="start center">
+                                      {{FuncTypeVMInst.FuncTypeKey}}
+                                  </div>
+                              </div>
+                              <div fxLayout="row" fxLayout.xs="column" style="border-bottom: 1px double #444;">
+                                  <div class="ContentData Bold" fxFlex="30" fxFlex.xs fxLayoutAlign="start center">
+                                      {{LangPack.hasOwnProperty('Status')?LangPack['Status']:'Status'}}
+                                  </div>
+                                  <div class="ContentData" fxFlex="70" fxFlex.xs fxLayoutAlign="start center">
+                                      {{FuncTypeStatusLabel}}
+                                  </div>
+                              </div>
+                              <div fxLayout="row" fxLayout.xs="column" style="border-bottom: 1px double #444;">
+                                  <div class="ContentData Bold" fxFlex="30" fxFlex.xs fxLayoutAlign="start center">
+                                      {{LangPack.hasOwnProperty('Pri')?LangPack['Pri']:'Pri'}}
+                                  </div>
+                                  <div class="ContentData" fxFlex="70" fxFlex.xs fxLayoutAlign="start center">
+                                      {{FuncTypeVMInst.Priority}}
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div style="margin-bottom: 8px; font-weight: bold;">
+                          {{LangPack.hasOwnProperty('ResetInfo')?LangPack['ResetInfo']:'ResetInfo'}}
+                      </div>
+                      <div style="margin-bottom: 1em;">
+                          <button mat-raised-button color="warn" (click)="stepper.reset()">{{LangPack.hasOwnProperty('Reset')?LangPack['Reset']:'Reset'}}</button>
+                      </div>
+                      <div class="BtnBar">
+                          <button mat-raised-button matStepperPrevious>{{LangPack.hasOwnProperty('PreStep')?LangPack['PreStep']:'PreStep'}}</button>
+                          <button mat-raised-button color="primary" (click)="OnSave()" [disabled]="!this.PrivilegeTypeInst.Create">{{LangPack.hasOwnProperty('Save')?LangPack['Save']:'Save'}}</button>
+                      </div>
+                  </div>
+              </mat-step>
+          </mat-horizontal-stepper>
+      </div>
+  </mat-card-content>
+</mat-card>

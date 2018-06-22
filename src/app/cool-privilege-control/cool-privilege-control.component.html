@@ -1,0 +1,132 @@
+<div class="CoolPrivilegeControl">
+  <mat-toolbar color="primary" fxLayoutAlign="space-between center">
+    <div fxLayoutAlign="start center">
+      <div class="header">
+        <button mat-icon-button (click)='openMenu=!openMenu'>
+          <mat-icon class="md-24" aria-hidden="true">menu</mat-icon>
+        </button>
+      </div>
+      <div fxHide.xs style="margin-left: 5px;">{{LangPack.hasOwnProperty("LoginScreenTitle")?LangPack["LoginScreenTitle"]:"LoginScreenTitle"}}</div>
+    </div>
+    <div fxLayout="row">
+      <div fxLayoutAlign="center center" style="font-family: Roboto,'Helvetica Neue',sans-serif;font-size: 14px;font-weight: 500;">
+        <span>{{LangPack.hasOwnProperty('LoginName')?LangPack['LoginName']:'LoginName'}}: {{loginName}}</span>
+      </div>
+      <div>
+        <button mat-button (click)="OnSignout()">{{LangPack.hasOwnProperty('Logout')?LangPack['Logout']:'Logout'}}</button>
+      </div>
+    </div>
+  </mat-toolbar>
+  <mat-sidenav-container class="sidenav">
+    <mat-sidenav [(mode)]="sideMenuMode" [(opened)]="openMenu">
+      <!-- style="background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);" -->
+      <div fxFill>
+        <mat-nav-list class="menu">
+          <div fxFill *ngFor="let menuItem of menuItems; index as i">
+            <app-side-menu [menuItem]='menuItem' (MenuItemClick)="menuItemClick($event)"></app-side-menu>
+          </div>
+        </mat-nav-list>
+      </div>
+      <!-- <div fxFill>
+                <mat-nav-list class="menu">
+                    <div fxFill>
+                        <mat-list-item (click)='subMenu1=!subMenu1'>
+                            <a class="link">
+                                <div class="label">Test 1 </div>
+                                <div class="icon">
+                                    <mat-icon>{{!subMenu1?'keyboard_arrow_down':'keyboard_arrow_up'}}</mat-icon>
+                                </div>
+                            </a>
+                        </mat-list-item>
+
+                        <div fxFill [@subMenuState]="subMenu1">
+                            <mat-nav-list class="submenu">
+                                <div fxFill>
+                                    <mat-list-item (click)='subMenu11=!subMenu11'>
+                                        <div class="buttonDiv">
+                                            <button mat-button> </button>
+                                            <a class="link">
+                                                <div class="label">Test 1.1 </div>
+                                                <div class="icon">
+                                                    <mat-icon>{{!subMenu11?'keyboard_arrow_down':'keyboard_arrow_up'}}</mat-icon>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </mat-list-item>
+                                    <div fxF [@subMenuState]="subMenu11">
+                                        <mat-nav-list class="submenu">
+                                            <div fxFill>
+                                                <mat-list-item>
+                                                    <a class="link">
+                                                        <div class="label">Test 1.1.1 </div>
+                                                    </a>
+                                                </mat-list-item>
+                                            </div>
+                                            <div fxFill>
+                                                <mat-list-item>
+                                                    <a class="link">
+                                                        <div class="label">Test 1.1.2 </div>
+                                                    </a>
+                                                </mat-list-item>
+                                            </div>
+                                        </mat-nav-list>
+                                    </div>
+                                </div>
+                            </mat-nav-list>
+                        </div>
+                    </div>
+                    <div fxFill>
+                        <mat-list-item>
+                            <a class="link">
+                                <div class="label">Home </div>
+                            </a>
+                        </mat-list-item>
+                    </div>
+                    <div fxFill>
+                        <mat-list-item>
+                            <a class="link">
+                                <div class="label">Athlets </div>
+                            </a>
+                        </mat-list-item>
+                    </div>
+                    <div fxFill>
+                        <mat-list-item>
+                            <a class="link">
+                                <div class="label">Teams & Partnerships </div>
+                            </a>
+                        </mat-list-item>
+                    </div>
+                </mat-nav-list>
+            </div> -->
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div fxLayout="column">
+        <app-bread-crumb></app-bread-crumb>
+        <router-outlet (activate)="onActivate($event)" (deactivate)="onDeactivate($event)"></router-outlet>
+
+        <mat-card *ngIf="isShowDashBoard" fxFlex>
+          <mat-toolbar fxFlex color="primary">{{LangPack.hasOwnProperty('AccessPrivilege')?LangPack['AccessPrivilege']:'AccessPrivilege'}}</mat-toolbar>
+          <mat-card-content fxFlex class="Grid">
+            <div fxLayout="column" fxLayout.xs="column" fxFlexFill>
+              <div fxLayout="row" fxLayout.xs="column">
+                <div class="Header" fxFlex="40" fxFlex.xs fxLayoutAlign="start center">
+                  {{LangPack.hasOwnProperty('FuncKey')?LangPack['FuncKey']:'FuncKey'}}
+                </div>
+                <div class="Header" fxFlex="60" fxFlex.xs fxLayoutAlign="start center">
+                  {{LangPack.hasOwnProperty('FuncTypeKey')?LangPack['FuncTypeKey']:'FuncTypeKey'}}
+                </div>
+              </div>
+              <div fxLayout="column" fxLayout.xs="column" *ngFor="let privilegeWOrg of PrivilegeWOrgList;">
+                <div class="ContentData" fxLayoutAlign="start center" *ngIf="privilegeWOrg.OrgKey!=null && privilegeWOrg.OrgKey!=''">{{LangPack.hasOwnProperty('OrgKey')?LangPack['OrgKey']:'OrgKey'}} : [{{privilegeWOrg.OrgPath}}] {{privilegeWOrg.OrgKey}}</div>
+                <div class="ContentData" style="padding-left: 2em;" fxLayout="row" *ngFor="let funcDGroup of privilegeWOrg.FuncDetailGroupList;">
+                  <div fxFlex="40" fxLayoutAlign="start center">{{funcDGroup.FuncKey}} {{LangPack.hasOwnProperty(funcDGroup.FuncKey)?' ('+LangPack[funcDGroup.FuncKey]+')':''}}</div>
+                  <div fxFlex="60" fxLayoutAlign="start center">{{funcDGroup.FuncTKeys}}</div>
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

@@ -1,0 +1,32 @@
+<div fxLayout="row">
+    <form fxLayoutAlign="center center" fxFlexFill>
+        <div class="LoginBox" fxLayout="column" fxFlexAlign="center" fxLayoutGap="8px">
+            <div fxLayoutAlign="center center" class="LoginHeader">{{LangPack.hasOwnProperty("LoginScreenTitle")?LangPack["LoginScreenTitle"]:"LoginScreenTitle"}}</div>
+            <div>
+                <div class="InputItem">
+                    <mat-form-field fxFlexFill>
+                        <input matInput type="text" placeholder="{{LangPack.hasOwnProperty('LoginName')?LangPack['LoginName']:'LoginName'}}" [(ngModel)]="loginUserVM.LoginName" name="LoginName">
+                    </mat-form-field>
+                </div>
+                <div class="InputItem">
+                    <mat-form-field fxFlexFill>
+                        <input matInput type="password" placeholder="{{LangPack.hasOwnProperty('LoginPwd')?LangPack['LoginPwd']:'LoginPwd'}}" [(ngModel)]="loginUserVM.LoginPwd" name="LoginPwd">
+                    </mat-form-field>
+                </div>
+  
+                <div class="InputItem">
+                    <mat-form-field fxFlexFill>
+                        <mat-select placeholder="{{LangPack.hasOwnProperty('Language')?LangPack['Language']:'Language'}}" name="LanguageKey" [(ngModel)]="loginUserVM.LanguageKey" (selectionChange)="OnChangeLang(loginUserVM.LanguageKey)">
+                            <mat-option *ngFor="let langInst of LanguageList" [value]="langInst.LanguageKey" fxFlexFill>
+                                {{langInst.LanguageDesc}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayoutAlign="center center" class="LoginFooter">
+                <button mat-raised-button color="primary" (click)="OnLogin()">{{LangPack.hasOwnProperty('Login')?LangPack['Login']:'Login'}}</button>
+            </div>
+        </div>
+    </form>
+  </div>

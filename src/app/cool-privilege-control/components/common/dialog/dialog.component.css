@@ -1,0 +1,20 @@
+.MsgContent {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    height: 30px;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+  
+  .MsgContentError {
+    color: red;
+    font-weight: bold;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+  
+  /* .MsgLable
+  {
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+  } */
