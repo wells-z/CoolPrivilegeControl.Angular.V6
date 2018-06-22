@@ -15,13 +15,13 @@ import { CoolPrivilegeControlComponent } from './cool-privilege-control.componen
 // Common Component
 import { SideMenuComponent } from './components/common/side-menu/side-menu.component';
 import { BreadCrumbComponent } from './components/common/bread-crumb/bread-crumb.component';
-
-// Service
-import { FuncMgtService } from "./services/func-mgt.service";
 import { PagingBarComponent } from './components/common/paging-bar/paging-bar.component';
 import { SelectedFuncsComponent } from './components/common/selected-funcs/selected-funcs.component';
 import { SelectedRolesComponent } from './components/common/selected-roles/selected-roles.component';
 import { SelectedLuserOrgComponent } from './components/common/selected-luser-org/selected-luser-org.component';
+
+// Service
+import { FuncMgtService } from './services/func-mgt.service';
 
 
 @NgModule({
@@ -43,7 +43,7 @@ import { SelectedLuserOrgComponent } from './components/common/selected-luser-or
     SelectedLuserOrgComponent
   ],
   providers: [
-    // FuncMgtService
+    FuncMgtService
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

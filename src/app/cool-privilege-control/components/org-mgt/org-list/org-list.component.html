@@ -1,0 +1,123 @@
+<mat-card fxFlex fxFlexAlign="start center">
+  <mat-toolbar fxFlex color="primary">{{LangPack.hasOwnProperty('OrgList')?LangPack['OrgList']:'OrgList'}}</mat-toolbar>
+  <mat-card-content fxFlex class="Grid">
+    <div>
+      <mat-expansion-panel *ngIf="this.PrivilegeTypeInst.Search">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{LangPack.hasOwnProperty('SearchCriteria')?LangPack['SearchCriteria']:'SearchCriteria'}}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{LangPack.hasOwnProperty('InputSearchCriteria')?LangPack['InputSearchCriteria']:'InputSearchCriteria'}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div fxFlex fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center" fxLayoutGap="8px">
+          <mat-form-field fxFlex.xs>
+            <input type="text" matInput name="SearchOrgKey" [(ngModel)]="SearchCriteriaOrg.OrgKey" placeholder="{{LangPack.hasOwnProperty('OrgKey')?LangPack['OrgKey']:'OrgKey'}}">
+          </mat-form-field>
+
+          <mat-form-field fxFlex.xs>
+            <input type="text" matInput name="SearchOrgPath" [(ngModel)]="SearchCriteriaOrg.OrgPath" placeholder="{{LangPack.hasOwnProperty('Path')?LangPack['Path']:'Path'}}">
+          </mat-form-field>
+        </div>
+
+        <div fxFlex fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center" fxLayoutGap="8px" fxFlex="80">
+          <div>{{LangPack.hasOwnProperty("Status")?LangPack["Status"]+":":"Status:"}}</div>
+          <mat-radio-group [(ngModel)]="SearchCriteriaOrg.Status" name="SearchOrgStatus" fxFlexFill fxFlexAlign="center center"
+            fxLayout="row" fxLayout.xs="column">
+            <div fxFlex.xs fxFlex="20" fxFlexAlign="start center">
+              <mat-radio-button value="null">{{LangPack.hasOwnProperty('All')?LangPack['All']:'All'}}</mat-radio-button>
+            </div>
+            <div fxFlex.xs fxFlex="20" fxFlexAlign="start center">
+              <mat-radio-button value="1">{{LangPack.hasOwnProperty('Active')?LangPack['Active']:'Active'}}</mat-radio-button>
+            </div>
+            <div fxFlex.xs fxFlex="20" fxFlexAlign="start center">
+              <mat-radio-button value="2">{{LangPack.hasOwnProperty('InActive')?LangPack['InActive']:'InActive'}}</mat-radio-button>
+            </div>
+          </mat-radio-group>
+        </div>
+
+        <div fxFlex fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center" style="margin-top: 8px;">
+
+          <div fxFlex.xs fxFlex="10">
+            <button mat-button color="primary" (click)="OnSearch()">{{LangPack.hasOwnProperty('Search')?LangPack['Search']:'Search'}}</button>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
+    <!-- fxHide.xs="true" -->
+    <div fxLayout="row" fxLayout.xs="column" fxFlexFill>
+      <!-- <div class="CheckBoxCol"> </div> -->
+      <div class="Header" fxFlex="20" fxFlex.xs fxLayoutAlign="start center" (click)="OnSort('OrgPath')">
+        <a matLine class="link">{{LangPack.hasOwnProperty('Path')?LangPack['Path']:'Path'}}</a>
+        <button mat-icon-button *ngIf="SortColumn=='OrgPath'">
+          <mat-icon>{{(SortDir=='asc')?'keyboard_arrow_up':'keyboard_arrow_down'}}</mat-icon>
+        </button>
+      </div>
+
+      <div class="Header" fxFlex="20" fxFlex.xs fxLayoutAlign="start center" (click)="OnSort('OrgKey')">
+        <a matLine class="link">{{LangPack.hasOwnProperty('OrgKey')?LangPack['OrgKey']:'OrgKey'}}</a>
+        <button mat-icon-button *ngIf="SortColumn=='OrgKey'">
+          <mat-icon>{{(SortDir=='asc')?'keyboard_arrow_up':'keyboard_arrow_down'}}</mat-icon>
+        </button>
+      </div>
+
+      <div class="Header" fxFlex="30" fxFlex.xs fxLayoutAlign="start center">
+        {{LangPack.hasOwnProperty('OrgName')?LangPack['OrgName']:'OrgName'}}
+      </div>
+
+      <div class="Header" fxFlex="10" fxFlex.xs fxLayoutAlign="start center" (click)="OnSort('Status')">
+        <a matLine class="link">{{LangPack.hasOwnProperty('Status')?LangPack['Status']:'Status'}}</a>
+        <button mat-icon-button *ngIf="SortColumn=='Status'">
+          <mat-icon>{{(SortDir=='asc')?'keyboard_arrow_up':'keyboard_arrow_down'}}</mat-icon>
+        </button>
+      </div>
+
+      <div class="Header" fxFlex="20" fxFlex.xs fxLayoutAlign="center center">
+        {{LangPack.hasOwnProperty('Operation')?LangPack['Operation']:'Operation'}}
+      </div>
+    </div>
+    <div [@listAnimation]="OrgList">
+      <div fxLayout="row" fxLayout.xs="column" *ngFor="let org of OrgList;">
+        <ng-container>
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('OrgPath')?LangPack['OrgPath']:'OrgPath'}}">
+            {{org.OrgPath}}
+          </div>
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('OrgKey')?LangPack['OrgKey']:'OrgKey'}}">
+            {{org.OrgKey}}
+          </div>
+          <div class="ContentData" fxFlex="30" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('OrgName')?LangPack['OrgName']:'OrgName'}}">
+            {{LangPack.hasOwnProperty(org.OrgKey)?LangPack[org.OrgKey]:org.OrgKey}}
+          </div>
+
+          <div class="ContentData" fxFlex="10" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('Status')?LangPack['Status']:'Status'}}">
+            {{org.Status==0?"":(org.Status==1?(LangPack.hasOwnProperty("Active")?LangPack["Active"]:"Active"):(LangPack.hasOwnProperty("InActive")?LangPack["InActive"]:"InActive"))}}
+          </div>
+
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Edit')?LangPack['Edit']:'Edit'}}" (click)="OnEdit(org.ID)"
+              [disabled]="!this.PrivilegeTypeInst.Update">
+              <mat-icon class="md-22" aria-hidden="true">mode_edit</mat-icon>
+            </button>
+
+            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Delete')?LangPack['Delete']:'Delete'}}" (click)="OnDel(org.ID)"
+              [disabled]="!this.PrivilegeTypeInst.Delete">
+              <mat-icon class="md-22" aria-hidden="true">delete</mat-icon>
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" *ngIf="TotalCount<=0">
+      <ng-container>
+        <div class="ContentData" fxLayoutAlign="start center">{{LangPack.hasOwnProperty('E019')?LangPack['E019']:'No record found.'}}</div>
+      </ng-container>
+    </div>
+    <paging-bar *ngIf="TotalCount!=null&&TotalCount>0" [totalcount]="TotalCount" [pagesize]="PageSize" [pageindex]="PageIndex"
+      [displaypagecount]="DisplayPageNum" (PageChange)="OnPageChange($event)" [langPackage]="LangPack"></paging-bar>
+  </mat-card-content>
+  <mat-card-actions class="ListAction">
+    <button mat-raised-button color="primary" (click)="OnCreate()" [disabled]="!this.PrivilegeTypeInst.Create">{{LangPack.hasOwnProperty('CreateOrg')?LangPack['CreateOrg']:'CreateOrg'}}</button>
+  </mat-card-actions>
+</mat-card>

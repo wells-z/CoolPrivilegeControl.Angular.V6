@@ -1,0 +1,113 @@
+<mat-card fxFlex fxFlexAlign="start center">
+  <mat-toolbar fxFlex color="primary">{{LangPack.hasOwnProperty('CreateOrgD')?LangPack['CreateOrgD']:'CreateOrgD'}}</mat-toolbar>
+  <mat-card-content class="CreateCard">
+    <div>
+      <mat-horizontal-stepper [linear]="isLinear" #stepper>
+        <mat-step [stepControl]="OrgDInfoGroup">
+          <form [formGroup]="OrgDInfoGroup">
+            <ng-template matStepLabel>{{LangPack.hasOwnProperty('InputOrgInfo')?LangPack['InputOrgInfo']:'InputOrgInfo'}}</ng-template>
+            <div class="Content">
+              <div class="Row">
+                <mat-form-field fxFlexFill>
+                  <input matInput placeholder="{{LangPack.hasOwnProperty('OrgDKey')?LangPack['OrgDKey']:'OrgDKey'}}"
+                    formControlName="OrgDKeyTextBox" (change)="OnChangeOrgDKey()">
+                </mat-form-field>
+              </div>
+
+              <div fxLayout="column" fxLayout.xs="column" fxFlexAlign="center center" fxLayoutGap="8px" fxFlex="80" style="margin-bottom: 2em;" >
+                <div>{{LangPack.hasOwnProperty("PrivilegeTypeSetting")?LangPack["PrivilegeTypeSetting"]+":":"PrivilegeTypeSetting:"}}</div>
+                <mat-radio-group fxFlexFill fxFlexAlign="center center" fxLayout="column" fxLayout.xs="column" formControlName="AccessPrivilegeTypeRadioBtn" fxLayoutGap="8px" (change)="OnChangeAccPrivilegeType()">
+                  <div fxFlex.xs fxFlex fxFlexAlign="start center">
+                    <mat-radio-button value="1">{{LangPack.hasOwnProperty('SpecificSetting')?LangPack['SpecificSetting']:'SpecificSetting'}}</mat-radio-button>
+                  </div>
+                  <div fxFlex.xs fxFlex fxFlexAlign="start center">
+                    <mat-radio-button value="2">{{LangPack.hasOwnProperty('RoleSetting')?LangPack['RoleSetting']:'RoleSetting'}}</mat-radio-button>
+                  </div>
+                </mat-radio-group>
+              </div>
+
+              <div class="BtnBar">
+                <button mat-raised-button color="warn" (click)="OnBackToList()">{{LangPack.hasOwnProperty('BacktoList')?LangPack['BacktoList']:'BacktoList'}}</button>
+                <button mat-raised-button matStepperNext>{{LangPack.hasOwnProperty('NextStep')?LangPack['NextStep']:'NextStep'}}</button>
+              </div>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="OrgDDetailGroup">
+          <form [formGroup]="OrgDDetailGroup">
+            <ng-template matStepLabel>{{LangPack.hasOwnProperty('InputDetailInfo')?LangPack['InputDetailInfo']:'InputDetailInfo'}}</ng-template>
+            <div class="Content">
+              <cpc-selected-funcs [pagesize]="PageSize" [displaypagecount]="DisplayPageNum" [LangKey]="LangKey" [LangPack]="LangPack"
+                [OutFuncDetailList]="selFuncDetailList" (UpdateFuncDetailList)="OnUpdateFuncDetailList($event)" *ngIf="OrgDetailVMInst.AccessPrivilegeTypeShort==1"></cpc-selected-funcs>
+
+              <cpc-selected-roles [pagesize]="PageSize" [displaypagecount]="DisplayPageNum" [LangKey]="LangKey" [LangPack]="LangPack"
+                [OutRoleList]="selRoleList" (UpdateRoleList)="OnUpdateRoleList($event)" *ngIf="OrgDetailVMInst.AccessPrivilegeTypeShort==2"></cpc-selected-roles>
+
+              <div class="BtnBar" style="margin-top: 1em;">
+                <button mat-raised-button matStepperPrevious>{{LangPack.hasOwnProperty('PreStep')?LangPack['PreStep']:'PreStep'}}</button>
+                <button mat-raised-button matStepperNext>{{LangPack.hasOwnProperty('NextStep')?LangPack['NextStep']:'NextStep'}}</button>
+              </div>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>{{LangPack.hasOwnProperty('Confirm')?LangPack['Confirm']:'Confirm'}}</ng-template>
+          <div class="Content">
+            <div style="margin-bottom: 8px; font-weight: bold;">
+              {{LangPack.hasOwnProperty('ConfirmInfo')?LangPack['ConfirmInfo']:'ConfirmInfo'}}
+            </div>
+
+            <div class="Row" fxLayout="row" fxLayout.xs="column" style="margin-bottom: 1em;">
+              <div fxFlex fxFlex.xs style="border: 1px double #444;">
+                <div fxLayout="row" fxLayout.xs="column" style="border-bottom: 1px double #444;">
+                  <div class="ContentData Bold" fxFlex="30" fxFlex.xs fxLayoutAlign="start center">
+                    {{LangPack.hasOwnProperty('OrgDKey')?LangPack['OrgDKey']:'OrgDKey'}}
+                  </div>
+                  <div class="ContentData" fxFlex="70" fxFlex.xs fxLayoutAlign="start center">
+                    {{OrgDetailVMInst.OrgDKey}}
+                  </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column" style="border-bottom: 1px double #444;" *ngIf="OrgDetailVMInst.AccessPrivilegeTypeShort==1">
+                  <div class="ContentDataHeight Bold" fxFlex="30" fxFlex.xs fxLayoutAlign="start center">
+                    {{LangPack.hasOwnProperty('FuncAllocationList')?LangPack['FuncAllocationList']:'FuncAllocationList'}}
+                  </div>
+                  <div class="ContentDataHeight" fxFlex="70" fxFlex.xs fxLayout="column" style="align-items:left !important;">
+                    <div *ngFor="let item of SelFuncDInfos" style="padding-top: 5px; padding-bottom: 5px;">
+                      <div fxLayout="row" fxFlexFill style="height: auto;">
+                        <div fxFlex="40">{{item.FuncName}}</div>
+                        <div fxFlex="60">
+                          <span *ngFor="let item_FuncType of item.FuncTypeList;">{{item_FuncType.FuncTypeKey}}|</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div fxLayout="row" fxLayout.xs="column" style="border-bottom: 1px double #444;" *ngIf="OrgDetailVMInst.AccessPrivilegeTypeShort==2">
+                  <div class="ContentDataHeight Bold" fxFlex="30" fxFlex.xs fxLayoutAlign="start center">
+                    {{LangPack.hasOwnProperty('RoleAllocationList')?LangPack['RoleAllocationList']:'RoleAllocationList'}}
+                  </div>
+                  <div class="ContentDataHeight" fxFlex="70" fxFlex.xs fxLayout="column" style="align-items:left !important;">
+                    <div *ngFor="let item of selRoleList" style="justify-self:left;">
+                      {{item.RoleKey}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="margin-bottom: 8px; font-weight: bold;">
+              {{LangPack.hasOwnProperty('ResetInfo')?LangPack['ResetInfo']:'ResetInfo'}}
+            </div>
+            <div style="margin-bottom: 1em;">
+              <button mat-raised-button color="warn" (click)="stepper.reset();OnReset();">{{LangPack.hasOwnProperty('Reset')?LangPack['Reset']:'Reset'}}</button>
+            </div>
+            <div class="BtnBar">
+              <button mat-raised-button matStepperPrevious>{{LangPack.hasOwnProperty('PreStep')?LangPack['PreStep']:'PreStep'}}</button>
+              <button mat-raised-button color="primary" (click)="OnSave()" [disabled]="!this.PrivilegeTypeInst.Create">{{LangPack.hasOwnProperty('Save')?LangPack['Save']:'Save'}}</button>
+            </div>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </div>
+  </mat-card-content>
+</mat-card>

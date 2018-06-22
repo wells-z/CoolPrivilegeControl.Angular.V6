@@ -1,0 +1,67 @@
+<mat-card fxFlex fxFlexAlign="start center">
+  <mat-toolbar fxFlex color="primary">{{LangPack.hasOwnProperty('EditLUser')?LangPack['EditLUser']:'EditLUser'}}</mat-toolbar>
+  <mat-card-content class="EditCard">
+    <div class="Content">
+      <div class="Row">
+        <mat-form-field fxFlexFill>
+          <input matInput placeholder="{{LangPack.hasOwnProperty('LoginName')?LangPack['LoginName']:'LoginName'}}" [(ngModel)]="LUserVMInst.LoginName">
+        </mat-form-field>
+      </div>
+
+      <div class="Row" fxLayoutAlign="start center" style="margin-bottom: 1em;" >
+        <button mat-raised-button color="warn" (click)="OnChangePWD()" *ngIf="!isChangePWD" style="margin-bottom: 1em;">{{LangPack.hasOwnProperty('ChangePWD')?LangPack['ChangePWD']:'ChangePWD'}}</button>
+        <mat-form-field fxFlexFill *ngIf="isChangePWD">
+          <input matInput placeholder="{{LangPack.hasOwnProperty('LoginPwd')?LangPack['LoginPwd']:'LoginPwd'}}" type="password" [formControl]="PWDFormControl" (change)="OnChangePWDTxt()">
+          <mat-error *ngIf="!PWDFormControl.hasError('required')">
+            {{this.strPWDLenChecked}}
+          </mat-error>
+          <mat-error *ngIf="PWDFormControl.hasError('required')">
+            {{this.strPWDRequired}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="Row" fxLayoutGap="1em" style="margin-bottom: 1em;" fxLayoutAlign="start center">
+        <div>{{LangPack.hasOwnProperty('Status')?LangPack['Status']:'Status'}}</div>
+        <mat-radio-group [(ngModel)]="LUserVMInst.Status" fxLayoutGap="8px" fxLayout="row" fxLayout.xs="column">
+          <div>
+            <mat-radio-button [value]="1">{{LangPack.hasOwnProperty('Active')?LangPack['Active']:'Active'}}</mat-radio-button>
+          </div>
+          <div>
+            <mat-radio-button [value]="2">{{LangPack.hasOwnProperty('InActive')?LangPack['InActive']:'InActive'}}</mat-radio-button>
+          </div>
+        </mat-radio-group>
+      </div>
+
+      <div class="Row" fxLayoutGap="1em" style="margin-bottom: 1em;" fxLayoutAlign="start center">
+        <div>{{LangPack.hasOwnProperty('PrivilegeTypeSetting')?LangPack['PrivilegeTypeSetting']:'PrivilegeTypeSetting'}}</div>
+        <mat-radio-group [(ngModel)]="LUserVMInst.AccessPrivilegeTypeShort" fxLayoutGap="8px" fxLayout="column" (change)="OnChangeAccPrivilegeType()" [disabled]="!canChangeAccPrivilegeType">
+          <div>
+            <mat-radio-button [value]="1">{{LangPack.hasOwnProperty('SpecificSetting')?LangPack['SpecificSetting']:'SpecificSetting'}}</mat-radio-button>
+          </div>
+          <div>
+            <mat-radio-button [value]="2">{{LangPack.hasOwnProperty('RoleSetting')?LangPack['RoleSetting']:'RoleSetting'}}</mat-radio-button>
+          </div>
+          <div>
+            <mat-radio-button [value]="3">{{LangPack.hasOwnProperty('LUserOrgSetting')?LangPack['LUserOrgSetting']:'LUserOrgSetting'}}</mat-radio-button>
+          </div>
+        </mat-radio-group>
+      </div>
+
+      <cpc-selected-funcs [pagesize]="PageSize" [displaypagecount]="DisplayPageNum" [LangKey]="LangKey" [LangPack]="LangPack" [OutFuncDetailList]="selFuncDetailList"
+        (UpdateFuncDetailList)="OnUpdateFuncDetailList($event)" *ngIf="LUserVMInst.AccessPrivilegeTypeShort==1"></cpc-selected-funcs>
+
+      <cpc-selected-roles [pagesize]="PageSize" [displaypagecount]="DisplayPageNum" [LangKey]="LangKey" [LangPack]="LangPack" [OutRoleList]="selRoleList"
+        (UpdateRoleList)="OnUpdateRoleList($event)" *ngIf="LUserVMInst.AccessPrivilegeTypeShort==2"></cpc-selected-roles>
+
+      <cpc-selected-luser-org [pagesize]="PageSize" [displaypagecount]="DisplayPageNum" [LangKey]="LangKey" [LangPack]="LangPack"
+        [OutLUserOrgList]="selLUserOrgList" (UpdateLUserOrgList)="OnUpdateLUserOrgList($event)" *ngIf="LUserVMInst.AccessPrivilegeTypeShort==3"></cpc-selected-luser-org>
+
+
+      <div class="BtnBar" style="margin-top: 1em;">
+        <button mat-raised-button color="warn" (click)="OnBackToList()">{{LangPack.hasOwnProperty('BacktoList')?LangPack['BacktoList']:'BacktoList'}}</button>
+        <button mat-raised-button color="primary" [disabled]="!this.PrivilegeTypeInst.Update" (click)="OnSave()">{{LangPack.hasOwnProperty('Save')?LangPack['Save']:'Save'}}</button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

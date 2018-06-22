@@ -1,0 +1,32 @@
+<mat-card fxFlex fxFlexAlign="start center">
+  <mat-toolbar fxFlex color="primary">{{LangPack.hasOwnProperty('EditOrg')?LangPack['EditOrg']:'EditOrg'}}</mat-toolbar>
+  <mat-card-content class="EditCard">
+    <div class="Content">
+      <div class="Row">
+        <mat-form-field fxFlexFill>
+          <input matInput placeholder="{{LangPack.hasOwnProperty('Path')?LangPack['Path']:'Path'}}" [(ngModel)]="OrgVMInst.OrgPath">
+        </mat-form-field>
+      </div>
+      <div class="Row">
+        <mat-form-field fxFlexFill>
+          <input matInput placeholder="{{LangPack.hasOwnProperty('OrgKey')?LangPack['OrgKey']:'OrgKey'}}" [(ngModel)]="OrgVMInst.OrgKey">
+        </mat-form-field>
+      </div>
+      <div class="Row" fxLayoutGap="1em" style="margin-bottom: 1em;" fxLayoutAlign="start center">
+        <div>{{LangPack.hasOwnProperty('Status')?LangPack['Status']:'Status'}}</div>
+        <mat-radio-group [(ngModel)]="OrgVMInst.Status" fxLayoutGap="8px" fxLayout="row" fxLayout.xs="column">
+          <div>
+            <mat-radio-button [value]="1">{{LangPack.hasOwnProperty('Active')?LangPack['Active']:'Active'}}</mat-radio-button>
+          </div>
+          <div>
+            <mat-radio-button [value]="2">{{LangPack.hasOwnProperty('InActive')?LangPack['InActive']:'InActive'}}</mat-radio-button>
+          </div>
+        </mat-radio-group>
+      </div>
+      <div class="BtnBar">
+          <button mat-raised-button color="warn" (click)="OnBackToList()">{{LangPack.hasOwnProperty('BacktoList')?LangPack['BacktoList']:'BacktoList'}}</button>
+        <button mat-raised-button color="primary" [disabled]="!this.PrivilegeTypeInst.Update" (click)="OnSave()">{{LangPack.hasOwnProperty('Save')?LangPack['Save']:'Save'}}</button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

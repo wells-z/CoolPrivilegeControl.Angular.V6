@@ -1,0 +1,169 @@
+<mat-card fxFlex fxFlexAlign="start center">
+  <mat-toolbar fxFlex color="primary">{{LangPack.hasOwnProperty('LUserList')?LangPack['LUserList']:'LUserList'}}</mat-toolbar>
+  <mat-card-content fxFlex class="Grid">
+    <div>
+      <mat-expansion-panel *ngIf="this.PrivilegeTypeInst.Search">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{LangPack.hasOwnProperty('SearchCriteria')?LangPack['SearchCriteria']:'SearchCriteria'}}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{LangPack.hasOwnProperty('InputSearchCriteria')?LangPack['InputSearchCriteria']:'InputSearchCriteria'}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div fxFlex fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center" fxLayoutGap="8px">
+          <mat-form-field fxFlex.xs>
+            <input type="text" matInput name="SearchLoginName" [(ngModel)]="SearchCriteria.LoginName" placeholder="{{LangPack.hasOwnProperty('LoginName')?LangPack['LoginName']:'LoginName'}}">
+          </mat-form-field>
+        </div>
+
+        <div fxFlex fxLayout="column" fxLayout.xs="column" fxFlexAlign="center center" fxLayoutGap="8px" fxFlex="80">
+          <div>{{LangPack.hasOwnProperty("PrivilegeTypeSetting")?LangPack["PrivilegeTypeSetting"]+":":"PrivilegeTypeSetting:"}}</div>
+          <mat-radio-group [(ngModel)]="SearchCriteria.AccessPrivilegeTypeShort" name="SearchAccPrivilegeType" fxFlexFill fxFlexAlign="center center"
+            fxLayout="column" fxLayout.xs="column" fxLayoutGap="8px">
+            <div fxFlex.xs fxFlex fxFlexAlign="start center">
+              <mat-radio-button value="null">{{LangPack.hasOwnProperty('All')?LangPack['All']:'All'}}</mat-radio-button>
+            </div>
+            <div fxFlex.xs fxFlex fxFlexAlign="start center">
+              <mat-radio-button value="1">{{LangPack.hasOwnProperty('SpecificSetting')?LangPack['SpecificSetting']:'SpecificSetting'}}</mat-radio-button>
+            </div>
+            <div fxFlex.xs fxFlex fxFlexAlign="start center">
+              <mat-radio-button value="2">{{LangPack.hasOwnProperty('RoleSetting')?LangPack['RoleSetting']:'RoleSetting'}}</mat-radio-button>
+            </div>
+            <div fxFlex.xs fxFlex fxFlexAlign="start center">
+              <mat-radio-button value="3">{{LangPack.hasOwnProperty('LUserOrgSetting')?LangPack['LUserOrgSetting']:'LUserOrgSetting'}}</mat-radio-button>
+            </div>
+          </mat-radio-group>
+        </div>
+
+        <div fxFlex fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center" fxLayoutGap="8px" fxFlex="80" style="margin-top: 10px;">
+          <div>{{LangPack.hasOwnProperty("Status")?LangPack["Status"]+":":"Status:"}}</div>
+          <mat-radio-group [(ngModel)]="SearchCriteria.Status" name="SearchStatus" fxFlexFill fxFlexAlign="center center" fxLayout="row"
+            fxLayout.xs="column">
+            <div fxFlex.xs fxFlex="20" fxFlexAlign="start center">
+              <mat-radio-button value="null">{{LangPack.hasOwnProperty('All')?LangPack['All']:'All'}}</mat-radio-button>
+            </div>
+            <div fxFlex.xs fxFlex="20" fxFlexAlign="start center">
+              <mat-radio-button value="1">{{LangPack.hasOwnProperty('Active')?LangPack['Active']:'Active'}}</mat-radio-button>
+            </div>
+            <div fxFlex.xs fxFlex="20" fxFlexAlign="start center">
+              <mat-radio-button value="2">{{LangPack.hasOwnProperty('InActive')?LangPack['InActive']:'InActive'}}</mat-radio-button>
+            </div>
+          </mat-radio-group>
+        </div>
+
+        <div fxFlex fxLayout="row" fxLayout.xs="row" fxLayoutAlign="start center" style="margin-top: 8px;">
+
+          <button mat-button color="primary" (click)="OnSearch()">{{LangPack.hasOwnProperty('Search')?LangPack['Search']:'Search'}}</button>
+
+          <button mat-button color="primary" (click)="OnClear()">{{LangPack.hasOwnProperty('Clear')?LangPack['Clear']:'Clear'}}</button>
+
+        </div>
+      </mat-expansion-panel>
+    </div>
+    <!-- fxHide.xs="true" -->
+    <div fxLayout="row" fxLayout.xs="column" fxFlexFill>
+      <!-- <div class="CheckBoxCol"> </div> -->
+      <div class="Header" fxFlex="20" fxFlex.xs fxLayoutAlign="start center" (click)="OnSort('LoginName')">
+        <a matLine class="link">{{LangPack.hasOwnProperty('LoginName')?LangPack['LoginName']:'LoginName'}}</a>
+        <button mat-icon-button *ngIf="SortColumn=='LoginName'">
+          <mat-icon>{{(SortDir=='asc')?'keyboard_arrow_up':'keyboard_arrow_down'}}</mat-icon>
+        </button>
+      </div>
+
+      <div class="Header" fxFlex="20" fxFlex.xs fxLayoutAlign="start center" (click)="OnSort('AccessPrivilegeTypeShort')">
+        <a matLine class="link">{{LangPack.hasOwnProperty('PrivilegeTypeSetting')?LangPack['PrivilegeTypeSetting']:'PrivilegeTypeSetting'}}</a>
+        <button mat-icon-button *ngIf="SortColumn=='AccessPrivilegeTypeShort'">
+          <mat-icon>{{(SortDir=='asc')?'keyboard_arrow_up':'keyboard_arrow_down'}}</mat-icon>
+        </button>
+      </div>
+
+      <div class="Header" fxFlex="10" fxFlex.xs fxLayoutAlign="start center" (click)="OnSort('Status')">
+        <a matLine class="link">{{LangPack.hasOwnProperty('Status')?LangPack['Status']:'Status'}}</a>
+        <button mat-icon-button *ngIf="SortColumn=='Status'">
+          <mat-icon>{{(SortDir=='asc')?'keyboard_arrow_up':'keyboard_arrow_down'}}</mat-icon>
+        </button>
+      </div>
+
+      <div class="Header" fxFlex="30" fxFlex.xs fxLayoutAlign="start center">
+        {{LangPack.hasOwnProperty('OrgKey')?LangPack['OrgKey']:'OrgKey'}}
+        <br/> or {{LangPack.hasOwnProperty('RoleKey')?LangPack['RoleKey']:'RoleKey'}}
+      </div>
+
+      <div class="Header" fxFlex="20" fxFlex.xs fxLayoutAlign="center center">
+        {{LangPack.hasOwnProperty('Operation')?LangPack['Operation']:'Operation'}}
+      </div>
+    </div>
+    <div [@listAnimation]="LUserList">
+      <div fxLayout="row" fxLayout.xs="column" *ngFor="let luserInst of LUserList;">
+        <ng-container>
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('LoginName')?LangPack['LoginName']:'LoginName'}}">
+            {{luserInst.LoginName}}
+          </div>
+
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('PrivilegeTypeSetting')?LangPack['PrivilegeTypeSetting']:'PrivilegeTypeSetting'}}">
+            {{luserInst.AccessPrivilegeTypeShort==0?"":(luserInst.AccessPrivilegeTypeShort==1?(LangPack.hasOwnProperty("SpecificSetting")?LangPack["SpecificSetting"]:"SpecificSetting"):(luserInst.AccessPrivilegeTypeShort==2?(LangPack.hasOwnProperty("RoleSetting")?LangPack["RoleSetting"]:"RoleSetting"):(LangPack.hasOwnProperty("LUserOrgSetting")?LangPack["LUserOrgSetting"]:"LUserOrgSetting")))}}
+          </div>
+
+          <div class="ContentData" fxFlex="10" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('Status')?LangPack['Status']:'Status'}}">
+            {{luserInst.Status==0?"":(luserInst.Status==1?(LangPack.hasOwnProperty("Active")?LangPack["Active"]:"Active"):(LangPack.hasOwnProperty("InActive")?LangPack["InActive"]:"InActive"))}}
+          </div>
+
+          <div class="ContentData" fxFlex="30" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('FuncKey')?LangPack['FuncKey']:'FuncKey'}}"
+            *ngIf="luserInst.SelectedFuncDetailList!=null && luserInst.SelectedFuncDetailList.length>0">
+            <div *ngFor="let item of luserInst.SelFuncDInfos">
+              <div fxLayout="row" fxFlexFill style="height: auto;">
+                <div fxFlex="40">
+                  <a [routerLink]="['/CoolPrivilegeControl',this.LangKey,'FuncMgt','EditFunc', item.FuncID]">
+                    {{item.FuncName}}</a>
+                </div>
+                <div fxFlex="60">
+                  <span *ngFor="let item_FuncType of item.FuncTypeList;">
+                    <a [routerLink]="['/CoolPrivilegeControl',this.LangKey,'FuncTMgt','EditFuncType', item_FuncType.FuncTypeID]">
+                      {{item_FuncType.FuncTypeKey}}|
+                    </a>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ContentData" fxFlex="30" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('OrgKey')?LangPack['OrgKey']:'OrgKey'}}"
+            *ngIf="luserInst.SelectedLUserOrgList!=null && luserInst.SelectedLUserOrgList.length>0">
+            <a *ngFor="let selectedLUserOrgInfo of luserInst.SelectedLUserOrgList;" [routerLink]="['/CoolPrivilegeControl',this.LangKey,'OrgMgt','EditOrg', selectedLUserOrgInfo.OrgID]">
+              {{selectedLUserOrgInfo.OrgKey}}|
+            </a>
+          </div>
+
+          <div class="ContentData" fxFlex="30" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('RoleKey')?LangPack['RoleKey']:'RoleKey'}}"
+            *ngIf="luserInst.SelectedRoleList!=null && luserInst.SelectedRoleList.length>0">
+            <a *ngFor="let selectedRoleInfo of luserInst.SelectedRoleList;" [routerLink]="['/CoolPrivilegeControl',this.LangKey,'RoleMgt','EditRole', selectedRoleInfo.RoleID]">{{selectedRoleInfo.RoleKey}}|</a>
+          </div>
+
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Edit')?LangPack['Edit']:'Edit'}}" (click)="OnEdit(luserInst.ID)"
+              [disabled]="!this.PrivilegeTypeInst.Update">
+              <mat-icon class="md-22" aria-hidden="true">mode_edit</mat-icon>
+            </button>
+
+            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Delete')?LangPack['Delete']:'Delete'}}" (click)="OnDel(luserInst.ID)"
+              [disabled]="!this.PrivilegeTypeInst.Delete">
+              <mat-icon class="md-22" aria-hidden="true">delete</mat-icon>
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" *ngIf="TotalCount<=0">
+      <ng-container>
+        <div class="ContentData" fxLayoutAlign="start center">{{LangPack.hasOwnProperty('E019')?LangPack['E019']:'No record found.'}}</div>
+      </ng-container>
+    </div>
+    <paging-bar *ngIf="TotalCount!=null&&TotalCount>0" [totalcount]="TotalCount" [pagesize]="PageSize" [pageindex]="PageIndex"
+      [displaypagecount]="DisplayPageNum" (PageChange)="OnPageChange($event)" [langPackage]="LangPack"></paging-bar>
+  </mat-card-content>
+  <mat-card-actions class="ListAction">
+    <button mat-raised-button color="primary" (click)="OnCreate()" [disabled]="!this.PrivilegeTypeInst.Create">{{LangPack.hasOwnProperty('CreateLUser')?LangPack['CreateLUser']:'CreateLUser'}}</button>
+  </mat-card-actions>
+</mat-card>

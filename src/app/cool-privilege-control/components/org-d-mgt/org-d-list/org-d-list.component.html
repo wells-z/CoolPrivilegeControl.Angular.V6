@@ -1,0 +1,109 @@
+<mat-card fxFlex fxFlexAlign="start center">
+  <mat-toolbar fxFlex color="primary">{{LangPack.hasOwnProperty('OrgDList')?LangPack['OrgDList']:'OrgDList'}}</mat-toolbar>
+  <mat-card-content fxFlex class="Grid">
+    <div>
+      <mat-expansion-panel *ngIf="this.PrivilegeTypeInst.Search">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{LangPack.hasOwnProperty('SearchCriteria')?LangPack['SearchCriteria']:'SearchCriteria'}}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{LangPack.hasOwnProperty('InputSearchCriteria')?LangPack['InputSearchCriteria']:'InputSearchCriteria'}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div fxFlex fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center" fxLayoutGap="8px">
+          <mat-form-field fxFlex.xs>
+            <input type="text" matInput name="SearchOrgDKey" [(ngModel)]="SearchCriteria.OrgDKey" placeholder="{{LangPack.hasOwnProperty('OrgDKey')?LangPack['OrgDKey']:'OrgDKey'}}">
+          </mat-form-field>
+        </div>
+
+        <div fxFlex fxLayout="column" fxLayout.xs="column" fxFlexAlign="center center" fxLayoutGap="8px" fxFlex="80">
+          <div>{{LangPack.hasOwnProperty("PrivilegeTypeSetting")?LangPack["PrivilegeTypeSetting"]+":":"PrivilegeTypeSetting:"}}</div>
+          <mat-radio-group [(ngModel)]="SearchCriteria.AccessPrivilegeTypeShort" name="SearchAccPrivilegeType" fxFlexFill fxFlexAlign="center center"
+            fxLayout="column" fxLayout.xs="column" fxLayoutGap="8px">
+            <div fxFlex.xs fxFlex fxFlexAlign="start center">
+              <mat-radio-button value="null">{{LangPack.hasOwnProperty('All')?LangPack['All']:'All'}}</mat-radio-button>
+            </div>
+            <div fxFlex.xs fxFlex fxFlexAlign="start center">
+              <mat-radio-button value="1">{{LangPack.hasOwnProperty('SpecificSetting')?LangPack['SpecificSetting']:'SpecificSetting'}}</mat-radio-button>
+            </div>
+            <div fxFlex.xs fxFlex fxFlexAlign="start center">
+              <mat-radio-button value="2">{{LangPack.hasOwnProperty('RoleSetting')?LangPack['RoleSetting']:'RoleSetting'}}</mat-radio-button>
+            </div>
+          </mat-radio-group>
+        </div>
+
+        <div fxFlex fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center" style="margin-top: 8px;">
+
+          <div fxFlex.xs fxFlex="10">
+            <button mat-button color="primary" (click)="OnSearch()">{{LangPack.hasOwnProperty('Search')?LangPack['Search']:'Search'}}</button>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
+    <!-- fxHide.xs="true" -->
+    <div fxLayout="row" fxLayout.xs="column" fxFlexFill>
+      <!-- <div class="CheckBoxCol"> </div> -->
+      <div class="Header" fxFlex="20" fxFlex.xs fxLayoutAlign="start center" (click)="OnSort('OrgDKey')">
+        <a matLine class="link">{{LangPack.hasOwnProperty('OrgDKey')?LangPack['OrgDKey']:'OrgDKey'}}</a>
+        <button mat-icon-button *ngIf="SortColumn=='OrgDKey'">
+          <mat-icon>{{(SortDir=='asc')?'keyboard_arrow_up':'keyboard_arrow_down'}}</mat-icon>
+        </button>
+      </div>
+
+      <div class="Header" fxFlex="20" fxFlex.xs fxLayoutAlign="start center">
+        {{LangPack.hasOwnProperty('OrgDName')?LangPack['OrgDName']:'OrgDName'}}
+      </div>
+
+      <div class="Header" fxFlex="40" fxFlex.xs fxLayoutAlign="start center" (click)="OnSort('AccessPrivilegeTypeShort')">
+        <a matLine class="link">{{LangPack.hasOwnProperty('PrivilegeTypeSetting')?LangPack['PrivilegeTypeSetting']:'PrivilegeTypeSetting'}}</a>
+        <button mat-icon-button *ngIf="SortColumn=='AccessPrivilegeTypeShort'">
+          <mat-icon>{{(SortDir=='asc')?'keyboard_arrow_up':'keyboard_arrow_down'}}</mat-icon>
+        </button>
+      </div>
+
+      <div class="Header" fxFlex="20" fxFlex.xs fxLayoutAlign="center center">
+        {{LangPack.hasOwnProperty('Operation')?LangPack['Operation']:'Operation'}}
+      </div>
+    </div>
+    <div [@listAnimation]="OrgDList">
+      <div fxLayout="row" fxLayout.xs="column" *ngFor="let orgD of OrgDList;">
+        <ng-container>
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('OrgDKey')?LangPack['OrgDKey']:'OrgDKey'}}">
+            {{orgD.OrgDKey}}
+          </div>
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('OrgDName')?LangPack['OrgDName']:'OrgDName'}}">
+            {{LangPack.hasOwnProperty(orgD.OrgDKey)?LangPack[orgD.OrgDKey]:orgD.OrgDKey}}
+          </div>
+
+          <div class="ContentData" fxFlex="40" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('PrivilegeTypeSetting')?LangPack['PrivilegeTypeSetting']:'PrivilegeTypeSetting'}}">
+            {{orgD.AccessPrivilegeTypeShort==0?"":(orgD.AccessPrivilegeTypeShort==1?(LangPack.hasOwnProperty("SpecificSetting")?LangPack["SpecificSetting"]:"SpecificSetting"):(LangPack.hasOwnProperty("RoleSetting")?LangPack["RoleSetting"]:"RoleSetting"))}}
+          </div>
+
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Edit')?LangPack['Edit']:'Edit'}}" (click)="OnEdit(orgD.ID)"
+              [disabled]="!this.PrivilegeTypeInst.Update">
+              <mat-icon class="md-22" aria-hidden="true">mode_edit</mat-icon>
+            </button>
+
+            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Delete')?LangPack['Delete']:'Delete'}}" (click)="OnDel(orgD.ID)"
+              [disabled]="!this.PrivilegeTypeInst.Delete">
+              <mat-icon class="md-22" aria-hidden="true">delete</mat-icon>
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" *ngIf="TotalCount<=0">
+      <ng-container>
+        <div class="ContentData" fxLayoutAlign="start center">{{LangPack.hasOwnProperty('E019')?LangPack['E019']:'No record found.'}}</div>
+      </ng-container>
+    </div>
+    <paging-bar *ngIf="TotalCount!=null&&TotalCount>0" [totalcount]="TotalCount" [pagesize]="PageSize" [pageindex]="PageIndex"
+      [displaypagecount]="DisplayPageNum" (PageChange)="OnPageChange($event)" [langPackage]="LangPack"></paging-bar>
+  </mat-card-content>
+  <mat-card-actions class="ListAction">
+    <button mat-raised-button color="primary" (click)="OnCreate()" [disabled]="!this.PrivilegeTypeInst.Create">{{LangPack.hasOwnProperty('CreateOrgD')?LangPack['CreateOrgD']:'CreateOrgD'}}</button>
+  </mat-card-actions>
+</mat-card>

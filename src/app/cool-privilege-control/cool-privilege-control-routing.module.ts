@@ -8,23 +8,16 @@ import { CanActivateViaAuthGuard } from './guards/can-activate-via-auth.guard';
 //Components
 import { CoolPrivilegeControlComponent } from './cool-privilege-control.component'
 
-//Modules
-// import { FuncMgtModule } from "./components/FuncMgt/func-mgt.module";
-// import { FuncTypeMgtModule } from "./components/FuncTypeMgt/func-type-mgt.module";
-// import { RoleMgtModule } from "./components/RoleMgt/role-mgt.module";
-// import { LUserMgtModule } from "./components/LUserMgt/luser-mgt.module";
-// import { OrgMgtModule } from "./components/OrgMgt/org-mgt.module";
-// import { OrgDMgtModule } from "./components/OrgDMgt/org-dmgt.module";
-// import { AuthorMgtModule } from "./components/AuthorMgt/author-mgt.module";
-// import { AuditLogMgtModule } from "./components/AuditLogMgt/audit-log-mgt.module";
-// import { LangMgtModule } from "./components/LangMgt/lang-mgt.module";
-// import { SysInfoMgtModule } from "./components/SysInfoMgt/sys-info-mgt.module";
-
-const funcMgtModule = 'app/cool-privilege-control/func-mgt/func-mgt.module#FuncMgtModule';
-const funcTypeMgtModule = 'app/cool-privilege-control/func-type-mgt/func-type-mgt.module#FuncTypeMgtModule';
-const roleMgtModule = 'app/cool-privilege-control/role-mgt/role-mgt.module#RoleMgtModule';
-const auditlogMgtModule = 'app/cool-privilege-control/audit-log-mgt/audit-log-mgt.module#AuditLogMgtModule';
-const langMgtModule = 'app/cool-privilege-control/lang-mgt/lang-mgt.module#LangMgtModule';
+const funcMgtModule = 'app/cool-privilege-control/components/func-mgt/func-mgt.module#FuncMgtModule';
+const funcTypeMgtModule = 'app/cool-privilege-control/components/func-type-mgt/func-type-mgt.module#FuncTypeMgtModule';
+const roleMgtModule = 'app/cool-privilege-control/components/role-mgt/role-mgt.module#RoleMgtModule';
+const auditlogMgtModule = 'app/cool-privilege-control/components/audit-log-mgt/audit-log-mgt.module#AuditLogMgtModule';
+const authorMgtModule = 'app/cool-privilege-control/components/author-mgt/author-mgt.module#AuthorMgtModule';
+const langMgtModule = 'app/cool-privilege-control/components/lang-mgt/lang-mgt.module#LangMgtModule';
+const luserMgtModule = 'app/cool-privilege-control/components/luser-mgt/luser-mgt.module#LuserMgtModule';
+const orgMgtModule = 'app/cool-privilege-control/components/org-mgt/org-mgt.module#OrgMgtModule';
+const orgDMgtModule = 'app/cool-privilege-control/components/org-d-mgt/org-d-mgt.module#OrgDMgtModule';
+const sysInfoMgtModule = 'app/cool-privilege-control/components/sys-info-mgt/sys-info-mgt.module#SysInfoMgtModule';
 
 const routes: Routes = [
   { path: '', redirectTo: "/CoolPrivilegeControl/en", pathMatch: "full" },
@@ -34,41 +27,16 @@ const routes: Routes = [
     data: { breadcrumb: 'CoolAccMgt' },
     canActivate: [CanActivateViaAuthGuard],
     children: [
-      {
-        path: 'FuncMgt',
-        loadChildren: funcMgtModule,
-        data: { breadcrumb: 'FuncMgt' },
-        canActivateChild: [CanActivateViaAuthGuard]
-      },
-      { 
-        path: 'FuncTMgt', 
-        loadChildren: funcTypeMgtModule, 
-        data: { breadcrumb: 'FuncTMgt' }, 
-        canActivateChild: [CanActivateViaAuthGuard] 
-      },
-      { 
-        path: 'RoleMgt', 
-        loadChildren: roleMgtModule, 
-        data: { breadcrumb: 'RoleMgt' }, 
-        canActivateChild: [CanActivateViaAuthGuard] 
-      },
-      // { path: 'LUserMgt', loadChildren: () => LUserMgtModule, data: { breadcrumb: 'LUserMgt' }, canActivateChild: [CanActivateViaAuthGuard] },
-      // { path: 'OrgMgt', loadChildren: () => OrgMgtModule, data: { breadcrumb: 'OrgMgt' }, canActivateChild: [CanActivateViaAuthGuard] },
-      // { path: 'OrgDMgt', loadChildren: () => OrgDMgtModule, data: { breadcrumb: 'OrgDMgt' }, canActivateChild: [CanActivateViaAuthGuard] },
-      // { path: 'AuthorMgt', loadChildren: () => AuthorMgtModule, data: { breadcrumb: 'AuthorMgt' }, canActivateChild: [CanActivateViaAuthGuard] },
-      { 
-        path: 'AuditMgt', 
-        loadChildren: auditlogMgtModule, 
-        data: { breadcrumb: 'AuditMgt' }, 
-        canActivateChild: [CanActivateViaAuthGuard] 
-      },
-      { 
-        path: 'LangMgt', 
-        loadChildren: langMgtModule, 
-        data: { breadcrumb: 'LangMgt' }, 
-        canActivateChild: [CanActivateViaAuthGuard] 
-      },
-      // { path: 'SysInfoMgt', loadChildren: () => SysInfoMgtModule, data: { breadcrumb: 'SysInfoMgt' }, canActivateChild: [CanActivateViaAuthGuard] },
+      { path: 'FuncMgt', loadChildren: funcMgtModule, data: { breadcrumb: 'FuncMgt' }, canActivateChild: [CanActivateViaAuthGuard] },
+      { path: 'FuncTMgt', loadChildren: funcTypeMgtModule, data: { breadcrumb: 'FuncTMgt' }, canActivateChild: [CanActivateViaAuthGuard] },
+      { path: 'RoleMgt', loadChildren: roleMgtModule, data: { breadcrumb: 'RoleMgt' }, canActivateChild: [CanActivateViaAuthGuard] },
+      { path: 'LUserMgt', loadChildren: luserMgtModule, data: { breadcrumb: 'LUserMgt' }, canActivateChild: [CanActivateViaAuthGuard] },
+      { path: 'OrgMgt', loadChildren: orgMgtModule, data: { breadcrumb: 'OrgMgt' }, canActivateChild: [CanActivateViaAuthGuard] },
+      { path: 'OrgDMgt', loadChildren: orgDMgtModule, data: { breadcrumb: 'OrgDMgt' }, canActivateChild: [CanActivateViaAuthGuard] },
+      { path: 'AuthorMgt', loadChildren: authorMgtModule, data: { breadcrumb: 'AuthorMgt' }, canActivateChild: [CanActivateViaAuthGuard] },
+      { path: 'AuditMgt', loadChildren: auditlogMgtModule, data: { breadcrumb: 'AuditMgt' }, canActivateChild: [CanActivateViaAuthGuard] },
+      { path: 'LangMgt', loadChildren: langMgtModule, data: { breadcrumb: 'LangMgt' }, canActivateChild: [CanActivateViaAuthGuard] },
+      { path: 'SysInfoMgt', loadChildren: sysInfoMgtModule, data: { breadcrumb: 'SysInfoMgt' }, canActivateChild: [CanActivateViaAuthGuard] },
     ]
   },
 ];

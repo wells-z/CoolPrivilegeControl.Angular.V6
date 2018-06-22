@@ -26,7 +26,7 @@ import { LoginService } from './cool-privilege-control/services/login.service';
 import { LoadingDialogService } from './cool-privilege-control/services/loading-dialog.service';
 import { MsgDialogService } from './cool-privilege-control/services/msg-dialog.service';
 import { PrivilegeService } from './cool-privilege-control/services/privilege.service';
-import { FuncMgtService } from './cool-privilege-control/services/func-mgt.service';
+import { PrivilegeCheckService } from "./cool-privilege-control/services/privilege-check.service";
 import { RoutingHistoryService } from './cool-privilege-control/services/routing-history.service';
 ///Guards
 // import { CanActivateViaAuthGuardGuard } from "./cool-privilege-control/Guards/can-activate-via-auth-guard.guard";
@@ -64,7 +64,7 @@ import { PrivilegeComponent } from './cool-privilege-control/components/common/p
     LoadingDialogService,
     MsgDialogService,
     PrivilegeService,
-    FuncMgtService,
+    PrivilegeCheckService,
     RoutingHistoryService,
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { disableClose: true, autoFocus: true, hasBackdrop: true } },
     { provide: COOLPRIVILEGECONFIG, useValue: { baseUrl: "http://localhost:1622/api/" } },

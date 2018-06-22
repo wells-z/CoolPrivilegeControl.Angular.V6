@@ -17,8 +17,8 @@ import { SelectedFuncDetail } from "../../../models/relativevm/selected-func-det
 import { SelectedFuncType } from "../../../models/relativevm/selected-func-type";
 import { FuncVm } from "../../../models/func-vm";
 import { FuncTypeVm } from "../../../models/func-type-vm";
-import { SelectedSpecificFunc } from "../../../models/UIVM/selected-specific-func";
-import { SelectedSpecificFuncType } from "../../../models/UIVM/selected-specific-func-type";
+import { SelectedSpecificFunc } from "../../../models/uivm/selected-specific-func";
+import { SelectedSpecificFuncType } from "../../../models/uivm/selected-specific-func-type";
 
 //Service
 import { FuncMgtService } from "../../../services/func-mgt.service";

@@ -1,0 +1,28 @@
+.EditCard {
+    /* font-family: Arial, Helvetica, sans-serif; */
+    border: 1px double #444;
+    /* border-bottom: none; */
+    /* min-width: 200px; */
+    padding-bottom: 1em;
+  }
+  
+  .EditCard .Content {
+      margin-top: 1em;
+      padding-left: 1em;
+      padding-right: 1em;
+      display: flex;
+      flex-direction: column;
+  }
+  
+  .EditCard .Content .Row {
+      margin: 0px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+  }
+  
+  .NextBtn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }

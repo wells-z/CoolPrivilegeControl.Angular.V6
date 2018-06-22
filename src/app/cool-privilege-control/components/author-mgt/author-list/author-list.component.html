@@ -1,0 +1,107 @@
+<mat-card fxFlex fxFlexAlign="start center">
+  <mat-toolbar fxFlex color="primary">{{LangPack.hasOwnProperty('AuthorList')?LangPack['AuthorList']:'AuthorList'}}</mat-toolbar>
+  <mat-card-content fxFlex class="Grid">
+    <div>
+      <mat-expansion-panel *ngIf="this.PrivilegeTypeInst.Search">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{LangPack.hasOwnProperty('SearchCriteria')?LangPack['SearchCriteria']:'SearchCriteria'}}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{LangPack.hasOwnProperty('InputSearchCriteria')?LangPack['InputSearchCriteria']:'InputSearchCriteria'}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div fxFlex fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutGap="8px" style="margin-top: 10px;">
+          <div>
+            <div style="height: 30px;">{{LangPack.hasOwnProperty("DateRange")?LangPack["DateRange"]+":":"DateRange:"}}</div>
+          </div>
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="{{LangPack.hasOwnProperty('From')?LangPack['From']:'From'}}" name="SearchDateFrom"
+              [(ngModel)]="SearchCriteria.DateFrom">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker1" placeholder="{{LangPack.hasOwnProperty('To')?LangPack['To']:'To'}}" name="SearchDateTo"
+              [(ngModel)]="SearchCriteria.DateTo">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex fxLayout="row" fxLayout.xs="row" fxLayoutAlign="start center" style="margin-top: 8px;">
+
+          <button mat-button color="primary" (click)="OnSearch()">{{LangPack.hasOwnProperty('Search')?LangPack['Search']:'Search'}}</button>
+
+          <button mat-button color="primary" (click)="OnClear()">{{LangPack.hasOwnProperty('Clear')?LangPack['Clear']:'Clear'}}</button>
+
+        </div>
+      </mat-expansion-panel>
+    </div>
+    <!-- fxHide.xs="true" -->
+    <div fxLayout="row" fxLayout.xs="column" fxFlexFill>
+      <!-- <div class="CheckBoxCol"> </div> -->
+      <div class="Header" fxFlex="20" fxFlex.xs fxFlex.sm="40" fxLayoutAlign="start center">
+        {{LangPack.hasOwnProperty('LoginName')?LangPack['LoginName']:'LoginName'}}
+      </div>
+
+      <div class="Header" fxFlex="20" fxFlex.xs fxFlex.sm="40" fxLayoutAlign="start center" (click)="OnSort('AuthorDT')">
+        <a matLine class="link">{{LangPack.hasOwnProperty('Date')?LangPack['Date']:'Date'}}</a>
+        <button mat-icon-button *ngIf="SortColumn=='AuthorDT'">
+          <mat-icon>{{(SortDir=='asc')?'keyboard_arrow_up':'keyboard_arrow_down'}}</mat-icon>
+        </button>
+      </div>
+
+      <div class="Header" fxFlex="30" fxHide.xs fxHide.sm fxLayoutAlign="start center">
+        {{LangPack.hasOwnProperty('FuncKey')?LangPack['FuncKey']:'FuncKey'}}
+      </div>
+
+      <div class="Header" fxFlex="20" fxHide.xs fxHide.sm fxLayoutAlign="start center">
+        {{LangPack.hasOwnProperty('FuncTypeKey')?LangPack['FuncTypeKey']:'FuncTypeKey'}}
+      </div>
+
+      <div class="Header" fxFlex="10" fxFlex.xs fxFlex.sm="20" fxLayoutAlign="center center">
+        {{LangPack.hasOwnProperty('Operation')?LangPack['Operation']:'Operation'}}
+      </div>
+    </div>
+    <div [@listAnimation]="AuthorList">
+      <div fxLayout="row" fxLayout.xs="column" *ngFor="let authorInst of AuthorList;">
+        <ng-container>
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxFlex.sm="40" fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('LoginName')?LangPack['LoginName']:'LoginName'}}">
+            <a [routerLink]="['/CoolPrivilegeControl',this.LangKey,'LUserMgt','EditLUser', authorInst.LUserID]" *ngIf="this.PrivilegeTypeInst_LUser.Update">{{authorInst.LUserInst.LoginName}}</a>
+            <span *ngIf="!this.PrivilegeTypeInst_LUser.Update">{{authorInst.LUserInst.LoginName}}</span>
+          </div>
+
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxFlex.sm="40" fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('Date')?LangPack['Date']:'Date'}}">
+            {{authorInst.AuthorDT}}
+          </div>
+
+          <div class="ContentData" fxFlex="30" fxHide.xs fxHide.sm fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('FuncKey')?LangPack['FuncKey']:'FuncKey'}}">
+            <a [routerLink]="['/CoolPrivilegeControl',this.LangKey,'FuncMgt','EditFunc', authorInst.FuncID]" *ngIf="this.PrivilegeTypeInst_Func.Update">{{authorInst.FuncInst.FuncKey+'-'+authorInst.FuncInst.FuncName}}</a>
+            <span *ngIf="!this.PrivilegeTypeInst_Func.Update">{{authorInst.FuncInst.FuncKey+'-'+authorInst.FuncInst.FuncName}}</span>
+          </div>
+
+          <div class="ContentData" fxFlex="20" fxHide.xs fxHide.sm fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('FuncTypeKey')?LangPack['FuncTypeKey']:'FuncTypeKey'}}">
+            <a [routerLink]="['/CoolPrivilegeControl',this.LangKey,'FuncTMgt','EditFuncType', authorInst.FuncTypeID]" *ngIf="this.PrivilegeTypeInst_FuncT.Update">{{authorInst.FuncTypeInst.FuncTypeKey}}</a>
+            <span *ngIf="!this.PrivilegeTypeInst_FuncT.Update">{{authorInst.FuncTypeInst.FuncTypeKey}}</span>
+          </div>
+
+          <div class="ContentData" fxFlex="10" fxFlex.xs fxFlex.sm="20" fxLayoutAlign="center center" matTooltip="{{LangPack.hasOwnProperty('Deatil')?LangPack['Deatil']:'Deatil'}}">
+            <button mat-button (click)="OnClickDetail(authorInst)">
+              {{LangPack.hasOwnProperty('Deatil')?LangPack['Deatil']:'Deatil'}}
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" *ngIf="TotalCount<=0">
+      <ng-container>
+        <div class="ContentData" fxLayoutAlign="start center">{{LangPack.hasOwnProperty('E019')?LangPack['E019']:'No record found.'}}</div>
+      </ng-container>
+    </div>
+    <paging-bar *ngIf="TotalCount!=null&&TotalCount>0" [totalcount]="TotalCount" [pagesize]="PageSize" [pageindex]="PageIndex"
+      [displaypagecount]="DisplayPageNum" (PageChange)="OnPageChange($event)" [langPackage]="LangPack"></paging-bar>
+  </mat-card-content>
+</mat-card>

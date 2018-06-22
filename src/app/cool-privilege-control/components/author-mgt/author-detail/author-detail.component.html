@@ -1,0 +1,77 @@
+<div fxFlexFill>
+  <h1 mat-dialog-title>{{LangPack.hasOwnProperty('DetailInfo')?LangPack['DetailInfo']:'DetailInfo'}}</h1>
+  <div mat-dialog-content>
+    <div class="GridContent">
+      <div fxLayoutGap="8px" fxLayout="row" fxFlexFill class="GridContentItem">
+        <div fxLayoutAlign="start" fxFlex="30" class="Label">
+          {{LangPack.hasOwnProperty('LUserId')?LangPack['LUserId']:'LUserId'}}:
+        </div>
+        <div fxFlex="70">
+          {{authorVM.LUserInst.ID}}
+        </div>
+      </div>
+      <div fxLayoutGap="8px" fxLayout="row" fxFlexFill class="GridContentItem">
+        <div fxLayoutAlign="start" fxFlex="30" class="Label">
+          {{LangPack.hasOwnProperty('LoginName')?LangPack['LoginName']:'LoginName'}}:
+        </div>
+        <div fxFlex="70">
+          {{authorVM.LUserInst.LoginName}}
+        </div>
+      </div>
+      <div fxLayoutGap="8px" fxLayout="row" fxFlexFill class="GridContentItem">
+        <div fxLayoutAlign="start" fxFlex="30" class="Label">
+          {{LangPack.hasOwnProperty('Date')?LangPack['Date']:'Date'}}:
+        </div>
+        <div fxFlex="70">
+          {{authorVM.AuthorDT}}
+        </div>
+      </div>
+      <div fxLayoutGap="8px" fxLayout="row" fxFlexFill class="GridContentItem">
+        <div fxLayoutAlign="start" fxFlex="30" class="Label">
+          {{LangPack.hasOwnProperty('FuncId')?LangPack['FuncId']:'FuncId'}}:
+        </div>
+        <div fxFlex="70">
+          {{authorVM.FuncInst.ID}}
+        </div>
+      </div>
+      <div fxLayoutGap="8px" fxLayout="row" fxFlexFill class="GridContentItem">
+        <div fxLayoutAlign="start" fxFlex="30" class="Label">
+          {{LangPack.hasOwnProperty('FuncKey')?LangPack['FuncKey']:'FuncKey'}}:
+        </div>
+        <div fxFlex="70">
+          {{authorVM.FuncInst.FuncKey}}
+        </div>
+      </div>
+
+      <div fxLayoutGap="8px" fxLayout="row" fxFlexFill class="GridContentItem">
+        <div fxLayoutAlign="start" fxFlex="30" class="Label">
+          {{LangPack.hasOwnProperty('FuncName')?LangPack['FuncName']:'FuncName'}}:
+        </div>
+        <div fxFlex="70">
+          {{authorVM.FuncInst.FuncName}}
+        </div>
+      </div>
+
+      <div fxLayoutGap="8px" fxLayout="row" fxFlexFill class="GridContentItem">
+        <div fxLayoutAlign="start" fxFlex="30" class="Label">
+          {{LangPack.hasOwnProperty('FuncTId')?LangPack['FuncTId']:'FuncTId'}}:
+        </div>
+        <div fxFlex="70">
+          {{authorVM.FuncTypeInst.ID}}
+        </div>
+      </div>
+
+      <div fxLayoutGap="8px" fxLayout="row" fxFlexFill class="GridContentItem">
+        <div fxLayoutAlign="start" fxFlex="30" class="Label">
+          {{LangPack.hasOwnProperty('FuncTypeKey')?LangPack['FuncTypeKey']:'FuncTypeKey'}}:
+        </div>
+        <div fxFlex="70">
+          {{authorVM.FuncTypeInst.FuncTypeKey}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions fxLayoutAlign="center center">
+    <button mat-raised-button color="primary" (click)="onOKClick()">OK</button>
+  </div>
+</div>

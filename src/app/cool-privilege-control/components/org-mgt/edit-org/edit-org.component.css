@@ -1,0 +1,68 @@
+.EditCard {
+    /* font-family: Arial, Helvetica, sans-serif; */
+    border: 1px double #444;
+    /* border-bottom: none; */
+    /* min-width: 200px; */
+    padding-bottom: 1em;
+}
+
+.EditCard .Content {
+    margin-top: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
+    display: flex;
+    flex-direction: column;
+}
+
+.EditCard .Content .Row {
+    margin: 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.EditCard .Content .Row .Header {
+    font-size: 14px;
+    height: 45px;
+    min-width: 80px;
+    font-weight: bold;
+    padding-left: 5px;
+}
+
+.EditCard .Content .Row .ContentData {
+    font-size: 12px;
+    height: 45px;
+    flex-grow: 1;
+    padding-left: 5px;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.EditCard .Content .Row .ContentData.Bold {
+    font-weight: bold;
+}
+
+.EditCard .Content .Row .ContentDataHeight {
+    font-size: 12px;
+    flex-grow: 1;
+    padding-left: 5px;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.EditCard .Content .Row .ContentDataHeight.Bold {
+    font-weight: bold;
+}
+
+.EditCard .BtnBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.NextBtn {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-bottom: 3px;
+}

@@ -1,0 +1,100 @@
+<mat-card fxFlex fxFlexAlign="start center">
+  <mat-toolbar fxFlex color="primary">{{LangPack.hasOwnProperty('EditLang')?LangPack['EditLang']:'EditLang'}}</mat-toolbar>
+  <mat-card-content class="EditCard">
+    <div class="Content">
+      <mat-accordion [multi]="true">
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{LangPack.hasOwnProperty('SysInfo_DisplaySettings')?LangPack['SysInfo_DisplaySettings']:'SysInfo_DisplaySettings'}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="Row" fxLayoutGap="1em">
+            <mat-form-field fxFlex="50">
+              <input matInput placeholder="{{LangPack.hasOwnProperty('SysInfo_PageSize')?LangPack['SysInfo_PageSize']:'SysInfo_PageSize'}}"
+                [(ngModel)]="SysInfoVMInst.Sys_PageSize" type="number">
+            </mat-form-field>
+            <mat-form-field fxFlex="50">
+              <input matInput placeholder="{{LangPack.hasOwnProperty('SysInfo_DisplayPageNum')?LangPack['SysInfo_DisplayPageNum']:'SysInfo_DisplayPageNum'}}"
+                [(ngModel)]="SysInfoVMInst.Sys_DisplayPageNum" type="number">
+            </mat-form-field>
+          </div>
+          <div class="Row" fxLayoutGap="1em">
+            <mat-form-field fxFlex="50">
+              <input matInput placeholder="{{LangPack.hasOwnProperty('SysInfo_DateFormat')?LangPack['SysInfo_DateFormat']:'SysInfo_DateFormat'}}"
+                [(ngModel)]="SysInfoVMInst.Sys_DateFormat">
+            </mat-form-field>
+
+            <mat-form-field fxFlex="50">
+              <input matInput placeholder="{{LangPack.hasOwnProperty('SysInfo_TimeFormat')?LangPack['SysInfo_TimeFormat']:'SysInfo_TimeFormat'}}"
+                [(ngModel)]="SysInfoVMInst.Sys_TimeFormat">
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{LangPack.hasOwnProperty('SysInfo_PwdPolicy')?LangPack['SysInfo_PwdPolicy']:'SysInfo_PwdPolicy'}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="Row" fxLayoutGap="1em">
+            <mat-form-field fxFlex="50">
+              <input matInput placeholder="{{LangPack.hasOwnProperty('SysInfo_MaximumLoginAttempts')?LangPack['SysInfo_MaximumLoginAttempts']:'SysInfo_MaximumLoginAttempts'}}"
+                [(ngModel)]="SysInfoVMInst.Sys_Password_MaximumCount" type="number">
+            </mat-form-field>
+            <mat-form-field fxFlex="50">
+              <input matInput placeholder="{{LangPack.hasOwnProperty('SysInfo_PwdReuseNum')?LangPack['SysInfo_PwdReuseNum']:'SysInfo_PwdReuseNum'}}"
+                [(ngModel)]="SysInfoVMInst.Sys_Password_ReuseNum" type="number">
+            </mat-form-field>
+          </div>
+          <div class="Row" fxLayoutGap="1em">
+            <mat-form-field fxFlex="50">
+              <input matInput placeholder="{{LangPack.hasOwnProperty('SysInfo_PwdLengthMin')?LangPack['SysInfo_PwdLengthMin']:'SysInfo_PwdLengthMin'}}"
+                [(ngModel)]="SysInfoVMInst.Sys_Password_LengthMin" type="number" (change)="OnChangePWDLen()">
+            </mat-form-field>
+            <mat-form-field fxFlex="50">
+              <input matInput placeholder="{{LangPack.hasOwnProperty('SysInfo_PwdLengthMax')?LangPack['SysInfo_PwdLengthMax']:'SysInfo_PwdLengthMax'}}"
+                [(ngModel)]="SysInfoVMInst.Sys_Password_LengthMax" type="number" (change)="OnChangePWDLen()">
+            </mat-form-field>
+          </div>
+          <div fxLayoutGap="1em"  fxLayout="column" >
+            <mat-slide-toggle [(ngModel)]="SysInfoVMInst.Sys_Password_IncludeNumDigit">{{LangPack.hasOwnProperty('SysInfo_PwdIncludeNumDigit')?LangPack['SysInfo_PwdIncludeNumDigit']:'SysInfo_PwdIncludeNumDigit'}}</mat-slide-toggle>
+
+            <mat-slide-toggle [(ngModel)]="SysInfoVMInst.Sys_Password_IncludeSpecialChar">{{LangPack.hasOwnProperty('SysInfo_PwdIncludeSpecialChar')?LangPack['SysInfo_PwdIncludeSpecialChar']:'SysInfo_PwdIncludeSpecialChar'}}</mat-slide-toggle>
+
+            <mat-slide-toggle [(ngModel)]="SysInfoVMInst.Sys_Password_IncludeDiffCase">{{LangPack.hasOwnProperty('SysInfo_PwdIncludeDiffCase')?LangPack['SysInfo_PwdIncludeDiffCase']:'SysInfo_PwdIncludeDiffCase'}}</mat-slide-toggle>
+          </div>
+          <div class="Row" fxLayoutAlign="start center" fxLayoutGap="1em" style="margin-top: 1em;">
+            <mat-form-field fxFlex="50">
+              <input matInput placeholder="{{LangPack.hasOwnProperty('SysInfo_PwdExpireDays')?LangPack['SysInfo_PwdExpireDays']:'SysInfo_PwdExpireDays'}}"
+                [(ngModel)]="SysInfoVMInst.Sys_Password_ExpireDays" type="number">
+            </mat-form-field>
+            <div fxFlex="50"></div>
+          </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{LangPack.hasOwnProperty('SysInfo_OthersSettings')?LangPack['SysInfo_OthersSettings']:'SysInfo_OthersSettings'}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="Row" fxLayoutGap="1em">
+            <mat-form-field fxFlex="50">
+              <input matInput placeholder="{{LangPack.hasOwnProperty('SysInfo_SessionTimeoutSeconds')?LangPack['SysInfo_SessionTimeoutSeconds']:'SysInfo_SessionTimeoutSeconds'}}"
+                [(ngModel)]="SysInfoVMInst.Sys_SessionTimeoutSeconds" type="number">
+            </mat-form-field>
+            <mat-form-field fxFlex="50">
+              <input matInput placeholder="{{LangPack.hasOwnProperty('SysInfo_MaxPrivilegeCol')?LangPack['SysInfo_MaxPrivilegeCol']:'SysInfo_MaxPrivilegeCol'}}"
+                [(ngModel)]="SysInfoVMInst.Sys_MaxAccPrivilegePerCol">
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <div class="NextBtn" style="margin-top: 1em;">
+        <button mat-raised-button color="primary" [disabled]="!this.PrivilegeTypeInst.Update" (click)="OnSave()">{{LangPack.hasOwnProperty('Save')?LangPack['Save']:'Save'}}</button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
