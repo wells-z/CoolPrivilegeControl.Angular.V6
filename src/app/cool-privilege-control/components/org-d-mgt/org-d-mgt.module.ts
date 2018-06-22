@@ -4,6 +4,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 
 import { SharedModule } from '../../../shared/shared.module';
+import { CommonSharedModule } from "../common/common-shared/common-shared.module";
 
 //Routing
 import { OrgDMgtRoutingModule } from './org-d-mgt-routing.module';
@@ -23,7 +24,8 @@ import { OrgDmgtService } from "../../services/org-dmgt.service";
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    OrgDMgtRoutingModule
+    OrgDMgtRoutingModule,
+    CommonSharedModule
   ],
   declarations: [
     OrgDListComponent, 

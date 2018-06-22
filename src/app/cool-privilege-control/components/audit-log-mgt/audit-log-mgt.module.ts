@@ -5,6 +5,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SharedModule } from '../../../shared/shared.module';
+import { CommonSharedModule } from "../common/common-shared/common-shared.module";
 
 //Routing
 import { AuditLogMgtRoutingModule } from './audit-log-mgt-routing.module';
@@ -23,7 +24,8 @@ import { AuditLogMgtService } from "../../services/audit-log-mgt.service";
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    AuditLogMgtRoutingModule
+    AuditLogMgtRoutingModule,
+    CommonSharedModule
   ],
   declarations: [
     AuditLogListComponent,

@@ -1,3 +1,159 @@
-<p>
-  selected-luser-org works!
-</p>
+<mat-card fxFlex fxFlexAlign="start center" *ngIf="!IsAdd && !IsEdit" style="margin-top: 2px; padding: 10px;">
+  <mat-card-actions *ngIf="!IsAdd" style="margin: 0px;">
+    <button mat-raised-button color="primary" (click)="OnCreate($event)">{{LangPack.hasOwnProperty('AddOrgToAllocationList')?LangPack['AddOrgToAllocationList']:'AddOrgToAllocationList'}}</button>
+  </mat-card-actions>
+  <mat-toolbar fxFlex color="primary">{{LangPack.hasOwnProperty('LUserOrgSetting')?LangPack['LUserOrgSetting']:'LUserOrgSetting'}}</mat-toolbar>
+  <mat-card-content fxFlex class="Grid">
+    <div>
+      <mat-expansion-panel style="padding-left: 1px; padding-right: 1px;">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{LangPack.hasOwnProperty('SearchCriteria')?LangPack['SearchCriteria']:'SearchCriteria'}}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{LangPack.hasOwnProperty('InputSearchCriteria')?LangPack['InputSearchCriteria']:'InputSearchCriteria'}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div fxFlex fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center" fxLayoutGap="8px">
+          <mat-form-field fxFlex.xs>
+            <mat-select placeholder="{{LangPack.hasOwnProperty('OrgKey')?LangPack['OrgKey']:'OrgKey'}}" [(ngModel)]="SearchCriteria.OrgID">
+              <mat-option *ngFor="let orgItem of OrgVMInsts" [value]="orgItem.ID" fxFlexFill>
+                <span *ngFor="let itemLevel of createRange(orgItem.OrgLevls)">&nbsp;&nbsp;&nbsp;&nbsp;</span>{{orgItem.OrgKey}} : {{LangPack.hasOwnProperty(orgItem.OrgKey)?LangPack[orgItem.OrgKey]:orgItem.OrgKey}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center" fxLayoutGap="8px">
+          <mat-form-field fxFlex.xs>
+            <mat-select placeholder="{{LangPack.hasOwnProperty('OrgDKey')?LangPack['OrgDKey']:'OrgDKey'}}" [(ngModel)]="SearchCriteria.OrgDID">
+              <mat-option *ngFor="let orgDItem of OrgDVMInsts" [value]="orgDItem.ID" fxFlexFill>
+                {{orgDItem.OrgDKey}} : {{LangPack.hasOwnProperty(orgDItem.OrgDKey)?LangPack[orgDItem.OrgDKey]:orgDItem.OrgDKey}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center" style="margin-top: 8px;">
+
+          <div fxFlex.xs fxFlex="25">
+            <button mat-button color="primary" (click)="OnSearch()">{{LangPack.hasOwnProperty('Search')?LangPack['Search']:'Search'}}</button>
+          </div>
+
+          <div fxFlex.xs fxFlex="25">
+            <button mat-button color="primary" (click)="OnClear()">{{LangPack.hasOwnProperty('Clear')?LangPack['Clear']:'Clear'}}</button>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" fxFlexFill>
+      <!-- <div class="CheckBoxCol"> </div> -->
+      <div class="Header" fxFlex="35" fxFlex.xs fxLayoutAlign="start center" (click)="OnSort('OrgKey')">
+        <a matLine class="link">{{LangPack.hasOwnProperty('OrgKey')?LangPack['OrgKey']:'OrgKey'}}</a>
+        <button mat-icon-button *ngIf="SortColumn=='OrgKey'">
+          <mat-icon>{{(SortDir=='asc')?'keyboard_arrow_up':'keyboard_arrow_down'}}</mat-icon>
+        </button>
+      </div>
+
+      <div class="Header" fxFlex="35" fxFlex.xs fxLayoutAlign="start center" (click)="OnSort('OrgDKey')">
+        <a matLine class="link">{{LangPack.hasOwnProperty('OrgDKey')?LangPack['OrgDKey']:'OrgDKey'}}</a>
+        <button mat-icon-button *ngIf="SortColumn=='OrgDKey'">
+          <mat-icon>{{(SortDir=='asc')?'keyboard_arrow_up':'keyboard_arrow_down'}}</mat-icon>
+        </button>
+      </div>
+
+      <div class="Header" fxFlex="30" fxFlex.xs fxLayoutAlign="center center">
+        {{LangPack.hasOwnProperty('Operation')?LangPack['Operation']:'Operation'}}
+      </div>
+    </div>
+    <div [@listAnimation]="DisplayLUserOrgList_Paging">
+      <div fxLayout="row" fxLayout.xs="column" style="border-bottom: 1px solid #444;" *ngFor="let luserOrgInfo of DisplayLUserOrgList_Paging;">
+        <ng-container>
+          <div class="ContentData" fxFlex="35" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('OrgKey')?LangPack['OrgKey']:'OrgKey'}}">
+            {{luserOrgInfo.OrgKey}}
+          </div>
+          <div class="ContentData" fxFlex="35" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('OrgDKey')?LangPack['OrgDKey']:'OrgDKey'}}">
+            {{luserOrgInfo.OrgDetailKey}}
+          </div>
+          <div class="ContentData" fxFlex="30" fxFlex.xs fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Edit')?LangPack['Edit']:'Edit'}}" (click)="OnEdit(luserOrgInfo)">
+              <mat-icon class="md-22" aria-hidden="true">mode_edit</mat-icon>
+            </button>
+
+            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Delete')?LangPack['Delete']:'Delete'}}" (click)="OnDel(luserOrgInfo)">
+              <mat-icon class="md-22" aria-hidden="true">delete</mat-icon>
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" *ngIf="totalcount<=0" style="border-bottom: 1px solid #444;">
+      <ng-container>
+        <div class="ContentData" fxLayoutAlign="start center">{{LangPack.hasOwnProperty('E019')?LangPack['E019']:'No record found.'}}</div>
+      </ng-container>
+    </div>
+    <paging-bar *ngIf="totalcount!=null&&totalcount>0" [totalcount]="totalcount" [pagesize]="pagesize" [pageindex]="pageindex"
+      [displaypagecount]="displaypagecount" (PageChange)="OnPageChange($event)" [langPackage]="LangPack"></paging-bar>
+  </mat-card-content>
+</mat-card>
+
+<mat-card fxFlex fxFlexAlign="start center" *ngIf="IsAdd" style="margin-top: 2px; padding: 10px;">
+  <mat-toolbar fxFlex color="primary">{{LangPack.hasOwnProperty('AddOrgToAllocationList')?LangPack['AddOrgToAllocationList']:'AddOrgToAllocationList'}}</mat-toolbar>
+  <mat-card-content fxFlex class="Grid" style="border-bottom: 1px solid #444;">
+    <div style="padding-left:1em;padding-right:1em; margin-top: 1em;">
+      <div fxFlex fxLayout="column" fxFlexAlign="center center" fxLayoutGap="8px" *ngIf="IsAdd">
+        <mat-form-field>
+          <mat-select placeholder="{{LangPack.hasOwnProperty('OrgKey')?LangPack['OrgKey']:'OrgKey'}}" [(ngModel)]="OrgVMInst">
+            <mat-option *ngFor="let orgItem of OrgVMInsts" [value]="orgItem" fxFlexFill>
+              <span *ngFor="let itemLevel of createRange(orgItem.OrgLevls)">&nbsp;&nbsp;&nbsp;&nbsp;</span>{{orgItem.OrgKey}} : {{LangPack.hasOwnProperty(orgItem.OrgKey)?LangPack[orgItem.OrgKey]:orgItem.OrgKey}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select placeholder="{{LangPack.hasOwnProperty('OrgDKey')?LangPack['OrgDKey']:'OrgDKey'}}" [(ngModel)]="OrgDVMInst">
+            <mat-option *ngFor="let orgDItem of OrgDVMInsts" [value]="orgDItem" fxFlexFill>
+              {{orgDItem.OrgDKey}} : {{LangPack.hasOwnProperty(orgDItem.OrgDKey)?LangPack[orgDItem.OrgDKey]:orgDItem.OrgDKey}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="BtnBar">
+          <button mat-raised-button color="warn" (click)="OnCancel()">{{LangPack.hasOwnProperty('Cancel')?LangPack['Cancel']:'Cancel'}}</button>
+          <button mat-raised-button color="primary" (click)="OnSave()">{{LangPack.hasOwnProperty('AddOrgToAllocationList')?LangPack['AddOrgToAllocationList']:'AddOrgToAllocationList'}}</button>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<mat-card fxFlex fxFlexAlign="start center" *ngIf="IsEdit" style="margin-top: 2px; padding: 10px;">
+  <mat-toolbar fxFlex color="primary">{{LangPack.hasOwnProperty('EditOrgToAllocationList')?LangPack['EditOrgToAllocationList']:'EditOrgToAllocationList'}}</mat-toolbar>
+  <mat-card-content fxFlex class="Grid" style="border-bottom: 1px solid #444;">
+    <div style="padding-left:1em;padding-right:1em; margin-top: 1em;">
+      <div fxFlex fxLayout="column" fxFlexAlign="center center" fxLayoutGap="8px" *ngIf="IsEdit">
+        <mat-form-field>
+          <mat-select placeholder="{{LangPack.hasOwnProperty('OrgKey')?LangPack['OrgKey']:'OrgKey'}}" [(ngModel)]="OrgVMInst">
+            <mat-option *ngFor="let orgItem of OrgVMInsts" [value]="orgItem" fxFlexFill>
+              <span *ngFor="let itemLevel of createRange(orgItem.OrgLevls)">&nbsp;&nbsp;&nbsp;&nbsp;</span>{{orgItem.OrgKey}} : {{LangPack.hasOwnProperty(orgItem.OrgKey)?LangPack[orgItem.OrgKey]:orgItem.OrgKey}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select placeholder="{{LangPack.hasOwnProperty('OrgDKey')?LangPack['OrgDKey']:'OrgDKey'}}" [(ngModel)]="OrgDVMInst">
+            <mat-option *ngFor="let orgDItem of OrgDVMInsts" [value]="orgDItem" fxFlexFill>
+              {{orgDItem.OrgDKey}} : {{LangPack.hasOwnProperty(orgDItem.OrgDKey)?LangPack[orgDItem.OrgDKey]:orgDItem.OrgDKey}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="BtnBar">
+          <button mat-raised-button color="warn" (click)="OnCancel()">{{LangPack.hasOwnProperty('Cancel')?LangPack['Cancel']:'Cancel'}}</button>
+          <button mat-raised-button color="primary" (click)="OnSave()">{{LangPack.hasOwnProperty('EditOrgToAllocationList')?LangPack['EditOrgToAllocationList']:'EditOrgToAllocationList'}}</button>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

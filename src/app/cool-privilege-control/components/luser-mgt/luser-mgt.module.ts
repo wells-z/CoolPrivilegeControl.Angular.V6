@@ -4,6 +4,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SharedModule } from '../../../shared/shared.module';
+import { CommonSharedModule } from "../common/common-shared/common-shared.module";
 
 //Routing
 import { LuserMgtRoutingModule } from './luser-mgt-routing.module';
@@ -23,7 +24,8 @@ import { LuserMgtService } from "../../services/luser-mgt.service";
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    LuserMgtRoutingModule
+    LuserMgtRoutingModule,
+    CommonSharedModule
   ],
   declarations: [
     LuserListComponent, 

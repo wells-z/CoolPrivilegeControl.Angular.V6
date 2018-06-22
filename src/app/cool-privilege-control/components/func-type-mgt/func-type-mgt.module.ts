@@ -4,6 +4,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 
 import { SharedModule } from '../../../shared/shared.module';
+import { CommonSharedModule } from "../common/common-shared/common-shared.module";
 
 //Routing
 import { FuncTypeMgtRoutingModule } from './func-type-mgt-routing.module';
@@ -21,6 +22,7 @@ import { FuncTypeMgtService } from "../../services/func-type-mgt.service";
     CommonModule,
     FlexLayoutModule,
     SharedModule,
+    CommonSharedModule,
     FormsModule,
     ReactiveFormsModule,
     FuncTypeMgtRoutingModule

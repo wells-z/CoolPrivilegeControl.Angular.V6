@@ -30,7 +30,7 @@ import { PrivilegeService } from "../../../services/privilege.service";
 import { PrivilegeCheckService } from "../../../services/privilege-check.service";
 
 @Component({
-  selector: 'app-selected-roles',
+  selector: 'cpc-selected-roles',
   templateUrl: './selected-roles.component.html',
   styleUrls: ['./selected-roles.component.css'],
   animations: [listAnimation()]

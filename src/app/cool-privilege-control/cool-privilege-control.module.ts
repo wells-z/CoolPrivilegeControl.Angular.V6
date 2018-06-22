@@ -15,13 +15,13 @@ import { CoolPrivilegeControlComponent } from './cool-privilege-control.componen
 // Common Component
 import { SideMenuComponent } from './components/common/side-menu/side-menu.component';
 import { BreadCrumbComponent } from './components/common/bread-crumb/bread-crumb.component';
-import { PagingBarComponent } from './components/common/paging-bar/paging-bar.component';
-import { SelectedFuncsComponent } from './components/common/selected-funcs/selected-funcs.component';
-import { SelectedRolesComponent } from './components/common/selected-roles/selected-roles.component';
-import { SelectedLuserOrgComponent } from './components/common/selected-luser-org/selected-luser-org.component';
 
 // Service
 import { FuncMgtService } from './services/func-mgt.service';
+import { FuncTypeMgtService } from './services/func-type-mgt.service';
+import { OrgMgtService } from './services/org-mgt.service';
+import { OrgDmgtService } from './services/org-dmgt.service';
+import { RoleMgtService } from './services/role-mgt.service';
 
 
 @NgModule({
@@ -31,19 +31,19 @@ import { FuncMgtService } from './services/func-mgt.service';
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    CoolPrivilegeControlRoutingModule
+    CoolPrivilegeControlRoutingModule,
   ],
   declarations: [
     CoolPrivilegeControlComponent,
     SideMenuComponent,
     BreadCrumbComponent,
-    PagingBarComponent,
-    SelectedFuncsComponent,
-    SelectedRolesComponent,
-    SelectedLuserOrgComponent
   ],
   providers: [
-    FuncMgtService
+    FuncMgtService,
+    FuncTypeMgtService,
+    OrgMgtService,
+    OrgDmgtService,
+    RoleMgtService
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

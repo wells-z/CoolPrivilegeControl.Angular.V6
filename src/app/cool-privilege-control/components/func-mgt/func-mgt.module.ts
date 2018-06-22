@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { WebStorageModule } from 'ngx-store';
 
 import { SharedModule } from '../../../shared/shared.module';
+import { CommonSharedModule } from "../common/common-shared/common-shared.module";
 
 //Routing
 import { FuncMgtRoutingModule } from './func-mgt-routing.module';
@@ -24,14 +25,16 @@ import { FuncMgtService } from '../../services/func-mgt.service';
     CommonModule,
     FlexLayoutModule,
     SharedModule,
+    CommonSharedModule,
     FormsModule,
     ReactiveFormsModule,
-    FuncMgtRoutingModule,
+    FuncMgtRoutingModule
   ],
   declarations: [
     FuncListComponent,
     CreateFuncComponent,
-    EditFuncComponent],
+    EditFuncComponent
+  ],
   providers: [
     FuncMgtService,
   ],

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'app-paging-bar',
+  selector: 'paging-bar',
   templateUrl: './paging-bar.component.html',
   styleUrls: ['./paging-bar.component.css']
 })

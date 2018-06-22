@@ -31,7 +31,7 @@ import { PrivilegeService } from "../../../services/privilege.service";
 import { PrivilegeCheckService } from "../../../services/privilege-check.service";
 
 @Component({
-  selector: 'app-selected-funcs',
+  selector: 'cpc-selected-funcs',
   templateUrl: './selected-funcs.component.html',
   styleUrls: ['./selected-funcs.component.css'],
   animations: [listAnimation()]
