@@ -1,32 +1,95 @@
 <div fxLayout="row">
-    <form fxLayoutAlign="center center" fxFlexFill>
-        <div class="LoginBox" fxLayout="column" fxFlexAlign="center" fxLayoutGap="8px">
-            <div fxLayoutAlign="center center" class="LoginHeader">{{LangPack.hasOwnProperty("LoginScreenTitle")?LangPack["LoginScreenTitle"]:"LoginScreenTitle"}}</div>
-            <div>
-                <div class="InputItem">
-                    <mat-form-field fxFlexFill>
-                        <input matInput type="text" placeholder="{{LangPack.hasOwnProperty('LoginName')?LangPack['LoginName']:'LoginName'}}" [(ngModel)]="loginUserVM.LoginName" name="LoginName">
-                    </mat-form-field>
-                </div>
-                <div class="InputItem">
-                    <mat-form-field fxFlexFill>
-                        <input matInput type="password" placeholder="{{LangPack.hasOwnProperty('LoginPwd')?LangPack['LoginPwd']:'LoginPwd'}}" [(ngModel)]="loginUserVM.LoginPwd" name="LoginPwd">
-                    </mat-form-field>
-                </div>
-  
-                <div class="InputItem">
-                    <mat-form-field fxFlexFill>
-                        <mat-select placeholder="{{LangPack.hasOwnProperty('Language')?LangPack['Language']:'Language'}}" name="LanguageKey" [(ngModel)]="loginUserVM.LanguageKey" (selectionChange)="OnChangeLang(loginUserVM.LanguageKey)">
-                            <mat-option *ngFor="let langInst of LanguageList" [value]="langInst.LanguageKey" fxFlexFill>
-                                {{langInst.LanguageDesc}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div fxLayoutAlign="center center" class="LoginFooter">
-                <button mat-raised-button color="primary" (click)="OnLogin()">{{LangPack.hasOwnProperty('Login')?LangPack['Login']:'Login'}}</button>
-            </div>
+  <form fxLayoutAlign="center center" fxFlexFill>
+    <div class="LoginBox" fxLayout="column" fxFlexAlign="center" fxLayoutGap="8px">
+      <div fxLayoutAlign="center center" class="LoginHeader">{{LangPack.hasOwnProperty("LoginScreenTitle")?LangPack["LoginScreenTitle"]:"LoginScreenTitle"}}</div>
+      <div>
+        <div class="InputItem">
+          <mat-form-field fxFlexFill>
+            <input matInput type="text" placeholder="{{LangPack.hasOwnProperty('LoginName')?LangPack['LoginName']:'LoginName'}}" [(ngModel)]="loginUserVM.LoginName"
+              name="LoginName">
+          </mat-form-field>
         </div>
-    </form>
-  </div>
+        <div class="InputItem">
+          <mat-form-field fxFlexFill>
+            <input matInput type="password" placeholder="{{LangPack.hasOwnProperty('LoginPwd')?LangPack['LoginPwd']:'LoginPwd'}}" [(ngModel)]="loginUserVM.LoginPwd"
+              name="LoginPwd">
+          </mat-form-field>
+        </div>
+
+        <div class="InputItem">
+          <mat-form-field fxFlexFill>
+            <mat-select placeholder="{{LangPack.hasOwnProperty('Language')?LangPack['Language']:'Language'}}" name="LanguageKey" [(ngModel)]="loginUserVM.LanguageKey"
+              (selectionChange)="OnChangeLang(loginUserVM.LanguageKey)">
+              <mat-option *ngFor="let langInst of LanguageList" [value]="langInst.LanguageKey" fxFlexFill>
+                {{langInst.LanguageDesc}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxLayoutAlign="center center" class="LoginFooter">
+        <button mat-raised-button color="primary" (click)="OnLogin()">{{LangPack.hasOwnProperty('Login')?LangPack['Login']:'Login'}}</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div fxLayout="column" fxLayoutAlign="center center" fxFlexFill style="padding-top: 1em;">
+  <mat-card fxFlexAlign="center" style="width: 400px;">
+    <mat-toolbar fxFlex color="primary">Login Credential List</mat-toolbar>
+    <mat-card-content fxFlex class="Grid">
+      <div fxLayout="row" fxLayout.xs="column">
+        <div class="Header" fxFlex="30" fxFlex.xs fxLayoutAlign="start center">
+          {{LangPack.hasOwnProperty('LoginName')?LangPack['LoginName']:'LoginName'}}
+        </div>
+        <div class="Header" fxFlex="30" fxFlex.xs fxLayoutAlign="start center">
+          {{LangPack.hasOwnProperty('LoginPwd')?LangPack['LoginPwd']:'LoginPwd'}}
+        </div>
+        <div class="Header" fxFlex="40" fxFlex.xs fxLayoutAlign="start center">
+          {{LangPack.hasOwnProperty('OrgKey')?LangPack['OrgKey']:'OrgKey'}}
+        </div>
+      </div>
+      <div fxLayout="column" fxLayout.xs="column">
+        <div class="ContentData" fxLayout="row">
+          <div fxFlex="30" fxLayoutAlign="start center">admin</div>
+          <div fxFlex="30" fxLayoutAlign="start center">123456</div>
+          <div fxFlex="40" fxLayoutAlign="start center">NUll</div>
+        </div>
+        <div class="ContentData" fxLayout="row">
+          <div fxFlex="30" fxLayoutAlign="start center">jobs</div>
+          <div fxFlex="30" fxLayoutAlign="start center">123456</div>
+          <div fxFlex="40" fxLayoutAlign="start center">CEO</div>
+        </div>
+        <div class="ContentData" fxLayout="row">
+          <div fxFlex="30" fxLayoutAlign="start center">Yuki</div>
+          <div fxFlex="30" fxLayoutAlign="start center">123456</div>
+          <div fxFlex="40" fxLayoutAlign="start center">HR manager</div>
+        </div>
+        <div class="ContentData" fxLayout="row">
+          <div fxFlex="30" fxLayoutAlign="start center">Angus</div>
+          <div fxFlex="30" fxLayoutAlign="start center">123456</div>
+          <div fxFlex="40" fxLayoutAlign="start center">DEV manager/Sale manager</div>
+        </div>
+        <div class="ContentData" fxLayout="row">
+          <div fxFlex="30" fxLayoutAlign="start center">Gigi</div>
+          <div fxFlex="30" fxLayoutAlign="start center">123456</div>
+          <div fxFlex="40" fxLayoutAlign="start center">Developer</div>
+        </div>
+        <div class="ContentData" fxLayout="row">
+          <div fxFlex="30" fxLayoutAlign="start center">Tim</div>
+          <div fxFlex="30" fxLayoutAlign="start center">123456</div>
+          <div fxFlex="40" fxLayoutAlign="start center">Developer</div>
+        </div>
+        <div class="ContentData" fxLayout="row">
+          <div fxFlex="30" fxLayoutAlign="start center">Michael</div>
+          <div fxFlex="30" fxLayoutAlign="start center">123456</div>
+          <div fxFlex="40" fxLayoutAlign="start center">Sale</div>
+        </div>
+        <div class="ContentData" fxLayout="row">
+          <div fxFlex="30" fxLayoutAlign="start center">Alice</div>
+          <div fxFlex="30" fxLayoutAlign="start center">123456</div>
+          <div fxFlex="40" fxLayoutAlign="start center">Sale</div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
