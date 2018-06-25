@@ -123,6 +123,14 @@ export class OrgDListComponent extends CoolComponent implements OnInit {
   }
   //#endregion
 
+  //#region [ Event -- Clear ]
+  OnClear() {
+    this.SearchCriteria.OrgDKey = "";
+    this.SearchCriteria.AccessPrivilegeTypeShort = null;
+    this.OnSearch();
+  }
+  //#endregion
+
   //#region [ Event -- Page Change ]
   OnPageChange(PGIndex: number) {
     this.PageIndex = PGIndex;

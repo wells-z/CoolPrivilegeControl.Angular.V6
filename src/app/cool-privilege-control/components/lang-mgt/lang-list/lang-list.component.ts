@@ -54,8 +54,8 @@ export class LangListComponent extends CoolComponent implements OnInit {
       PageIndex: this.PageIndex,
       SortColumn: this.SortColumn,
       SortDir: this.SortDir,
-      LangKey: this.SearchCriteria.LanguageKey,
-      LangDesc: this.SearchCriteria.LanguageDesc,
+      LanguageKey: this.SearchCriteria.LanguageKey,
+      LanguageDesc: this.SearchCriteria.LanguageDesc,
       Priority: this.SearchCriteria.Priority
     }
     super.navigateRouter(command);
@@ -208,13 +208,13 @@ export class LangListComponent extends CoolComponent implements OnInit {
 
   //#region [ Initialize Event ]
   initSetExtraParam(urlParams: Params) {
-    if (urlParams.hasOwnProperty("LangKey")) {
-      let langKey = urlParams["LangKey"];
+    if (urlParams.hasOwnProperty("LanguageKey")) {
+      let langKey = urlParams["LanguageKey"];
       this.SearchCriteria.LanguageKey = langKey;
     }
 
-    if (urlParams.hasOwnProperty("LangDesc")) {
-      let langDesc = urlParams["LangDesc"];
+    if (urlParams.hasOwnProperty("LanguageDesc")) {
+      let langDesc = urlParams["LanguageDesc"];
       this.SearchCriteria.LanguageDesc = langDesc;
     }
 

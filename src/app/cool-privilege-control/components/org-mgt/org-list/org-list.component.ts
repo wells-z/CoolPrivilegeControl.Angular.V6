@@ -62,6 +62,15 @@ export class OrgListComponent extends CoolComponent implements OnInit {
   }
   //#endregion
 
+  //#region [ Event -- Clear ]
+  OnClear() {
+    this.SearchCriteriaOrg.OrgPath = "";
+    this.SearchCriteriaOrg.OrgKey = "";
+    this.SearchCriteriaOrg.Status = null;
+    this.OnSearch();
+  }
+  //#endregion
+
   //#region [ Event -- Delete Organization ]
   OnDel(orgId: string) {
     this.IsClickDel = true;

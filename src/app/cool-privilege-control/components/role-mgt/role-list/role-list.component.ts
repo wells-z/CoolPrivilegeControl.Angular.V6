@@ -128,6 +128,13 @@ export class RoleListComponent extends CoolComponent implements OnInit {
   }
   //#endregion
 
+  //#region [ Event -- Clear ]
+  OnClear() {
+    this.SearchCriteriaRole.RoleKey = "";
+    this.OnSearch();
+  }
+  //#endregion
+
   getSearchCriteria(): any {
     if (this.SearchCriteriaRole.RoleKey == "") {
       return null;
