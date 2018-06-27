@@ -1,22 +1,22 @@
 import { Injectable, InjectionToken, Injector } from '@angular/core';
 import {
-  HttpClient,
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor,
+  // HttpClient,
+  // HttpRequest,
+  // HttpHandler,
+  // HttpEvent,
+  // HttpInterceptor,
   HttpHeaders
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+// import { Observable } from 'rxjs';
 import { CoolPrivilegeSerconfig } from '../cool-privilege-serconfig';
 import { COOLPRIVILEGECONFIG } from '../cool-privilege-serconfig-token';
 import { LocalStorage, SessionStorage } from 'ngx-webstorage';
 
-//Model
-import { LoginUserVm } from '../models/login-user-vm';
-import { FuncVm } from "../models/func-vm";
-import { OperationResponse } from '../models/common/operation-response'
-import { SearchableVm } from "../models/searchable-vm";
+//Models
+// import { LoginUserVm } from '../models/login-user-vm';
+// import { FuncVm } from "../models/func-vm";
+// import { OperationResponse } from '../models/common/operation-response'
+// import { SearchableVm } from "../models/searchable-vm";
 
 @Injectable({
   providedIn: 'root'
@@ -30,8 +30,6 @@ export class CommonService {
 
   constructor(injector: Injector) {
     this.serConfig = injector.get(COOLPRIVILEGECONFIG);
-    // this.serConfig = new CoolPrivilegeSerconfig();
-    // this.serConfig.baseUrl = "http://localhost:1622/api/";
   }
 
   getReqOptions() {
