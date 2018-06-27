@@ -42,9 +42,9 @@ export class CanActivateViaAuthGuard implements CanActivate, CanActivateChild {
         else if (resp != null) {
           val = false;
           if (resp.ResponseStatus.ErrorCode == "401") {
-            this.router.navigate(["login", this.LangKey]);
+            //this.router.navigate(["login", this.LangKey]);
             // this.router.navigate(["/login/en"]);
-            //window.location.href = window.location.href.substr(0, window.location.href.indexOf("CoolPrivilegeControl")) + "login/" + this.LangKey;
+            window.location.href = window.location.href.substr(0, window.location.href.indexOf("CoolPrivilegeControl"));
           }
         }
         return val;
@@ -65,9 +65,9 @@ export class CanActivateViaAuthGuard implements CanActivate, CanActivateChild {
         else if (resp != null) {
           val = false;
           if (resp.ResponseStatus.ErrorCode == "401") {
-            this.router.navigate(["login", this.LangKey]);
+            //this.router.navigate(["login", this.LangKey]);
             // this.router.navigate(["/login/en"]);
-            //window.location.href = window.location.href.substr(0, window.location.href.indexOf("CoolPrivilegeControl")) + "login/" + this.LangKey;
+            window.location.href = window.location.href.substr(0, window.location.href.indexOf("CoolPrivilegeControl"));
           }
         }
         return val;

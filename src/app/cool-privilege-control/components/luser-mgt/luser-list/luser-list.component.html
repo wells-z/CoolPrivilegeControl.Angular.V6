@@ -112,8 +112,8 @@
 
           <div class="ContentData" fxFlex="30" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('FuncKey')?LangPack['FuncKey']:'FuncKey'}}"
             *ngIf="luserInst.SelectedFuncDetailList!=null && luserInst.SelectedFuncDetailList.length>0">
-            <div *ngFor="let item of luserInst.SelFuncDInfos">
-              <div fxLayout="row" fxFlexFill style="height: auto;">
+            <div *ngFor="let item of luserInst.SelFuncDInfos" fxFlex="100">
+              <div fxLayout="row">
                 <div fxFlex="40">
                   <a [routerLink]="['/CoolPrivilegeControl',this.LangKey,'FuncMgt','EditFunc', item.FuncID]">
                     {{item.FuncName}}</a>
