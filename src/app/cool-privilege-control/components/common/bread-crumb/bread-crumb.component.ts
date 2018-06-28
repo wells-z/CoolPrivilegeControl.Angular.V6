@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { NgModule } from '@angular/core';
 // import { CookieStorage, LocalStorage, SessionStorage,TempStorage } from 'ngx-store';
 import { LocalStorage, SessionStorage } from 'ngx-webstorage';
@@ -12,13 +12,9 @@ import { BreadCrumb } from "./bread-crumb";
   templateUrl: './bread-crumb.component.html',
   styleUrls: ['./bread-crumb.component.css']
 })
-export class BreadCrumbComponent implements OnInit {
+export class BreadCrumbComponent implements OnInit, OnChanges {
 
-  @LocalStorage()
-  LangPack: any;
-
-  @LocalStorage()
-  LangKey: string;
+  @Input() LangPack: any;
 
   public breadcrumbs = new Array<BreadCrumb>();
 
@@ -40,9 +36,8 @@ export class BreadCrumbComponent implements OnInit {
     // this.breadcrumbChanged.emit(this.breadcrumbs);
   }
 
-  private onRouteEvent(routeEvent: Event) {
-    if (!(routeEvent instanceof NavigationEnd)) { return; }
-
+  private generateBreadCrumbs()
+  {
     let route = this.router.routerState.root.snapshot;
     let url = '';
 
@@ -60,8 +55,30 @@ export class BreadCrumbComponent implements OnInit {
 
       this.breadcrumbs.push(this.createBreadcrumb(route, url));
     }
+  }
 
-    // this.breadcrumbChanged.emit(this.breadcrumbs);
+  private onRouteEvent(routeEvent: Event) {
+    if (!(routeEvent instanceof NavigationEnd)) { return; }
+
+    // let route = this.router.routerState.root.snapshot;
+    // let url = '';
+
+    // this.breadcrumbs = [];
+
+    // while (route.firstChild != null) {
+    //   route = route.firstChild;
+
+    //   if (route.routeConfig === null) { continue; }
+    //   if (!route.routeConfig.path) { continue; }
+
+    //   url += `/${this.createUrl(route)}`;
+
+    //   if (!route.data['breadcrumb']) { continue; }
+
+    //   this.breadcrumbs.push(this.createBreadcrumb(route, url));
+    // }
+
+    this.generateBreadCrumbs();
   }
 
   private createBreadcrumb(route: ActivatedRouteSnapshot, url: string): BreadCrumb {
@@ -111,6 +128,12 @@ export class BreadCrumbComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngOnChanges(changes: any) {
+    if (this.LangPack != null) {
+      this.generateBreadCrumbs();
+    }
   }
 
 }

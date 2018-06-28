@@ -97,6 +97,7 @@ export class CoolPrivilegeControlComponent implements OnInit {
 
   genMenu(langKey: string) {
     if (this.AuthKey != null && this.AuthKey != "") {
+      this.menuItems=[];
       this.funcMgtSer.getMenuItemList(langKey).subscribe(
         resp => {
           if (resp != null && resp.ResponseStatus != null && resp.ResponseStatus.ErrorCode == "00") {

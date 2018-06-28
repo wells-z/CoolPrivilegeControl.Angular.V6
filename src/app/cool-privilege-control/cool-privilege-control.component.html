@@ -101,7 +101,7 @@
     </mat-sidenav>
     <mat-sidenav-content>
       <div fxLayout="column">
-        <app-bread-crumb></app-bread-crumb>
+        <app-bread-crumb [LangPack]="LangPack"></app-bread-crumb>
         <router-outlet (activate)="onActivate($event)" (deactivate)="onDeactivate($event)"></router-outlet>
 
         <mat-card *ngIf="isShowDashBoard" fxFlex>
