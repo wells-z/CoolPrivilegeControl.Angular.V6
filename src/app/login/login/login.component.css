@@ -37,7 +37,8 @@
 
 .ContentData {
   font-size: 12px;
-  height: 35px;
+  min-height: 35px;
+  height: auto;
   border-bottom: 1px solid #444;
   flex-grow: 1;
   padding-left: 5px;

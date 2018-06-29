@@ -118,7 +118,7 @@
               </div>
               <div fxLayout="column" fxLayout.xs="column" *ngFor="let privilegeWOrg of PrivilegeWOrgList;">
                 <div class="ContentData" fxLayoutAlign="start center" *ngIf="privilegeWOrg.OrgKey!=null && privilegeWOrg.OrgKey!=''">{{LangPack.hasOwnProperty('OrgKey')?LangPack['OrgKey']:'OrgKey'}} : [{{privilegeWOrg.OrgPath}}] {{privilegeWOrg.OrgKey}}</div>
-                <div class="ContentData" style="padding-left: 2em;" fxLayout="row" *ngFor="let funcDGroup of privilegeWOrg.FuncDetailGroupList;">
+                <div class="ContentData" style="padding-left: 5px;" fxLayout="row" fxLayout.xs="column" *ngFor="let funcDGroup of privilegeWOrg.FuncDetailGroupList;">
                   <div fxFlex="40" fxLayoutAlign="start center">{{funcDGroup.FuncKey}} {{LangPack.hasOwnProperty(funcDGroup.FuncKey)?' ('+LangPack[funcDGroup.FuncKey]+')':''}}</div>
                   <div fxFlex="60" fxLayoutAlign="start center">{{funcDGroup.FuncTKeys}}</div>
                 </div>

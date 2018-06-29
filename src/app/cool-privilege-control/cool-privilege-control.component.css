@@ -1,11 +1,14 @@
 .CoolPrivilegeControl {
   display: flex;
   flex-direction: column;
-  position: absolute;
+  margin: 0px;
+  padding: 0px;
+  /* position: absolute;
   top: 0;
-  bottom: 0;
   left: 0;
-  right: 0;
+  right: 0; */
+  height: auto;
+  flex-grow: 1;
 }
 
 .CoolPrivilegeControl .header button {
@@ -22,6 +25,7 @@
 .sidenav {
   flex: 1;
   font-size: 1em;
+  height: auto;
 }
 
 .sidenav .menu {
@@ -92,7 +96,8 @@
 
 .ContentData {
   font-size: 12px;
-  height: 35px;
+  min-height: 35px;
+  height: auto;
   border-bottom: 1px solid #444;
   flex-grow: 1;
   padding-left: 5px;
