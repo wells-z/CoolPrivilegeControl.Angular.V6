@@ -23,7 +23,7 @@
           </mat-form-field>
         </div>
 
-        <div fxFlex fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center" fxLayoutGap="8px" fxFlex="80">
+        <div fxFlex fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center" fxLayoutGap="8px">
           <div>{{LangPack.hasOwnProperty("Status")?LangPack["Status"]+":":"Status:"}}</div>
           <mat-radio-group [(ngModel)]="SearchCriteria.Status" name="SearchStatus" fxFlexFill fxFlexAlign="center center" fxLayout="row"
             fxLayout.xs="column">
@@ -39,7 +39,7 @@
           </mat-radio-group>
         </div>
 
-        <div fxFlex fxLayout="row" fxLayout.xs="row" fxLayoutAlign="start center" style="margin-top: 8px;">
+        <div fxFlex fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" style="margin-top: 8px;">
 
           <button mat-button color="primary" (click)="OnSearch()">{{LangPack.hasOwnProperty('Search')?LangPack['Search']:'Search'}}</button>
 

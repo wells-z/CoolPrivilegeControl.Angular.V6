@@ -18,7 +18,7 @@
           </mat-form-field>
         </div>
 
-        <div fxFlex fxLayout="column" fxLayout.xs="column" fxFlexAlign="center center" fxLayoutGap="8px" fxFlex="80">
+        <div fxFlex fxLayout="column" fxLayout.xs="column" fxFlexAlign="center center" fxLayoutGap="8px">
           <div>{{LangPack.hasOwnProperty("PrivilegeTypeSetting")?LangPack["PrivilegeTypeSetting"]+":":"PrivilegeTypeSetting:"}}</div>
           <mat-radio-group [(ngModel)]="SearchCriteria.AccessPrivilegeTypeShort" name="SearchAccPrivilegeType" fxFlexFill fxFlexAlign="center center"
             fxLayout="column" fxLayout.xs="column" fxLayoutGap="8px">

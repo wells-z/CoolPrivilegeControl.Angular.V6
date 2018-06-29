@@ -67,8 +67,8 @@ import { PrivilegeComponent } from './cool-privilege-control/components/common/p
     PrivilegeCheckService,
     RoutingHistoryService,
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { disableClose: true, autoFocus: true, hasBackdrop: true } },
-    // { provide: COOLPRIVILEGECONFIG, useValue: { baseUrl: "http://localhost:1622/api/" } },
-    { provide: COOLPRIVILEGECONFIG, useValue: { baseUrl: "http://API.wellstech.us/api/" } }
+    { provide: COOLPRIVILEGECONFIG, useValue: { baseUrl: "http://localhost:1622/api/" } },
+    // { provide: COOLPRIVILEGECONFIG, useValue: { baseUrl: "http://API.wellstech.us/api/" } }
   ],
   bootstrap: [AppComponent],
   entryComponents: [MsgDialogComponent,DialogComponent, LoadingDialogComponent, PrivilegeComponent],
