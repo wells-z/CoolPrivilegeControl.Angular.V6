@@ -30,8 +30,8 @@
 
               <div class="Row">
                 <mat-form-field fxFlexFill>
-                  <input matInput placeholder="{{LangPack.hasOwnProperty('Path')?LangPack['Path']:'Path'}}"
-                    formControlName="FuncPathTextBox" (change)="OnChangeFuncPath()">
+                  <input matInput placeholder="{{LangPack.hasOwnProperty('Path')?LangPack['Path']:'Path'}}" formControlName="FuncPathTextBox"
+                    (change)="OnChangeFuncPath()">
                 </mat-form-field>
               </div>
 
@@ -48,7 +48,8 @@
             <div class="Content">
               <div class="Row">
                 <mat-form-field fxFlexFill>
-                  <input matInput placeholder="{{LangPack.hasOwnProperty('FuncKey')?LangPack['FuncKey']:'FuncKey'}}" formControlName="FuncKey" (change)="OnChangeFuncKey()">
+                  <input matInput placeholder="{{LangPack.hasOwnProperty('FuncKey')?LangPack['FuncKey']:'FuncKey'}}" formControlName="FuncKey"
+                    (change)="OnChangeFuncKey()">
                 </mat-form-field>
               </div>
               <div class="Row">
@@ -58,8 +59,7 @@
               </div>
               <div class="Row" fxLayoutGap="1em" style="margin-bottom: 1em;" fxLayoutAlign="start center">
                 <div>{{LangPack.hasOwnProperty('Status')?LangPack['Status']:'Status'}}</div>
-                <mat-radio-group formControlName="StatusRB" fxLayoutGap="8px" fxLayout="row" fxLayout.xs="column"
-                  (change)="OnChangeStatus($event)">
+                <mat-radio-group formControlName="StatusRB" fxLayoutGap="8px" fxLayout="row" fxLayout.xs="column" (change)="OnChangeStatus($event)">
                   <div>
                     <mat-radio-button [value]="1">{{LangPack.hasOwnProperty('Active')?LangPack['Active']:'Active'}}</mat-radio-button>
                   </div>
@@ -88,10 +88,10 @@
                       <div class="ContentDataCheckBoxCol" fxFlex="10" fxFlex.xs="40px" fxLayoutAlign="center center">
                         <mat-checkbox fxFlexAlign="space-around center" color="primary" (click)="OnCheckFuncType($event,funcTypeItem)"></mat-checkbox>
                       </div>
-                      <div class="ContentData" fxFlex="40" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('FuncTypeKey')?LangPack['FuncTypeKey']:'FuncTypeKey'}}">
+                      <div class="ContentData" fxFlex="40" fxFlex.xs fxLayoutAlign="start center">
                         {{funcTypeItem.FuncTypeKey}}
                       </div>
-                      <div class="ContentData" fxFlex="50" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('FuncTypeName')?LangPack['FuncTypeName']:'FuncTypeName'}}">
+                      <div class="ContentData" fxFlex="50" fxFlex.xs fxLayoutAlign="start center">
                         {{LangPack.hasOwnProperty(funcTypeItem.FuncTypeKey)?LangPack[funcTypeItem.FuncTypeKey]:funcTypeItem.FuncTypeKey}}
                       </div>
                     </ng-container>

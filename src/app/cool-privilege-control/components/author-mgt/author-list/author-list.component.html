@@ -69,26 +69,26 @@
     <div [@listAnimation]="AuthorList">
       <div fxLayout="row" fxLayout.xs="column" *ngFor="let authorInst of AuthorList;">
         <ng-container>
-          <div class="ContentData" fxFlex="20" fxFlex.xs fxFlex.sm="40" fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('LoginName')?LangPack['LoginName']:'LoginName'}}">
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxFlex.sm="40" fxLayoutAlign="start center" >
             <a [routerLink]="['/CoolPrivilegeControl',this.LangKey,'LUserMgt','EditLUser', authorInst.LUserID]" *ngIf="this.PrivilegeTypeInst_LUser.Update">{{authorInst.LUserInst.LoginName}}</a>
             <span *ngIf="!this.PrivilegeTypeInst_LUser.Update">{{authorInst.LUserInst.LoginName}}</span>
           </div>
 
-          <div class="ContentData" fxFlex="20" fxFlex.xs fxFlex.sm="40" fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('Date')?LangPack['Date']:'Date'}}">
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxFlex.sm="40" fxLayoutAlign="start center">
             {{authorInst.AuthorDT}}
           </div>
 
-          <div class="ContentData" fxFlex="30" fxHide.xs fxHide.sm fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('FuncKey')?LangPack['FuncKey']:'FuncKey'}}">
+          <div class="ContentData" fxFlex="30" fxHide.xs fxHide.sm fxLayoutAlign="start center" >
             <a [routerLink]="['/CoolPrivilegeControl',this.LangKey,'FuncMgt','EditFunc', authorInst.FuncID]" *ngIf="this.PrivilegeTypeInst_Func.Update">{{authorInst.FuncInst.FuncKey+'-'+authorInst.FuncInst.FuncName}}</a>
             <span *ngIf="!this.PrivilegeTypeInst_Func.Update">{{authorInst.FuncInst.FuncKey+'-'+authorInst.FuncInst.FuncName}}</span>
           </div>
 
-          <div class="ContentData" fxFlex="20" fxHide.xs fxHide.sm fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('FuncTypeKey')?LangPack['FuncTypeKey']:'FuncTypeKey'}}">
+          <div class="ContentData" fxFlex="20" fxHide.xs fxHide.sm fxLayoutAlign="start center">
             <a [routerLink]="['/CoolPrivilegeControl',this.LangKey,'FuncTMgt','EditFuncType', authorInst.FuncTypeID]" *ngIf="this.PrivilegeTypeInst_FuncT.Update">{{authorInst.FuncTypeInst.FuncTypeKey}}</a>
             <span *ngIf="!this.PrivilegeTypeInst_FuncT.Update">{{authorInst.FuncTypeInst.FuncTypeKey}}</span>
           </div>
 
-          <div class="ContentData" fxFlex="10" fxFlex.xs fxFlex.sm="20" fxLayoutAlign="center center" matTooltip="{{LangPack.hasOwnProperty('Deatil')?LangPack['Deatil']:'Deatil'}}">
+          <div class="ContentData" fxFlex="10" fxFlex.xs fxFlex.sm="20" fxLayoutAlign="center center">
             <button mat-button (click)="OnClickDetail(authorInst)">
               {{LangPack.hasOwnProperty('Deatil')?LangPack['Deatil']:'Deatil'}}
             </button>

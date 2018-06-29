@@ -70,24 +70,24 @@
     <div [@listAnimation]="OrgDList">
       <div fxLayout="row" fxLayout.xs="column" *ngFor="let orgD of OrgDList;">
         <ng-container>
-          <div class="ContentData" fxFlex="20" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('OrgDKey')?LangPack['OrgDKey']:'OrgDKey'}}">
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxLayoutAlign="start center">
             {{orgD.OrgDKey}}
           </div>
-          <div class="ContentData" fxFlex="20" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('OrgDName')?LangPack['OrgDName']:'OrgDName'}}">
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxLayoutAlign="start center">
             {{LangPack.hasOwnProperty(orgD.OrgDKey)?LangPack[orgD.OrgDKey]:orgD.OrgDKey}}
           </div>
 
-          <div class="ContentData" fxFlex="40" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('PrivilegeTypeSetting')?LangPack['PrivilegeTypeSetting']:'PrivilegeTypeSetting'}}">
+          <div class="ContentData" fxFlex="40" fxFlex.xs fxLayoutAlign="start center">
             {{orgD.AccessPrivilegeTypeShort==0?"":(orgD.AccessPrivilegeTypeShort==1?(LangPack.hasOwnProperty("SpecificSetting")?LangPack["SpecificSetting"]:"SpecificSetting"):(LangPack.hasOwnProperty("RoleSetting")?LangPack["RoleSetting"]:"RoleSetting"))}}
           </div>
 
           <div class="ContentData" fxFlex="20" fxFlex.xs fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Edit')?LangPack['Edit']:'Edit'}}" (click)="OnEdit(orgD.ID)"
+            <button mat-icon-button (click)="OnEdit(orgD.ID)"
               [disabled]="!this.PrivilegeTypeInst.Update">
               <mat-icon class="md-22" aria-hidden="true">mode_edit</mat-icon>
             </button>
 
-            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Delete')?LangPack['Delete']:'Delete'}}" (click)="OnDel(orgD.ID)"
+            <button mat-icon-button (click)="OnDel(orgD.ID)"
               [disabled]="!this.PrivilegeTypeInst.Delete">
               <mat-icon class="md-22" aria-hidden="true">delete</mat-icon>
             </button>

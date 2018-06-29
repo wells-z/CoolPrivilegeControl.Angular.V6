@@ -3,11 +3,11 @@
   flex-direction: column;
   margin: 0px;
   padding: 0px;
-  /* position: absolute;
+  position: absolute;
   top: 0;
   left: 0;
-  right: 0; */
-  height: auto;
+  right: 0;
+  height: 100%;
   flex-grow: 1;
 }
 
@@ -25,7 +25,7 @@
 .sidenav {
   flex: 1;
   font-size: 1em;
-  height: auto;
+  height: 100%;
 }
 
 .sidenav .menu {

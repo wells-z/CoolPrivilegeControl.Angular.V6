@@ -42,16 +42,16 @@
     <div [@listAnimation]="RoleList">
       <div fxLayout="row" *ngFor="let role of RoleList;">
         <ng-container>
-          <div class="ContentData" fxFlex="50" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('RoleKey')?LangPack['RoleKey']:'RoleKey'}}">
+          <div class="ContentData" fxFlex="50" fxFlex.xs fxLayoutAlign="start center">
             {{role.RoleKey}}
           </div>
           <div class="ContentData" fxFlex="50" fxFlex.xs fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Edit')?LangPack['Edit']:'Edit'}}" (click)="OnEdit(role.ID)"
+            <button mat-icon-button (click)="OnEdit(role.ID)"
               [disabled]="!this.PrivilegeTypeInst.Update">
               <mat-icon class="md-22" aria-hidden="true">mode_edit</mat-icon>
             </button>
 
-            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Delete')?LangPack['Delete']:'Delete'}}" (click)="OnDel(role.ID)"
+            <button mat-icon-button (click)="OnDel(role.ID)"
               [disabled]="!this.PrivilegeTypeInst.Delete">
               <mat-icon class="md-22" aria-hidden="true">delete</mat-icon>
             </button>

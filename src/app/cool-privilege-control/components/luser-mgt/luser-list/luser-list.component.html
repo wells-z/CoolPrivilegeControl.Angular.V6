@@ -98,19 +98,19 @@
     <div [@listAnimation]="LUserList">
       <div fxLayout="row" fxLayout.xs="column" *ngFor="let luserInst of LUserList;">
         <ng-container>
-          <div class="ContentData" fxFlex="20" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('LoginName')?LangPack['LoginName']:'LoginName'}}">
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxLayoutAlign="start center">
             {{luserInst.LoginName}}
           </div>
 
-          <div class="ContentData" fxFlex="20" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('PrivilegeTypeSetting')?LangPack['PrivilegeTypeSetting']:'PrivilegeTypeSetting'}}">
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxLayoutAlign="start center">
             {{luserInst.AccessPrivilegeTypeShort==0?"":(luserInst.AccessPrivilegeTypeShort==1?(LangPack.hasOwnProperty("SpecificSetting")?LangPack["SpecificSetting"]:"SpecificSetting"):(luserInst.AccessPrivilegeTypeShort==2?(LangPack.hasOwnProperty("RoleSetting")?LangPack["RoleSetting"]:"RoleSetting"):(LangPack.hasOwnProperty("LUserOrgSetting")?LangPack["LUserOrgSetting"]:"LUserOrgSetting")))}}
           </div>
 
-          <div class="ContentData" fxFlex="10" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('Status')?LangPack['Status']:'Status'}}">
+          <div class="ContentData" fxFlex="10" fxFlex.xs fxLayoutAlign="start center">
             {{luserInst.Status==0?"":(luserInst.Status==1?(LangPack.hasOwnProperty("Active")?LangPack["Active"]:"Active"):(LangPack.hasOwnProperty("InActive")?LangPack["InActive"]:"InActive"))}}
           </div>
 
-          <div class="ContentData" fxFlex="30" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('FuncKey')?LangPack['FuncKey']:'FuncKey'}}"
+          <div class="ContentData" fxFlex="30" fxFlex.xs fxLayoutAlign="start center"
             *ngIf="luserInst.SelectedFuncDetailList!=null && luserInst.SelectedFuncDetailList.length>0">
             <div *ngFor="let item of luserInst.SelFuncDInfos" fxFlex="100">
               <div fxLayout="row">
@@ -129,25 +129,25 @@
             </div>
           </div>
 
-          <div class="ContentData" fxFlex="30" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('OrgKey')?LangPack['OrgKey']:'OrgKey'}}"
+          <div class="ContentData" fxFlex="30" fxFlex.xs fxLayoutAlign="start center"
             *ngIf="luserInst.SelectedLUserOrgList!=null && luserInst.SelectedLUserOrgList.length>0">
             <a *ngFor="let selectedLUserOrgInfo of luserInst.SelectedLUserOrgList;" [routerLink]="['/CoolPrivilegeControl',this.LangKey,'OrgMgt','EditOrg', selectedLUserOrgInfo.OrgID]">
               {{selectedLUserOrgInfo.OrgKey}}|
             </a>
           </div>
 
-          <div class="ContentData" fxFlex="30" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('RoleKey')?LangPack['RoleKey']:'RoleKey'}}"
+          <div class="ContentData" fxFlex="30" fxFlex.xs fxLayoutAlign="start center"
             *ngIf="luserInst.SelectedRoleList!=null && luserInst.SelectedRoleList.length>0">
             <a *ngFor="let selectedRoleInfo of luserInst.SelectedRoleList;" [routerLink]="['/CoolPrivilegeControl',this.LangKey,'RoleMgt','EditRole', selectedRoleInfo.RoleID]">{{selectedRoleInfo.RoleKey}}|</a>
           </div>
 
           <div class="ContentData" fxFlex="20" fxFlex.xs fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Edit')?LangPack['Edit']:'Edit'}}" (click)="OnEdit(luserInst.ID)"
+            <button mat-icon-button (click)="OnEdit(luserInst.ID)"
               [disabled]="!this.PrivilegeTypeInst.Update">
               <mat-icon class="md-22" aria-hidden="true">mode_edit</mat-icon>
             </button>
 
-            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Delete')?LangPack['Delete']:'Delete'}}" (click)="OnDel(luserInst.ID)"
+            <button mat-icon-button (click)="OnDel(luserInst.ID)"
               [disabled]="!this.PrivilegeTypeInst.Delete">
               <mat-icon class="md-22" aria-hidden="true">delete</mat-icon>
             </button>

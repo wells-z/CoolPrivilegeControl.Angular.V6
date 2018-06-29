@@ -79,25 +79,25 @@
     <div [@listAnimation]="FuncTypeList">
       <div fxLayout="row" fxLayout.xs="column" *ngFor="let funcType of FuncTypeList;">
         <ng-container>
-          <div class="ContentData" fxFlex="20" fxFlex.xs fxFlex.sm="30" fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('Pri')?LangPack['Pri']:'Pri'}}">
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxFlex.sm="30" fxLayoutAlign="start center">
             {{funcType.Priority}}
           </div>
-          <div class="ContentData" fxFlex="25" fxFlex.xs fxFlex.sm="30" fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('FuncTypeKey')?LangPack['FuncTypeKey']:'FuncTypeKey'}}">
+          <div class="ContentData" fxFlex="25" fxFlex.xs fxFlex.sm="30" fxLayoutAlign="start center">
             {{funcType.FuncTypeKey}}
           </div>
-          <div class="ContentData" fxFlex="25" fxHide.xs fxHide.sm fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('FuncTypeName')?LangPack['FuncTypeName']:'FuncTypeName'}}">
+          <div class="ContentData" fxFlex="25" fxHide.xs fxHide.sm fxLayoutAlign="start center">
             {{LangPack.hasOwnProperty(funcType.FuncTypeKey)?LangPack[funcType.FuncTypeKey]:funcType.FuncTypeKey}}
           </div>
-          <div class="ContentData" fxFlex="10" fxFlex.xs fxFlex.sm="20" fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('Status')?LangPack['Status']:'Status'}}">
+          <div class="ContentData" fxFlex="10" fxFlex.xs fxFlex.sm="20" fxLayoutAlign="start center">
             {{funcType.Status==0?"":(funcType.Status==1?(LangPack.hasOwnProperty("Active")?LangPack["Active"]:"Active"):(LangPack.hasOwnProperty("InActive")?LangPack["InActive"]:"InActive"))}}
           </div>
           <div class="ContentData" fxFlex="20" fxFlex.xs fxFlex.sm="20" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Edit')?LangPack['Edit']:'Edit'}}" (click)="OnEdit(funcType.ID)"
+            <button mat-icon-button (click)="OnEdit(funcType.ID)"
               [disabled]="!this.PrivilegeTypeInst.Update">
               <mat-icon class="md-22" aria-hidden="true">mode_edit</mat-icon>
             </button>
 
-            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Delete')?LangPack['Delete']:'Delete'}}" (click)="OnDel(funcType.ID)"
+            <button mat-icon-button (click)="OnDel(funcType.ID)"
               [disabled]="!this.PrivilegeTypeInst.Delete">
               <mat-icon class="md-22" aria-hidden="true">delete</mat-icon>
             </button>

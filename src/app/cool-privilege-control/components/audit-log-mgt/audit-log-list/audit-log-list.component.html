@@ -75,24 +75,24 @@
     <div [@listAnimation]="AuditLogList">
       <div fxLayout="row" fxLayout.xs="column" *ngFor="let auditLogInst of AuditLogList;">
         <ng-container>
-          <div class="ContentData" fxFlex="20" fxFlex.xs fxFlex.sm="40" fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('LoginName')?LangPack['LoginName']:'LoginName'}}">
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxFlex.sm="40" fxLayoutAlign="start center">
             <a [routerLink]="['/CoolPrivilegeControl',this.LangKey,'LUserMgt','EditLUser', auditLogInst.LUserID]" *ngIf="this.PrivilegeTypeInst_LUser.Update">{{auditLogInst.LUserInst.LoginName}}</a>
             <span *ngIf="!this.PrivilegeTypeInst_LUser.Update">{{auditLogInst.LUserInst.LoginName}}</span>
           </div>
 
-          <div class="ContentData" fxFlex="20" fxFlex.xs fxFlex.sm="40" fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('Date')?LangPack['Date']:'Date'}}">
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxFlex.sm="40" fxLayoutAlign="start center">
             {{auditLogInst.CreateDate}}
           </div>
 
-          <div class="ContentData" fxFlex="30" fxHide.xs fxHide.sm fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('TableName')?LangPack['TableName']:'TableName'}}">
+          <div class="ContentData" fxFlex="30" fxHide.xs fxHide.sm fxLayoutAlign="start center" >
             {{auditLogInst.TableName}}
           </div>
 
-          <div class="ContentData" fxFlex="20" fxHide.xs fxHide.sm fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('Type')?LangPack['Type']:'Type'}}">
+          <div class="ContentData" fxFlex="20" fxHide.xs fxHide.sm fxLayoutAlign="start center">
             {{LangPack.hasOwnProperty(auditLogInst.EventType)?LangPack[auditLogInst.EventType]:auditLogInst.EventType}}
           </div>
 
-          <div class="ContentData" fxFlex="10" fxFlex.xs fxFlex.sm="20" fxLayoutAlign="center center" matTooltip="{{LangPack.hasOwnProperty('Deatil')?LangPack['Deatil']:'Deatil'}}">
+          <div class="ContentData" fxFlex="10" fxFlex.xs fxFlex.sm="20" fxLayoutAlign="center center">
             <button mat-button (click)="OnClickDetail(auditLogInst)">
               {{LangPack.hasOwnProperty('Deatil')?LangPack['Deatil']:'Deatil'}}
             </button>

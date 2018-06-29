@@ -73,21 +73,21 @@
     <div [@listAnimation]="DisplayFuncList_Paging">
       <div fxLayout="row" fxLayout.xs="column" style="border-bottom: 1px solid #444;" *ngFor="let funcInfo of DisplayFuncList_Paging;">
         <ng-container>
-          <div class="ContentData" fxFlex="20" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('FuncKey')?LangPack['FuncKey']:'FuncKey'}}">
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxLayoutAlign="start center">
             {{funcInfo.FuncKey}}
           </div>
-          <div class="ContentData" fxFlex="20" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('FuncName')?LangPack['FuncName']:'FuncName'}}">
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxLayoutAlign="start center">
             {{funcInfo.FuncName}}
           </div>
-          <div class="ContentData" fxFlex="35" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('FuncTypeKey')?LangPack['FuncTypeKey']:'FuncTypeKey'}}">
+          <div class="ContentData" fxFlex="35" fxFlex.xs fxLayoutAlign="start center">
             <span *ngFor="let funcTypeInfo of funcInfo.FuncTypeList;">{{funcTypeInfo.FuncTypeKey}}|</span>
           </div>
           <div class="ContentData" fxFlex="25" fxFlex.xs fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Edit')?LangPack['Edit']:'Edit'}}" (click)="OnEdit(funcInfo)">
+            <button mat-icon-button (click)="OnEdit(funcInfo)">
               <mat-icon class="md-22" aria-hidden="true">mode_edit</mat-icon>
             </button>
 
-            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Delete')?LangPack['Delete']:'Delete'}}" (click)="OnDel(funcInfo)">
+            <button mat-icon-button (click)="OnDel(funcInfo)">
               <mat-icon class="md-22" aria-hidden="true">delete</mat-icon>
             </button>
           </div>
@@ -134,7 +134,7 @@
                 <div fxFlex="20" fxFlex.xs="40px" fxLayoutAlign="center center">
                   <mat-checkbox fxFlexAlign="space-around center" color="primary" [(ngModel)]="funcTypeItem.Selected"></mat-checkbox>
                 </div>
-                <div class="ContentData" fxFlex="80" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('FuncTypeKey')?LangPack['FuncTypeKey']:'FuncTypeKey'}}">
+                <div class="ContentData" fxFlex="80" fxFlex.xs fxLayoutAlign="start center">
                   {{funcTypeItem.FuncTypeKey}}
                 </div>
               </ng-container>
@@ -181,7 +181,7 @@
                 <div fxFlex="20" fxFlex.xs="40px" fxLayoutAlign="center center">
                   <mat-checkbox fxFlexAlign="space-around center" color="primary" [(ngModel)]="funcTypeItem.Selected"></mat-checkbox>
                 </div>
-                <div class="ContentData" fxFlex="80" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('FuncTypeKey')?LangPack['FuncTypeKey']:'FuncTypeKey'}}">
+                <div class="ContentData" fxFlex="80" fxFlex.xs fxLayoutAlign="start center">
                   {{funcTypeItem.FuncTypeKey}}
                 </div>
               </ng-container>

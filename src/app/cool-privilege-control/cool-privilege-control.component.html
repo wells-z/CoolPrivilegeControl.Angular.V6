@@ -1,4 +1,4 @@
-<div class="CoolPrivilegeControl">
+<div class="CoolPrivilegeControl" fxFlexFill>
   <mat-toolbar color="primary" fxLayoutAlign="space-between center">
     <div fxLayoutAlign="start center">
       <div class="header">
@@ -20,7 +20,7 @@
   <mat-sidenav-container class="sidenav">
     <mat-sidenav [(mode)]="sideMenuMode" [(opened)]="openMenu">
       <!-- style="background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);" -->
-      <div fxFill>
+      <div fxFlexFill>
         <mat-nav-list class="menu">
           <div fxFill *ngFor="let menuItem of menuItems; index as i">
             <app-side-menu [menuItem]='menuItem' (MenuItemClick)="menuItemClick($event)"></app-side-menu>

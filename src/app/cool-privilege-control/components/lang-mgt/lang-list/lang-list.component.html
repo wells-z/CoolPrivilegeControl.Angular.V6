@@ -64,22 +64,22 @@
     <div [@listAnimation]="LangList">
       <div fxLayout="row" fxLayout.xs="column" *ngFor="let langInst of LangList;">
         <ng-container>
-          <div class="ContentData" fxFlex="20" fxFlex.xs fxFlex.sm="40" fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('Pri')?LangPack['Pri']:'Pri'}}">
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxFlex.sm="40" fxLayoutAlign="start center">
             {{langInst.Priority}}
           </div>
-          <div class="ContentData" fxFlex="25" fxFlex.xs fxFlex.sm="40" fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('LanguageKey')?LangPack['LanguageKey']:'LanguageKey'}}">
+          <div class="ContentData" fxFlex="25" fxFlex.xs fxFlex.sm="40" fxLayoutAlign="start center">
             {{langInst.LanguageKey}}
           </div>
-          <div class="ContentData" fxFlex="35" fxHide.xs fxHide.sm fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('LanguageDesc')?LangPack['LanguageDesc']:'LanguageDesc'}}">
+          <div class="ContentData" fxFlex="35" fxHide.xs fxHide.sm fxLayoutAlign="start center">
             {{langInst.LanguageDesc}}
           </div>
           <div class="ContentData" fxFlex="20" fxFlex.xs fxFlex.sm="20" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Edit')?LangPack['Edit']:'Edit'}}" (click)="OnEdit(langInst.ID)"
+            <button mat-icon-button (click)="OnEdit(langInst.ID)"
               [disabled]="!this.PrivilegeTypeInst.Update">
               <mat-icon class="md-22" aria-hidden="true">mode_edit</mat-icon>
             </button>
 
-            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Delete')?LangPack['Delete']:'Delete'}}" (click)="OnDel(langInst.ID)"
+            <button mat-icon-button (click)="OnDel(langInst.ID)"
               [disabled]="!this.PrivilegeTypeInst.Delete">
               <mat-icon class="md-22" aria-hidden="true">delete</mat-icon>
             </button>

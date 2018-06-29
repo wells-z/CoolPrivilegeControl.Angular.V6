@@ -111,7 +111,7 @@ export class CoolPrivilegeControlComponent implements OnInit {
             this.loadingDialogSer.refreshAuthKey(resp);
           }
           else if (resp != null) {
-            this.msgDialogService.OpenDialog(resp);
+            // this.msgDialogService.OpenDialog(resp);
           }
         },
         err => {

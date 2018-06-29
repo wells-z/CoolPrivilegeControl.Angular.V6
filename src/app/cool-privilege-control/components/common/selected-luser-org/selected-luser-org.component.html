@@ -70,18 +70,18 @@
     <div [@listAnimation]="DisplayLUserOrgList_Paging">
       <div fxLayout="row" fxLayout.xs="column" style="border-bottom: 1px solid #444;" *ngFor="let luserOrgInfo of DisplayLUserOrgList_Paging;">
         <ng-container>
-          <div class="ContentData" fxFlex="35" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('OrgKey')?LangPack['OrgKey']:'OrgKey'}}">
+          <div class="ContentData" fxFlex="35" fxFlex.xs fxLayoutAlign="start center">
             {{luserOrgInfo.OrgKey}}
           </div>
-          <div class="ContentData" fxFlex="35" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('OrgDKey')?LangPack['OrgDKey']:'OrgDKey'}}">
+          <div class="ContentData" fxFlex="35" fxFlex.xs fxLayoutAlign="start center">
             {{luserOrgInfo.OrgDetailKey}}
           </div>
           <div class="ContentData" fxFlex="30" fxFlex.xs fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Edit')?LangPack['Edit']:'Edit'}}" (click)="OnEdit(luserOrgInfo)">
+            <button mat-icon-button (click)="OnEdit(luserOrgInfo)">
               <mat-icon class="md-22" aria-hidden="true">mode_edit</mat-icon>
             </button>
 
-            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Delete')?LangPack['Delete']:'Delete'}}" (click)="OnDel(luserOrgInfo)">
+            <button mat-icon-button (click)="OnDel(luserOrgInfo)">
               <mat-icon class="md-22" aria-hidden="true">delete</mat-icon>
             </button>
           </div>

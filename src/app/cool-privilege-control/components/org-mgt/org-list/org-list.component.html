@@ -24,8 +24,8 @@
 
         <div fxFlex fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center" fxLayoutGap="8px">
           <div>{{LangPack.hasOwnProperty("Status")?LangPack["Status"]+":":"Status:"}}</div>
-          <mat-radio-group [(ngModel)]="SearchCriteriaOrg.Status" name="SearchOrgStatus" fxFlexFill fxFlexAlign="center center"
-            fxLayout="row" fxLayout.xs="column">
+          <mat-radio-group [(ngModel)]="SearchCriteriaOrg.Status" name="SearchOrgStatus" fxFlexFill fxFlexAlign="center center" fxLayout="row"
+            fxLayout.xs="column">
             <div fxFlex.xs fxFlex="20" fxFlexAlign="start center">
               <mat-radio-button value="null">{{LangPack.hasOwnProperty('All')?LangPack['All']:'All'}}</mat-radio-button>
             </div>
@@ -39,9 +39,9 @@
         </div>
 
         <div fxFlex fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center" style="margin-top: 8px;">
-            <button mat-button color="primary" (click)="OnSearch()">{{LangPack.hasOwnProperty('Search')?LangPack['Search']:'Search'}}</button>
+          <button mat-button color="primary" (click)="OnSearch()">{{LangPack.hasOwnProperty('Search')?LangPack['Search']:'Search'}}</button>
 
-            <button mat-button color="primary" (click)="OnClear()">{{LangPack.hasOwnProperty('Clear')?LangPack['Clear']:'Clear'}}</button>
+          <button mat-button color="primary" (click)="OnClear()">{{LangPack.hasOwnProperty('Clear')?LangPack['Clear']:'Clear'}}</button>
         </div>
       </mat-expansion-panel>
     </div>
@@ -80,28 +80,26 @@
     <div [@listAnimation]="OrgList">
       <div fxLayout="row" fxLayout.xs="column" *ngFor="let org of OrgList;">
         <ng-container>
-          <div class="ContentData" fxFlex="20" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('OrgPath')?LangPack['OrgPath']:'OrgPath'}}">
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxLayoutAlign="start center">
             {{org.OrgPath}}
           </div>
-          <div class="ContentData" fxFlex="20" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('OrgKey')?LangPack['OrgKey']:'OrgKey'}}">
+          <div class="ContentData" fxFlex="20" fxFlex.xs fxLayoutAlign="start center">
             {{org.OrgKey}}
           </div>
-          <div class="ContentData" fxFlex="30" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('OrgName')?LangPack['OrgName']:'OrgName'}}">
+          <div class="ContentData" fxFlex="30" fxFlex.xs fxLayoutAlign="start center">
             {{LangPack.hasOwnProperty(org.OrgKey)?LangPack[org.OrgKey]:org.OrgKey}}
           </div>
 
-          <div class="ContentData" fxFlex="10" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('Status')?LangPack['Status']:'Status'}}">
+          <div class="ContentData" fxFlex="10" fxFlex.xs fxLayoutAlign="start center">
             {{org.Status==0?"":(org.Status==1?(LangPack.hasOwnProperty("Active")?LangPack["Active"]:"Active"):(LangPack.hasOwnProperty("InActive")?LangPack["InActive"]:"InActive"))}}
           </div>
 
           <div class="ContentData" fxFlex="20" fxFlex.xs fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Edit')?LangPack['Edit']:'Edit'}}" (click)="OnEdit(org.ID)"
-              [disabled]="!this.PrivilegeTypeInst.Update">
+            <button mat-icon-button (click)="OnEdit(org.ID)" [disabled]="!this.PrivilegeTypeInst.Update">
               <mat-icon class="md-22" aria-hidden="true">mode_edit</mat-icon>
             </button>
 
-            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Delete')?LangPack['Delete']:'Delete'}}" (click)="OnDel(org.ID)"
-              [disabled]="!this.PrivilegeTypeInst.Delete">
+            <button mat-icon-button (click)="OnDel(org.ID)" [disabled]="!this.PrivilegeTypeInst.Delete">
               <mat-icon class="md-22" aria-hidden="true">delete</mat-icon>
             </button>
           </div>

@@ -153,7 +153,7 @@ export class AuthorListComponent extends CoolComponent implements OnInit {
             this.loadingDialogSer.refreshAuthKey(resp);
             this.AuthorList = [];
 
-            this.msgDialogService.OpenDialog(resp);
+            // this.msgDialogService.OpenDialog(resp);
           }
 
           this.loadingDialogSer.CloseLoadingDialog();

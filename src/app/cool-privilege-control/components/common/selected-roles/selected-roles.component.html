@@ -53,15 +53,15 @@
     <div [@listAnimation]="DisplayRoleList_Paging">
       <div fxLayout="row" fxLayout.xs="column" style="border-bottom: 1px solid #444;" *ngFor="let roleInfo of DisplayRoleList_Paging;">
         <ng-container>
-          <div class="ContentData" fxFlex="65" fxFlex.xs fxLayoutAlign="start center" matTooltip="{{LangPack.hasOwnProperty('RoleKey')?LangPack['RoleKey']:'RoleKey'}}">
+          <div class="ContentData" fxFlex="65" fxFlex.xs fxLayoutAlign="start center" >
             {{roleInfo.RoleKey}}
           </div>
           <div class="ContentData" fxFlex="35" fxFlex.xs fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Edit')?LangPack['Edit']:'Edit'}}" (click)="OnEdit(roleInfo)">
+            <button mat-icon-button  (click)="OnEdit(roleInfo)">
               <mat-icon class="md-22" aria-hidden="true">mode_edit</mat-icon>
             </button>
 
-            <button mat-icon-button matTooltip="{{LangPack.hasOwnProperty('Delete')?LangPack['Delete']:'Delete'}}" (click)="OnDel(roleInfo)">
+            <button mat-icon-button  (click)="OnDel(roleInfo)">
               <mat-icon class="md-22" aria-hidden="true">delete</mat-icon>
             </button>
           </div>

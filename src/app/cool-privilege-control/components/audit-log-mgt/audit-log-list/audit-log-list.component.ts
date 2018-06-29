@@ -151,7 +151,7 @@ export class AuditLogListComponent extends CoolComponent implements OnInit {
             this.loadingDialogSer.refreshAuthKey(resp);
             this.AuditLogList = [];
 
-            this.msgDialogService.OpenDialog(resp);
+            // this.msgDialogService.OpenDialog(resp);
           }
 
           this.loadingDialogSer.CloseLoadingDialog();
