@@ -1,5 +1,6 @@
 # CoolPrivilegeControl.Angular.V6
 Cool Privilege Control System -- Angular V6
+Please see project spec in [medium](https://medium.com/@wellscheung/cool-privilege-control-system-angular-version-6-0-single-page-application-145edc06f770).
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
 
