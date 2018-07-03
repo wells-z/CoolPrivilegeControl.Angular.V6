@@ -3,6 +3,20 @@ Cool Privilege Control System -- Angular V6
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
 
+## Installation
+
+1. Download and install [node.js](https://nodejs.org/en/).
+
+2. Install Angular Cli
+```bash
+npm install -g @angular/cli
+```
+3. Download source code.
+4. Install the related modules.
+```bash
+npm install
+```
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
